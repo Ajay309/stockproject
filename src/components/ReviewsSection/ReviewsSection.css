@@ -1,0 +1,272 @@
+
+@font-face {
+  font-family: 'Ghost'; /* ✅ Matches usage */
+  src: url('../assets/fonts/Ghost-Medium.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'TWKLausanne'; /* ✅ Matches usage */
+  src: url('../assets/fonts/TWKLausanne-300.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.left-section{
+  padding: 0 !important;
+}
+
+/* ReviewsSection.css */
+/* ReviewsSection.css */
+.review-slide {
+    min-height: 500px; /* Set your desired minimum height */
+  background-color: #ffffff;
+  border: 1px solid #e1e6ec;
+  border-radius: 20px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  overflow: hidden;
+  flex-wrap: wrap;
+}
+
+.review-slide:hover {
+  transform: translateY(-10px);
+}
+
+/* Left Section - Company Info */
+.company-info {
+  flex: 1;
+  min-width: 300px;
+  background-color: #f8f9fa;
+  border-radius: 20px 0 0 20px;
+  padding: 30px;
+  text-align: center;
+  border-right: 1px solid #eee;
+}
+
+.company-info img {
+  width: 120px;
+  margin-bottom: 20px;
+}
+
+.company-info h6 {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 5px;
+  letter-spacing: 1px;
+}
+
+.company-info h5 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.heading-14{
+  color: #ffffff !important;
+  font-family: twklausanne !important;
+  font-size: 36px !important;
+  font-weight: 300 !important;
+  padding: 30px 20px 0 20px !important;
+}
+
+.text-muted{
+    font-family: 'Ghost', sans-serif !important;
+    font-size: 20px !important;
+    font-weight: 300 !important;
+}
+
+.head{
+    font-family: 'Ghost', sans-serif !important;
+    font-size: 21px !important;
+    font-weight: 300 !important;
+    color: #000000 !important;
+}
+
+/* Right Section - Testimonial */
+/* Right Section - Testimonial */
+.testimonial-content {
+ flex-grow: 1;
+  background-color: #000000 !important;
+  border-radius: 0 20px 20px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  min-height: 580px; /* Ensure full height */
+}
+
+.testimonial-content .blockquote {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #24324a;
+  line-height: 1.4;
+  margin-bottom: 30px;
+}
+
+.client-info {
+  margin-bottom: 30px;
+}
+
+.client-info p {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #24324a;
+  margin-bottom: 5px;
+}
+
+.client-info span {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Button Styling */
+.btn-primary {
+  width: 200px;
+  border: 2px solid #f6b40e !important;
+  color: #ffffff !important;
+  background-color: transparent !important;
+  font-weight: 600;
+  padding: 20px 30px !important;
+  border-radius: 30px;
+  transition: all 0.3s;
+}
+
+.btn-outline-primary:hover {
+  background-color: #24324a;
+  color: #fff;
+  border-color: #24324a;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .testimonial-content {
+    border-radius: 20px;
+    padding: 20px;
+  }
+
+  .testimonial-content .blockquote {
+    font-size: 3px;
+  }
+
+  .client-info p {
+    font-size: 1rem;
+  }
+
+  .client-info span {
+    font-size: 0.9rem;
+  }
+
+  .btn-outline-primary {
+    font-size: 0.9rem;
+    padding: 8px 20px;
+  }
+}
+
+
+.btn-primary:hover {
+  background-color: #0040a0;
+  border-color: #0040a0;
+}
+
+/* Arrows */
+.slick-prev, .slick-next {
+  color: #0d6efd !important;
+  background-color: #ffffff !important;
+  border-radius: 50%;
+  padding: 10px;
+  border: 2px solid #0d6efd;
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+
+.slick-prev:hover, .slick-next:hover {
+  background-color: #0d6efd !important;
+  color: #ffffff !important;
+}
+
+.slick-dots li button:before {
+  color: #0d6efd !important;
+  font-size: 12px !important;
+}
+
+.slick-dots li.slick-active button:before {
+  color: #0d6efd !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .review-slide {
+    flex-direction: column;
+  }
+
+  .company-info {
+    border-radius: 20px 20px 0 0;
+    border-right: none;
+    margin-bottom: 20px;
+  }
+
+  .heading-14 {
+    font-size: 24px !important;
+    font-weight: 300 !important;
+    
+  }
+
+  
+
+  .btn-primary {
+    font-size: 0.9rem;
+    padding: 10px 20px;
+    align-self: center;
+  }
+  .left-section {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .company-info h5 {
+    font-size: 1.2rem;
+  }
+
+  .blockquote {
+    font-size: 1rem;
+  }
+
+  .client-info p {
+    font-size: 1rem;
+  }
+
+  .client-info span {
+    font-size: 0.8rem;
+  }
+}
+
+
+
+/* ReviewsSection.css */
+.slick-prev, .slick-next {
+  color: #0d6efd !important;
+  background-color: #fff !important;
+  border-radius: 50%;
+  padding: 5px;
+  border: 1px solid #0d6efd;
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+
+.slick-prev:hover, .slick-next:hover {
+  background-color: #0d6efd !important;
+  color: #fff !important;
+}
+
+.slick-dots li button:before {
+  color: #0d6efd !important;
+}
+
+.slick-dots li.slick-active button:before {
+  color: #0d6efd !important;
+}
+
+

@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Ghost'; /* ✅ Matches usage */
+  src: url('../assets/fonts/Ghost-Medium.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'TWKLausanne'; /* ✅ Matches usage */
+  src: url('../assets/fonts/TWKLausanne-300.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  font-family: "Ghost", "Helvetica Neue", "Helvetica", sans-serif !important;
+}

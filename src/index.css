@@ -1,0 +1,12 @@
+
+
+@font-face {
+  font-family: 'Ghost'; /* ✅ Matches usage */
+  src: url('/assets/fonts/Ghost-Medium.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  font-family: "Ghost", "Helvetica Neue", "Helvetica", sans-serif;
+}

@@ -1,0 +1,107 @@
+.logo-slider-section {
+    overflow: hidden;
+  }
+
+  .heading-2 {
+    font-size: 30px !important;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 20px;
+    font-family: 'Ghost', sans-serif !important;
+    text-wrap: balance;
+  }
+
+ .fs-5{
+    font-size: 3.2rem !important;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 20px;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .logo-img {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+  }
+  
+  .logo-img:hover {
+    opacity: 1;
+  }
+  
+  .logo-slider-wrapper {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+  }
+  
+  .logo-track {
+    display: flex;
+    gap: 60px;
+    width: fit-content;
+  }
+  .brand-logo {
+    height: 32px;
+    object-fit: contain;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+  }
+  
+  .brand-logo:hover {
+    opacity: 1;
+  }
+  .features-section {
+    background-color: white;
+    overflow: hidden;
+  }
+  
+  .heading {
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 30px;
+  }
+  
+  /* .logo-slider {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+  } */
+  
+  .slider-track {
+    display: flex;
+    width: calc(250px * 10); /* Adjust according to logos count * 2 */
+    animation: scroll 20s linear infinite;
+  }
+  
+  .slide {
+    width: 250px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .slide img {
+    max-width: 80px;
+    height: auto;
+    filter: grayscale(100%);
+    transition: filter 0.3s ease;
+  }
+  
+  .slide img:hover {
+    filter: grayscale(0%);
+  }
+  
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  

@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css'; // optional for custom styling
+import { useAuth } from '../../context/AuthContext';
 
 export default function Navbar() {
   const location = useLocation();
+  const { userEmail, logout } = useAuth();
 
   return (
     <nav className="navbar navbar-expand-lg position-fixed w-100 z-1  navbar-light bg-white shadow-sm py-1 px-3 px-lg-5">
@@ -55,14 +57,32 @@ export default function Navbar() {
 
         {/* Desktop view: right-aligned */}
         <div className="ms-auto d-none d-lg-flex flex-column flex-lg-row justify-content-end gap-2 gap-lg-4 mt-3 mt-lg-0">
-          <Link to="/login" className="login">Login</Link>
-          <Link to="/get-started" className="get-started">Get Started</Link>
+<div className="d-flex">
+          {userEmail ? (
+            <>
+              <span className="navbar-text me-3">Welcome, {userEmail}</span>
+              <button className="btn btn-outline-danger" onClick={logout}>Logout</button>
+            </>
+          ) : (
+            <Link to="/login" className="login">Login</Link>
+          )}
+        
+        </div>
+         <Link to="/get-started" className="get-started">Get Started</Link>
         </div>
 
         {/* Mobile view: bottom of menu links */}
         <div className="d-flex d-lg-none flex-column gap-2 mt-3">
-          <Link to="/login" className="btn btn-outline-primary w-100">Login</Link>
-          <Link to="/get-started" className="btn btn-primary w-100">Get Started</Link>
+<div className="d-flex">
+          {userEmail ? (
+            <>
+              <span className="navbar-text me-3">Welcome, {userEmail}</span>
+              <button className="btn btn-outline-danger" onClick={logout}>Logout</button>
+            </>
+          ) : (
+            <Link to="/login" className="login">Login</Link>
+          )}
+        </div>          <Link to="/get-started" className="btn btn-primary w-100">Get Started</Link>
         </div>
       </div>
     </nav>

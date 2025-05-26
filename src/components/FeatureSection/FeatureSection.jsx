@@ -14,7 +14,7 @@ export default function FeaturesSection() {
       <div className="container">
         <div className="row">
           <div className="col-lg-5">
-        <h5 className="heading-2  mb-5">
+        <h5 className="heading-3  mb-5">
           Trusted by Leading Trading Platforms and Financial Institutions
         </h5>
         </div>

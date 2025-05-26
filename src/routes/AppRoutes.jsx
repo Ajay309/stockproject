@@ -4,7 +4,7 @@ import React from 'react'
 import Home from '../pages/Home';
 import Dashboard from '../pages/Dashboard';
 import Login from '../pages/Login';
-import Plans from '../pages/plans';
+import Plans from '../pages/Plans';
 import ContactUs from '../pages/ContactUs';
 import AboutUS from '../pages/AboutUs';
 import Blogs from '../pages/Blogs';

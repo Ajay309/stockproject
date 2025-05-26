@@ -13,7 +13,7 @@ export default function Navbar() {
 
   return (
     <nav className="navbar navbar-expand-lg position-fixed w-100 z-1  navbar-light bg-white shadow-sm py-1 px-3 px-lg-5" style={navbarOffsetStyle}>
-      <Link className="navbar-brand fw-bold text-primary" to="/">📈 StockApp</Link>
+      <Link className="navbar-brand fw-bold text-primary" to="/"><img src="/assets/logos/PNG-Logo.png" className='img-fluid' style={{ width: '100px' }}alt="" /></Link>
       <button
         className="navbar-toggler"
         type="button"
@@ -28,7 +28,7 @@ export default function Navbar() {
 
       <div className="collapse navbar-collapse" id="navbarNav">
         {/* Navigation Links */}
-        <ul className="navbar-nav gap-2">
+        <ul className="navbar-nav gap-2 mx-auto me-4">
           <li className="nav-item">
             <Link className={`nav-link ${location.pathname === '/' ? 'active-link' : ''}`} to="/">Home</Link>
           </li>
@@ -60,7 +60,7 @@ export default function Navbar() {
         </ul>
 
         {/* Desktop view: right-aligned */}
-        <div className="ms-auto d-none d-lg-flex flex-column flex-lg-row justify-content-end gap-2 gap-lg-4 mt-3 mt-lg-0">
+        <div className="ms-auto border-start d-none d-lg-flex flex-column flex-lg-row justify-content-end gap-2 gap-lg-4 mt-3 mt-lg-0">
 <div className="d-flex">
           {userEmail ? (
             <>

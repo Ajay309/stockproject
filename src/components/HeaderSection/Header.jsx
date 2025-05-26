@@ -25,14 +25,7 @@ export default function HeaderSection() {
           <section className="py-4 rounded-3 mt-3" style={{ width: '100%', maxWidth: '100%' }}>
         <div className="container text-center">
           <div className="ratio ratio-16x9 rounded-4 shadow-lg overflow-hidden">
-            <iframe
-              className="video-iframe"
-              src="https://fast.wistia.net/embed/iframe/e63ziqkf6i?fitStrategy=cover&muted=false&autoPlay=muted&playPauseNotifier=true&playButton=true&fullscreenButton=true&playSuspendedOffScreen=true"
-              title="Work Management Video"
-              frameBorder="0"
-              allow="autoplay; fullscreen"
-              allowFullScreen
-            ></iframe>
+           <img src="/assets/images/istockphoto-1487894858-612x612.jpg" alt="" />
           </div>
         </div>
       </section>

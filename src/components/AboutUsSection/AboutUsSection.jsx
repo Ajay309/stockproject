@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import './AboutUsSection.css'; // Import your CSS file for styling
 import { section } from 'framer-motion/client';
@@ -15,7 +16,7 @@ const AboutUsSection = () => {
             <h1 className="display-4 text-white fw-bold mb-4">About Our Company</h1>
             <p className="lead mb-4">We're a passionate team dedicated to creating innovative solutions that make a difference in people's lives.</p>
             <button className="btn btn-light btn-lg px-4 me-2">Our Services</button>
-            <button className="btn btn-outline-light btn-lg px-4">Contact Us</button>
+            <Link to="/contact-us" className="btn btn-outline-light btn-lg px-4">Contact Us</Link>
           </div>
           <div className="col-lg-6 animate delay-1">
             <svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg" className="img-fluid">

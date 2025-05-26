@@ -3,12 +3,16 @@ import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css'; // optional for custom styling
 import { useAuth } from '../../context/AuthContext';
 
+const navbarOffsetStyle = {
+  marginTop: '40px' // Height of the notification bar
+};
+
 export default function Navbar() {
   const location = useLocation();
   const { userEmail, logout } = useAuth();
 
   return (
-    <nav className="navbar navbar-expand-lg position-fixed w-100 z-1  navbar-light bg-white shadow-sm py-1 px-3 px-lg-5">
+    <nav className="navbar navbar-expand-lg position-fixed w-100 z-1  navbar-light bg-white shadow-sm py-1 px-3 px-lg-5" style={navbarOffsetStyle}>
       <Link className="navbar-brand fw-bold text-primary" to="/">📈 StockApp</Link>
       <button
         className="navbar-toggler"

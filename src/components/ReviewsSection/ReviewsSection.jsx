@@ -55,7 +55,7 @@ const ReviewsSection = () => {
 
   return (
     <div className="container my-5">
-        <h2 className="heading-1 mb-2  display-4 text-start text-black">What Our Customers Say</h2>
+        <h2 className="heading-1 mb-2 display-3 text-start text-black">What Our Customers Say</h2>
          <button className="btn btn-primary rounded-pill mb-5">
                   See All Case Study
                 </button>

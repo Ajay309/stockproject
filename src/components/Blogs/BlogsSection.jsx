@@ -4,6 +4,8 @@ import ReactPaginate from 'react-paginate';
 import api from '../../api';
 import './BlogsSection.css';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 
 const BlogsSection = () => {
@@ -12,9 +14,14 @@ const BlogsSection = () => {
   const blogsPerPage = 3;
   const pageCount = Math.ceil(blogs.length / blogsPerPage);
 
+const navigate = useNavigate();
+const handleReadMore = (blog) => {
+  navigate(`/blogs/${blog.id}`, { state: { blog } });
+};
+
   
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/v1/blog')
+    axios.get('https://dtc.sinfode.com/api/v1/blog')
       .then(response => {
         console.log(response.data.data);
         setBlogs(response.data.data); // assuming API returns { data: [...] }
@@ -46,7 +53,12 @@ const BlogsSection = () => {
                 <h5 className="card-title">{blog.name}</h5>
                 <p className="card-text text-muted small">{blog.created_at}</p>
                 <p className="card-text">{blog.blog_key}</p>
-                <button className="btn btn-primary rounded-pill">Read More</button>
+                <button
+  className="btn btn-primary rounded-pill"
+  onClick={() => handleReadMore(blog)}
+>
+  Read More
+</button>
               </div>
             </div>
           </div>

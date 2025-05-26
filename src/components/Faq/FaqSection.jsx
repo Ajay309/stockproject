@@ -5,7 +5,7 @@ const FaqSection = () => {
   const [faqs, setFaqs] = useState([]);
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/v1/faq-data')
+    axios.get('https://dtc.sinfode.com/api/v1/faq-data')
       .then(response => {
         setFaqs(response.data.data); // assuming API returns { data: [...] }
       })

@@ -9,6 +9,8 @@ import ContactUs from '../pages/ContactUs';
 import AboutUS from '../pages/AboutUs';
 import Blogs from '../pages/Blogs';
 import PurchaseForm from '../pages/Purchase'; // ✅ Importing the new PurchaseForm component
+import BlogDetail from '../pages/BlogDetail';
+
 export default function AppRoutes() {
   return (
     <Routes>
@@ -19,7 +21,9 @@ export default function AppRoutes() {
       <Route path="/blogs" element={<Blogs />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/purchase" element={<PurchaseForm />} /> {/* ✅ New route */}
+      <Route path="/purchase" element={<PurchaseForm />} />
+      <Route path="/blogs/:id" element={<BlogDetail />} />
+ {/* ✅ New route */}
 
     </Routes>
   );

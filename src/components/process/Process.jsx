@@ -91,8 +91,8 @@ export default function Process() {
       <div className=" mb-5">
         <div className="row">
         <div className="col-lg-6">
-        <h2 className="  heading-3">
-          See how Asana keeps work moving across use cases
+        <h2 className="heading-3">
+          How DTC Club Keeps Work Moving
         </h2>
         </div>
       </div>

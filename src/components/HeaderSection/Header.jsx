@@ -7,10 +7,10 @@ export default function HeaderSection() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="container-fluid bg-black py-5 mt-5">
+      <section className="container-fluid bg-black py-5 ">
         <div className="row  py-5 justify-content-center align-items-center">
           <div className="col-lg-8 text-center text-lg-start">
-            <h1 className="display-4  text-center text-white mb-3">
+            <h1 className="display-4 pt-5  text-center text-white mb-3">
             MAKE YOUR <span className='text-warning'> TRADING </span>BETTER
             </h1>
             <p className="lead text-white mb-4 text-center ">

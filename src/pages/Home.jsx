@@ -5,7 +5,7 @@ import Process from '../components/process/Process';
 import FaqSection from '../components/Faq/FaqSection';
 import ReviewsSection from '../components/ReviewsSection/ReviewsSection';
 import Footer from '../components/Footer/Footer';
-
+import EnquiryForm from './EnquiryForm';
 
 export default function Home() {
   return (
@@ -23,7 +23,7 @@ export default function Home() {
     <div className="container-fluid py-3">
       <FaqSection/>
     </div>
-   
+    <EnquiryForm/>
     <Footer/>
     </>
   );

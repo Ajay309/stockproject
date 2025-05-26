@@ -72,7 +72,7 @@ const ContactUsSection = () => {
                                     <input type="email" name="email" className="form-control mb-3" placeholder="Your Email" value={formData.email} onChange={handleChange} required />
                                 </div>
                             </div>
-                            <input type="text" name="subject" className="form-control mb-3" placeholder="Subject" value={formData.subject} onChange={handleChange} />
+                            <input type="text" name="phone number" className="form-control mb-3" placeholder="Phone Number" value={formData.subject} onChange={handleChange} />
                             <textarea name="message" className="form-control mb-3" rows="5" placeholder="Your Message" value={formData.message} onChange={handleChange} required></textarea>
                             <button type="submit" className="btn btn-primary w-100">Send Message</button>
                         </form>

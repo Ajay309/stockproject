@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Footer.css';
 
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa';
@@ -9,13 +10,13 @@ const Footer = () => {
       <div className="container">
         <h1 className="px-5 py-4 mb-4 mb-4 heading-10 text-center">The only platform that can support your company at any scale</h1>
         <div className="button-footer">
-        <button variant="light" className="btn-lg fw-semibold rounded-pill px-5 py-3 mb-4">
-          Get started
-        </button>
+          <Link to="/get-started" className="btn btn-light btn-lg fw-semibold rounded-pill px-5 py-3 mb-4">
+            Get started
+          </Link>
         </div>
         <p className="footer-text text-start small">
           1. Accurate as of December 2023, includes free and paid users.<br />
-          2. See the 2024 Gartner® Magic Quadrant™ for Collaborative Work Management (CWM). GARTNER is a registered trademark and service mark of Gartner, Inc. and/or its affiliates in the U.S. and internationally, MAGIC QUADRANT and PEER INSIGHTS are registered trademarks and The GARTNER PEER INSIGHTS CUSTOMERS’ CHOICE badge is a trademark and service mark of Gartner, Inc. and/or its affiliates and is used herein with permission. All rights reserved.<br />
+          2. See the 2024 Gartner® Magic Quadrant™ for Collaborative Work Management (CWM). GARTNER is a registered trademark and service mark of Gartner, Inc. and/or its affiliates in the U.S. and internationally, MAGIC QUADRANT and PEER INSIGHTS are registered trademarks and The GARTNER PEER INSIGHTS CUSTOMERS' CHOICE badge is a trademark and service mark of Gartner, Inc. and/or its affiliates and is used herein with permission. All rights reserved.<br />
           3. See The Forrester Wave™: Collaborative Work Management Tools, Q4 2022 report. The Forrester Wave is copyrighted by Forrester Research, Inc. Forrester and its affiliates, and is used herein with permission. All rights reserved.
         </p>
         <div className="floating-btn position-fixed rounded-circle bg-white d-flex align-items-center justify-content-center shadow" style={{ bottom: '30px', right: '30px', width: '60px', height: '60px' }}>

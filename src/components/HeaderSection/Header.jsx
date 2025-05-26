@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Home.css'; // Optional for custom styles
 
 
@@ -17,8 +18,8 @@ export default function HeaderSection() {
               Empower your trading with our easy-to-use platform.
             </p>
             <div className="d-flex justify-content-center justify-content-lg-center gap-3">
-              <button className="btn btn-outline-warning  btn-lg px-4 rounded-pill">View Plans</button>
-              <button className="btn btn-warning btn-lg px-4 rounded-pill">Get Started</button> 
+              <Link to="/plans" className="btn btn-outline-warning btn-lg px-4 rounded-pill">View Plans</Link>
+              <Link to="/get-started" className="btn btn-warning btn-lg px-4 rounded-pill">Get Started</Link>
             </div>
           </div>
           <section className="py-4 rounded-3 mt-3" style={{ width: '100%', maxWidth: '100%' }}>

@@ -16,7 +16,7 @@ const FaqSection = () => {
 
   return (
     <div className="container py-5">
-      <h2 className="mb-4">Frequently Asked Questions</h2>
+      <h2 className="heading-3 mb-4">Frequently Asked Questions</h2>
       <div className="accordion" id="faqAccordion">
         {faqs.map((faq, index) => (
           <div className="accordion-item" key={index}>

@@ -43,7 +43,7 @@ const handleReadMore = (blog) => {
 
   return (
     <div className="container py-5">
-      <h2 className="display-4 mb-4 text-start text-black">Our Blogs</h2>
+      <h2 className="display-4 heading-3 mb-4 text-start text-black">Our Blogs</h2>
       <div className="row">
         {currentBlogs.map((blog, index) => (
           <div key={index} className="col-md-4 mb-4">

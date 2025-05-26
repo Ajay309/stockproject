@@ -13,7 +13,7 @@ export default function FeaturesSection() {
     <section className="features-section">
       <div className="container">
         <div className="row">
-          <div className="col-lg-8">
+          <div className="col-lg-12">
         <h5 className="heading-3  mb-5">
           Trusted Leading Trading Platforms
         </h5>

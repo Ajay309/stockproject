@@ -10,7 +10,7 @@ import EnquiryForm from './EnquiryForm';
 export default function Home() {
   return (
     <>
-    <div className="">
+    <div className="mt-5">
     <HeaderSection/>
     </div>
     <FeaturesSection/>

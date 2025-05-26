@@ -7,7 +7,7 @@ export default function HeaderSection() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="container-fluid bg-black py-5">
+      <section className="container-fluid bg-black py-5 mt-5">
         <div className="row  py-5 justify-content-center align-items-center">
           <div className="col-lg-8 text-center text-lg-start">
             <h1 className="display-4  text-center text-white mb-3">

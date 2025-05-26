@@ -15,7 +15,7 @@ export default function FeaturesSection() {
         <div className="row">
           <div className="col-lg-8">
         <h5 className="heading-3  mb-5">
-          Trusted by Leading Trading Platforms and Financial Institutions
+          Trusted Leading Trading Platforms
         </h5>
         </div>
         <div className="logo-slider">

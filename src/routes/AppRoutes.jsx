@@ -8,6 +8,9 @@ import Plans from '../pages/Plans';
 import ContactUs from '../pages/ContactUs';
 import AboutUS from '../pages/AboutUs';
 import Blogs from '../pages/Blogs';
+import GetStarted from '../pages/GetStarted';
+import BlogDetail from '../pages/BlogDetail'; // ✅ Importing the BlogDetails component
+
 import PurchaseForm from '../pages/Purchase'; // ✅ Importing the new PurchaseForm component
 export default function AppRoutes() {
   return (
@@ -17,9 +20,12 @@ export default function AppRoutes() {
       <Route path="/contact-us" element={<ContactUs />} />
       <Route path="/about-us" element={<AboutUS />} />
       <Route path="/blogs" element={<Blogs />} />
+      <Route path="/blogs/:blogId" element={<BlogDetail/>} /> {/* Dynamic route for blog details */}
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/login" element={<Login />} />
       <Route path="/purchase" element={<PurchaseForm />} /> {/* ✅ New route */}
+      <Route path="/get-started" element={<GetStarted/>} />
+
 
     </Routes>
   );

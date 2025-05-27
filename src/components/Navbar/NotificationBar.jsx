@@ -4,7 +4,7 @@ import axios from 'axios';
 const notificationBarStyle = {
   width: '100%',
   background: '#fffae6',
-  color: '#000000',
+  color: '#856404',
   padding: '8px 0',
   textAlign: 'center',
   fontSize: '0.95rem',

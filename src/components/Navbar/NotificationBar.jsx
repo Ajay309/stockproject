@@ -19,7 +19,7 @@ export default function NotificationBar() {
   const [notification, setNotification] = useState('');
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/v1/notification')
+    axios.get('http://dtc.sinfode.com/api/v1/notification')
       .then(response => {
         console.log(response.data.data);
         setNotification(response.data.data); // assuming API returns { data: [...] }

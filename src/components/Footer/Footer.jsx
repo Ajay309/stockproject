@@ -15,10 +15,28 @@ const Footer = () => {
           </Link>
         </div>
         <p className="footer-text text-start small">
-          1. Accurate as of December 2023, includes free and paid users.<br />
-          2. See the 2024 Gartner® Magic Quadrant™ for Collaborative Work Management (CWM). GARTNER is a registered trademark and service mark of Gartner, Inc. and/or its affiliates in the U.S. and internationally, MAGIC QUADRANT and PEER INSIGHTS are registered trademarks and The GARTNER PEER INSIGHTS CUSTOMERS' CHOICE badge is a trademark and service mark of Gartner, Inc. and/or its affiliates and is used herein with permission. All rights reserved.<br />
-          3. See The Forrester Wave™: Collaborative Work Management Tools, Q4 2022 report. The Forrester Wave is copyrighted by Forrester Research, Inc. Forrester and its affiliates, and is used herein with permission. All rights reserved.
-        </p>
+        Trading is risky and many will lose money in connection with trading activities. All content on this site is not intended to, and should not be, construed as financial advice. Decisions to buy, sell, hold, or trade in securities, commodities, and other markets involve risk and are best made based on the advice of qualified financial professionals. Past performance does not guarantee future results.
+  </p>
+
+  <p>
+    Hypothetical or simulated performance results have certain limitations. Unlike an actual performance record, simulated results do not represent actual trading. Also, since the trades have not been executed, the results may have under- or over-compensated for the impact, if any, of certain market factors, including, but not limited to, lack of liquidity. Simulated trading programs, in general, are designed with the benefit of hindsight and are based on historical information. No representation is being made that any account will or is likely to achieve profits or losses similar to those shown.
+  </p>
+
+  <p>
+    Testimonials appearing on this website may not be representative of other clients or customers and are not a guarantee of future performance or success.
+  </p>
+
+  <p>
+    As a provider of technical analysis tools for charting platforms, DTC Trading Club does not have access to the personal trading accounts or brokerage statements of its customers. As a result, we have no reason to believe our customers perform better or worse than traders as a whole based on any content or tool we provide.
+  </p>
+
+  <p>
+    Charts used on this site are by TradingView®, on which the majority of our tools are built. TradingView® is a registered trademark of TradingView, Inc. www.TradingView.com. TradingView® has no affiliation with the owner, developer, or provider of the services described herein.
+  </p>
+
+  <p>
+    This does not represent our full disclaimer. Please read our full disclaimer.
+  </p>
         <div className="floating-btn position-fixed rounded-circle bg-white d-flex align-items-center justify-content-center shadow" style={{ bottom: '30px', right: '30px', width: '60px', height: '60px' }}>
           <img src="/path/to/icon.png" alt="Floating Button" width="30" height="30" />
         </div> 
@@ -32,7 +50,7 @@ const Footer = () => {
             <li><a href="/privacy" className="hover:text-white transition">Privacy Policy</a></li>
             <li><a href="/terms" className="hover:text-white transition">Terms of Service</a></li>
             <li><a href="/security" className="hover:text-white transition">Security</a></li>
-            <li><a href="/status" className="hover:text-white transition">Status</a></li>
+            {/* <li><a href="/status" className="hover:text-white transition">Status</a></li> */}
           </li>
           <li><a href="/about" className="hover:text-white transition">Plans</a>
             <li><a href="/features" className="hover:text-white transition">Features</a></li>

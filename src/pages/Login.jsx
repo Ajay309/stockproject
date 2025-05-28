@@ -1,19 +1,17 @@
-// LoginWithOtp.jsx
-import React, { useState  } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // ✅ add this
-import { useAuth } from '../context/AuthContext'; // ✅ import AuthContext
-
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
-  const [step, setStep] = useState(1); // 1 = email step, 2 = OTP step
+  const [step, setStep] = useState(1);
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
-const { login } = useAuth(); // ⬅️ Add this inside the component
+  const { login } = useAuth();
 
-    const navigate = useNavigate(); // ✅ initialize
+  const navigate = useNavigate();
 
   const handleSendOtp = async () => {
     setLoading(true);
@@ -27,25 +25,46 @@ const { login } = useAuth(); // ⬅️ Add this inside the component
     setLoading(false);
   };
 
- const handleVerifyOtp = async () => {
-  setLoading(true);
-  try {
-    const res = await axios.post('http://127.0.0.1:8000/api/v1/verify-otp', { email, otp });
-    localStorage.setItem('auth_token', res.data.token);
-    login(email); // ✅ Save email globally
-    setMessage('✅ Logged in successfully!');
-    setTimeout(() => navigate('/'), 1000);
-  } catch (err) {
-    setMessage(err.response?.data?.message || 'OTP verification failed');
-  }
-  setLoading(false);
-};
-
+  const handleVerifyOtp = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.post('http://127.0.0.1:8000/api/v1/verify-otp', { email, otp });
+      localStorage.setItem('auth_token', res.data.token);
+      login(email);
+      setMessage('✅ Logged in successfully!');
+      setTimeout(() => navigate('/'), 1000);
+    } catch (err) {
+      setMessage(err.response?.data?.message || 'OTP verification failed');
+    }
+    setLoading(false);
+  };
 
   return (
-    <div className="container d-flex align-items-center justify-content-center min-vh-100 bg-light">
-      <div className="card shadow p-4" style={{ maxWidth: '400px', width: '100%' }}>
-        <h4 className="text-center mb-3 text-primary">{step === 1 ? 'Login via Email' : 'Verify OTP'}</h4>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+        width: '100vw',
+        backgroundColor: '#f8f9fa', // light background
+        padding: '20px',
+        boxSizing: 'border-box',
+      }}
+    >
+      <div
+        className="card shadow p-4"
+        style={{
+          maxWidth: '400px',
+          width: '100%',
+          borderRadius: '12px',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+          backgroundColor: '#fff',
+        }}
+      >
+        <h4 className="text-center mb-3 text-primary">
+          {step === 1 ? 'Login via Email' : 'Verify OTP'}
+        </h4>
 
         {step === 1 ? (
           <>
@@ -56,7 +75,7 @@ const { login } = useAuth(); // ⬅️ Add this inside the component
                 className="form-control"
                 placeholder="Enter your email"
                 value={email}
-                onChange={e => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <button
@@ -76,7 +95,7 @@ const { login } = useAuth(); // ⬅️ Add this inside the component
                 className="form-control"
                 placeholder="Enter OTP"
                 value={otp}
-                onChange={e => setOtp(e.target.value)}
+                onChange={(e) => setOtp(e.target.value)}
               />
             </div>
             <button

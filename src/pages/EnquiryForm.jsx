@@ -25,63 +25,165 @@ export default function EnquiryForm() {
   const [form, setForm] = useState({
     name: '',
     email: '',
-    phone: '',
-    enquiryType: '',
+    phone_number: '',
     message: '',
-    preferredContact: '',
     agree: false
   });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setForm((prev) => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.agree) {
       alert('You must agree to the terms and privacy policy.');
       return;
     }
-    setSubmitted(true);
-    // Here you can add your API call or logic
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch('https://dtc.sinfode.com/api/v1/contact-us', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone_number: form.phone_number,
+          message: form.message
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Something went wrong');
+      }
+
+      setSubmitted(true);
+      setForm({
+        name: '',
+        email: '',
+        phone_number: '',
+        message: '',
+        agree: false
+      });
+    } catch (err) {
+      setError(err.message || 'Failed to submit form. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (submitted) {
     return (
-      <div style={{ marginTop: 40, textAlign: 'center', color: '#28a745' }}>
-        <div style={{ fontSize: 48, marginBottom: 12 }}>✅</div>
-        <div style={{ fontSize: 20, fontWeight: 500 }}>Thank you for your enquiry!</div>
-        <div style={{ marginTop: 8, color: '#444' }}>We will get back to you soon.</div>
+      <div style={{
+        maxWidth: 1150,
+        margin: '60px auto',
+        padding: '40px 20px',
+        borderRadius: 0,
+        boxShadow: '0 8px 32px rgba(0,0,0,0.10)',
+        background: 'linear-gradient(135deg, #f8fafc 60%, #e3f0ff 100%)',
+        textAlign: 'center'
+      }}>
+        <div style={{ 
+          padding: '40px 20px 20px 20px', 
+          textAlign: 'center', 
+          background: '#f6b40e', 
+          color: '#fff',
+          marginBottom: '20px'
+        }}>
+          <div style={{ fontSize: 32, fontWeight: 700, letterSpacing: 1, marginBottom: '10px' }}>Thank You!</div>
+          <div style={{ fontSize: 16, opacity: 0.95, maxWidth: '600px', margin: '0 auto' }}>Your enquiry has been received. We will get back to you soon.</div>
+        </div>
+        <div style={{ padding: '20px' }}>
+          <div style={{ 
+            width: '80px', 
+            height: '80px', 
+            margin: '0 auto 20px',
+            background: '#f6b40e',
+            borderRadius: '50%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <i className="bi bi-check-lg" style={{ fontSize: '40px', color: '#fff' }}></i>
+          </div>
+          <p style={{ color: '#666', fontSize: '16px', marginBottom: '20px' }}>We appreciate your interest in our services.</p>
+          <button 
+            onClick={() => setSubmitted(false)}
+            style={{
+              padding: '12px 30px',
+              background: '#f6b40e',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '6px',
+              fontWeight: 600,
+              cursor: 'pointer',
+              transition: 'all 0.3s ease'
+            }}
+            onMouseOver={e => {
+              e.target.style.background = '#e6a800';
+              e.target.style.transform = 'translateY(-2px)';
+              e.target.style.boxShadow = '0 4px 12px #f6b40e';
+            }}
+            onMouseOut={e => {
+              e.target.style.background = '#f6b40e';
+              e.target.style.transform = 'translateY(0)';
+              e.target.style.boxShadow = 'none';
+            }}
+          >
+            Send Another Enquiry
+          </button>
+        </div>
       </div>
     );
   }
 
   return (
     <div style={{
-      maxWidth: 800,
+      maxWidth: 1150,
       margin: '60px auto',
       padding: '0 20px',
-      borderRadius: 16,
+      borderRadius: 0,
       boxShadow: '0 8px 32px rgba(0,0,0,0.10)',
       background: 'linear-gradient(135deg, #f8fafc 60%, #e3f0ff 100%)',
       overflow: 'hidden',
     }}>
       <div style={{ 
-        padding: '40px 40px 20px 40px', 
+        padding: '40px 20px 20px 20px', 
         textAlign: 'center', 
         background: 'linear-gradient(90deg, #f6b40e 0%, #ffc107 100%)', 
-        color: '#fff',
+        color: '#rgb(255, 255, 255, 0.9)',
         marginBottom: '20px'
       }}>
         <div style={{ fontSize: 32, fontWeight: 700, letterSpacing: 1, marginBottom: '10px' }}>Enquiry Form</div>
         <div style={{ fontSize: 16, opacity: 0.95, maxWidth: '600px', margin: '0 auto' }}>Have a question or need help? Fill out the form below and our team will respond.</div>
       </div>
-      <form onSubmit={handleSubmit} style={{ padding: '0 40px 40px 40px' }}>
+      <form onSubmit={handleSubmit} style={{ padding: '0 20px 40px 20px' }}>
+        {error && (
+          <div style={{ 
+            padding: '12px', 
+            marginBottom: '20px', 
+            backgroundColor: '#fee2e2', 
+            border: '1px solid #ef4444',
+            borderRadius: '6px',
+            color: '#dc2626'
+          }}>
+            {error}
+          </div>
+        )}
         <div style={{ 
           display: 'grid', 
-          gridTemplateColumns: 'repeat(2, 1fr)', 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', 
           gap: '20px',
           marginBottom: '20px'
         }}>
@@ -117,47 +219,21 @@ export default function EnquiryForm() {
               onBlur={e => e.target.style.border = '1.5px solid #bcd0ee'}
             />
           </div>
-        </div>
-
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(2, 1fr)', 
-          gap: '20px',
-          marginBottom: '20px'
-        }}>
           <div>
-            {/* <label style={{ fontWeight: 500, fontSize: 15, display: 'block', marginBottom: 8 }}>
-              <span style={iconStyle}></span>Phone Number <span style={{ color: '#888', fontSize: '0.85em' }}>(Optional)</span>
+            <label style={{ fontWeight: 500, fontSize: 15, display: 'block', marginBottom: 8 }}>
+              <span style={iconStyle}></span>Phone Number
             </label>
             <input
               type="tel"
-              name="phone"
-              value={form.phone}
-              onChange={handleChange}
-              style={{ width: '100%', padding: '12px 14px', borderRadius: 6, border: '1.5px solid #bcd0ee', fontSize: 16, outline: 'none', transition: 'border 0.2s', boxSizing: 'border-box' }}
-              placeholder="For urgent contact or WhatsApp"
-              onFocus={e => e.target.style.border = '1.5px solid #f6b40e'}
-              onBlur={e => e.target.style.border = '1.5px solid #bcd0ee'}
-            /> */}
-          </div>
-          <div>
-            {/* <label style={{ fontWeight: 500, fontSize: 15, display: 'block', marginBottom: 8 }}>
-              <span style={iconStyle}></span>Type of Enquiry / Subject
-            </label> */}
-            {/* <select
-              name="enquiryType"
-              value={form.enquiryType}
+              name="phone_number"
+              value={form.phone_number}
               onChange={handleChange}
               required
-              style={{ width: '100%', padding: '12px 14px', borderRadius: 6, border: '1.5px solid #bcd0ee', fontSize: 16, outline: 'none', transition: 'border 0.2s', boxSizing: 'border-box', background: '#fff' }}
+              style={{ width: '100%', padding: '12px 14px', borderRadius: 6, border: '1.5px solid #bcd0ee', fontSize: 16, outline: 'none', transition: 'border 0.2s', boxSizing: 'border-box' }}
+              placeholder="Your Phone Number"
               onFocus={e => e.target.style.border = '1.5px solid #f6b40e'}
               onBlur={e => e.target.style.border = '1.5px solid #bcd0ee'}
-            >
-              <option value="">Select</option>
-              {ENQUIRY_TYPES.map((type) => (
-                <option key={type} value={type}>{type}</option>
-              ))}
-            </select> */}
+            />
           </div>
         </div>
 
@@ -178,32 +254,14 @@ export default function EnquiryForm() {
           />
         </div>
 
-        <div style={{ marginBottom: '20px' }}>
-          {/* <label style={{ fontWeight: 500, fontSize: 15, display: 'block', marginBottom: 8 }}>
-            <span style={iconStyle}></span>Preferred Contact Method <span style={{ color: '#888', fontSize: '0.85em' }}>(Optional)</span>
-          </label> */}
-          {/* <select
-            name="preferredContact"
-            value={form.preferredContact}
-            onChange={handleChange}
-            style={{ width: '100%', padding: '12px 14px', borderRadius: 6, border: '1.5px solid #bcd0ee', fontSize: 16, outline: 'none', transition: 'border 0.2s', boxSizing: 'border-box', background: '#fff' }}
-            onFocus={e => e.target.style.border = '1.5px solid #f6b40e'}
-            onBlur={e => e.target.style.border = '1.5px solid #bcd0ee'}
-          >
-            <option value="">Select</option>
-            {CONTACT_METHODS.map((method) => (
-              <option key={method} value={method}>{method}</option>
-            ))}
-          </select> */}
-        </div>
-
         <div style={{ 
           marginBottom: '25px', 
           display: 'flex', 
           alignItems: 'center',
           backgroundColor: '#f8f9fa',
           padding: '15px',
-          borderRadius: '8px'
+          borderRadius: '8px',
+          flexWrap: 'wrap'
         }}>
           <input
             type="checkbox"
@@ -220,32 +278,37 @@ export default function EnquiryForm() {
 
         <button
           type="submit"
+          disabled={loading}
           style={{
             width: '100%',
             padding: '15px 0',
             background: 'linear-gradient(90deg, #f6b40e 0%, #ffc107 100%)',
-            color: '#fff',
+            color: '#rgb(255, 255, 255, 0.9)',
             border: 'none',
             borderRadius: 8,
             fontWeight: 600,
             fontSize: 17,
             letterSpacing: 0.5,
-            boxShadow: '0 2px 8px #f6b40e',
-            cursor: 'pointer',
+            cursor: loading ? 'not-allowed' : 'pointer',
+            opacity: loading ? 0.7 : 1,
             transition: 'all 0.3s ease',
           }}
           onMouseOver={e => {
-            e.target.style.background = 'linear-gradient(90deg, #e6a800 0%, #e6c200 100%)';
-            e.target.style.transform = 'translateY(-2px)';
-            e.target.style.boxShadow = '0 4px 12px #f6b40e';
+            if (!loading) {
+              e.target.style.background = 'linear-gradient(90deg, #e6a800 0%, #e6c200 100%)';
+              e.target.style.transform = 'translateY(-2px)';
+              e.target.style.boxShadow = '0 4px 12px #f6b40e';
+            }
           }}
           onMouseOut={e => {
-            e.target.style.background = 'linear-gradient(90deg, #f6b40e 0%, #ffc107 100%)';
-            e.target.style.transform = 'translateY(0)';
-            e.target.style.boxShadow = '0 2px 8px #f6b40e';
+            if (!loading) {
+              e.target.style.background = 'linear-gradient(90deg, #f6b40e 0%, #ffc107 100%)';
+              e.target.style.transform = 'translateY(0)';
+              e.target.style.boxShadow = '0 2px 8px #f6b40e';
+            }
           }}
         >
-          Submit Enquiry
+          {loading ? 'Submitting...' : 'Submit Enquiry'}
         </button>
       </form>
     </div>

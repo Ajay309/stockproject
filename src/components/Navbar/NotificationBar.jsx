@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 
 const notificationBarStyle = {
   width: '100%',
@@ -12,10 +11,11 @@ const notificationBarStyle = {
   position: 'fixed',
   top: 0,
   left: 0,
-  zIndex: 1051, // just above the navbar
+  zIndex: 1051 // just above the navbar
 };
 
 export default function NotificationBar() {
+<<<<<<< HEAD
   const [notification, setNotification] = useState('');
 
   useEffect(() => {
@@ -33,12 +33,11 @@ export default function NotificationBar() {
   if (!notification) return null; // Hide if empty
 
  return (
+=======
+  return (
+>>>>>>> origin/master
     <div style={notificationBarStyle}>
-      {notification.map((note, index) => (
-        <span key={note.id || index} className="mx-2">
-          {note.name}
-        </span>
-      ))}
+      <span>🔔 Welcome! Check out our latest updates and offers.</span>
     </div>
   );
-}
+} 

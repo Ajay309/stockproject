@@ -26,7 +26,7 @@ export default function HeaderSection() {
         <div className="container text-center">
           <div className="ratio ratio-16x9 rounded-4 shadow-lg overflow-hidden">
            <img src="/assets/images/istockphoto-1487894858-612x612.jpg" alt="" />
-          </div>
+          </div>  
         </div>
       </section>
         </div>

@@ -8,7 +8,6 @@ export default function ContactUs ()  {
     <div className="container-fluid py-5">
     <ContactUsSection/>
         </div>
-
     <Footer/>
     </>
   )

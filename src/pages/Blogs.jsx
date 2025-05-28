@@ -9,7 +9,6 @@ export default function Blogs ()  {
     <>
     <div className="container-fluid py-5">
       <BlogsSection />
-
       </div>
     <Footer/>
     </>

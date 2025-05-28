@@ -19,6 +19,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({
     email: "ajay@example.com",
     phone: "9999999999",
+    
   });
 
   useEffect(() => {

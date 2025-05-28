@@ -8,7 +8,6 @@ const handleGetStarted = () => {
     navigate('/purchase', { state: { plan } }); // ✅ Passing plan to purchase page
   };
 
-  const [showForm, setShowForm] = useState(false);
 
   return (
     <>
@@ -24,14 +23,11 @@ const handleGetStarted = () => {
                   {plan.price}
                   <span className="price-period">{plan.duration}</span>
                 </div>
-                <p className="plan-description">{plan.features}</p>
               </div>
               <div className="divider"></div>
               <div className="pricing-card-body">
                 <ul className="feature-list">
-                  <li className={plan.features}>
-                    <i className={`fas ${plan.features}`}></i>
-                  </li>
+                  <div dangerouslySetInnerHTML={{ __html: plan.features }} />
                 </ul>
                 <button className='btn btn-primary' onClick={handleGetStarted}>Get Started</button>
 

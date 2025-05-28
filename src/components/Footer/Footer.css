@@ -1,9 +1,7 @@
-
-
 .heading-10{
     margin-top: 10px;
     font-size: 50px !important;
-    font-weight: 500;
+    font-weight: 700;
     margin-bottom: 30px;
     font-family: 'Ghost', sans-serif !important;
     text-wrap: balance !important;
@@ -30,7 +28,7 @@
     color: #ffffff !important;
     font-family: 'Ghost', sans-serif !important;
     font-size: 16px !important;
-    font-weight: 700 !important;
+    font-weight: 500 !important;
 }
 
 .footer-text{
@@ -47,4 +45,50 @@
         margin-top: 0px !important;
     }
    
+}
+
+/* Responsive adjustments for links section */
+@media (max-width: 768px) {
+    .footer-links-container {
+        flex-direction: column;
+        gap: 40px; /* Increased gap between stacked columns */
+        padding: 20px 15px; /* Added vertical padding */
+    }
+
+    .footer-links-column {
+        align-items: center;
+        min-width: 100%;
+        text-align: center;
+        margin-bottom: 0;
+    }
+
+    .footer-column-heading {
+      margin-bottom: 12px; /* Slightly adjusted margin below heading */
+      font-size: 18px; /* Keep font size consistent with larger breakpoint heading */
+    }
+
+    .footer-link {
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 20px 10px;
+  }
+
+  .footer-links-container {
+    padding: 15px 0; /* Adjusted vertical padding */
+    gap: 30px; /* Adjusted gap for smaller mobile screens */
+  }
+
+  .footer-column-heading {
+    font-size: 17px; /* Slightly adjusted heading size for smaller screen */
+  }
+
+  .footer-link {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
 }

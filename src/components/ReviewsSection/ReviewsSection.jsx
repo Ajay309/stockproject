@@ -62,7 +62,7 @@ const ReviewsSection = () => {
       ) : (
         <Slider {...sliderSettings}>
           {testimonials.map((testimonial, index) => (
-            <div key={index} className="review-slide bg-white ">
+            <div key={index} className="review-slide bg-white rounded ">
               <div className="row align-items-center">
                 {/* Left Section - Image and Info */}
                 <div className="col-md-4 text-center mb-4 mb-md-0 left-section">

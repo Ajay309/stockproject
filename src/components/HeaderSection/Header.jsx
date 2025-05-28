@@ -50,12 +50,30 @@ export default function HeaderSection() {
             </div>
           </div>
           <section className="py-4 rounded-3 mt-3" style={{ width: '100%', maxWidth: '100%' }}>
-        <div className="container text-center">
-          <div className="ratio ratio-16x9 rounded-4 shadow-lg overflow-hidden">
-           <img src="/assets/images/istockphoto-1487894858-612x612.jpg" alt="" />
-          </div>
-        </div>
-      </section>
+            <div className="container text-center">
+              <div className="ratio ratio-16x9 rounded-4 shadow-lg overflow-hidden">
+                {sliderImages.length > 0 ? (
+                  sliderImages.map((image, index) => (
+                    <img
+                      key={index}
+                      src={image}
+                      alt={`Slider ${index + 1}`}
+                      className={`slider-image ${index === currentIndex ? 'active' : ''}`}
+                      style={{
+                        display: index === currentIndex || index === (currentIndex - 1 + sliderImages.length) % sliderImages.length ? 'block' : 'none'
+                      }}
+                    />
+                  ))
+                ) : (
+                  <img
+                    src="/assets/images/istockphoto-1487894858-612x612.jpg"
+                    alt="Default Slider"
+                    className="slider-image active"
+                  />
+                )}
+              </div>
+            </div>
+          </section>
         </div>
       </section>
     </div>

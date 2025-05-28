@@ -27,7 +27,7 @@ const BlogDetails = () => {
       </p>
 
       <div className="fs-5" style={{ whiteSpace: 'pre-line' }}>
-        {blog.description}
+                  <div dangerouslySetInnerHTML={{ __html: blog.description }} />
       </div>
     </div>
   );

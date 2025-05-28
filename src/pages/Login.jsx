@@ -16,7 +16,7 @@ const Login = () => {
   const handleSendOtp = async () => {
     setLoading(true);
     try {
-      const res = await axios.post('http://127.0.0.1:8000/api/v1/send-otp', { email });
+      const res = await axios.post('https://dtc.sinfode.com/api/v1/send-otp', { email });
       setMessage(res.data.message);
       setStep(2);
     } catch (err) {
@@ -28,7 +28,7 @@ const Login = () => {
   const handleVerifyOtp = async () => {
     setLoading(true);
     try {
-      const res = await axios.post('http://127.0.0.1:8000/api/v1/verify-otp', { email, otp });
+      const res = await axios.post('https://dtc.sinfode.com/api/v1/send-otp', { email, otp });
       localStorage.setItem('auth_token', res.data.token);
       login(email);
       setMessage('✅ Logged in successfully!');

@@ -1,9 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const GetStarted = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
+  const [otp, setOtp] = useState('');
+  const [step, setStep] = useState(1); // 1: Enter email, 2: Enter OTP
+  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
   const googleCallback = useRef(null);
 
   useEffect(() => {
@@ -33,6 +38,38 @@ const GetStarted = () => {
     if (window.google && window.google.accounts && window.google.accounts.id) {
       window.google.accounts.id.prompt();
     }
+  };
+
+  const handleSendOtp = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  try {
+    const res = await axios.post('https://dtc.sinfode.com/api/v1/send-otp', { email });
+
+    if (res.data.already_registered) {
+      setMessage('Email already registered. Redirecting to login...');
+      setTimeout(() => navigate('/login'), 2000);
+    } else {
+      setMessage(res.data.message);
+      setStep(2);
+    }
+  } catch (err) {
+    setMessage(err.response?.data?.message || 'Failed to send OTP');
+  }
+  setLoading(false);
+};
+  const handleVerifyOtp = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const res = await axios.post('https://dtc.sinfode.com/api/v1/verify-otp', { email, otp });
+      localStorage.setItem('auth_token', res.data.token);
+      setMessage('✅ Logged in successfully!');
+      setTimeout(() => navigate('/'), 1000);
+    } catch (err) {
+      setMessage(err.response?.data?.message || 'OTP verification failed');
+    }
+    setLoading(false);
   };
 
   const containerStyle = {
@@ -169,42 +206,49 @@ const GetStarted = () => {
     width: '100%',
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!email) {
-      alert('Please enter your email address.');
-      return;
-    }
-    // Handle sign up logic here
-    console.log('Email submitted:', email);
-  };
-
   return (
     <div style={containerStyle}>
       <div style={headingStyle}>Welcome to Stock App</div>
       <div style={subheadingStyle}>To get started, please sign up</div>
+
       <button style={googleBtnStyle} onClick={handleGoogleSignIn}>
-        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style={{width: 26, marginRight: 12}} />
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style={{ width: 26, marginRight: 12 }} />
         Continue with Google
       </button>
+
       <div style={dividerStyle}>
         <div style={lineStyle}></div>
         <span style={orStyle}>or</span>
         <div style={lineStyle}></div>
       </div>
-      <form onSubmit={handleSubmit} style={formStyle}>
-        <label htmlFor="email" style={labelStyle}>Email address</label>
-        <input
-          id="email"
-          type="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          placeholder="Enter your email"
-          style={inputStyle}
-          required
-        />
-        <button 
-          type="submit" 
+
+      <form onSubmit={step === 1 ? handleSendOtp : handleVerifyOtp} style={formStyle}>
+        <label style={labelStyle}>{step === 1 ? 'Email address' : 'Enter OTP sent to your email'}</label>
+
+        {step === 1 ? (
+          <input
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            placeholder="Enter your email"
+            style={inputStyle}
+            required
+          />
+        ) : (
+          <>
+            <input
+              type="text"
+              value={otp}
+              onChange={e => setOtp(e.target.value)}
+              placeholder="Enter OTP"
+              style={inputStyle}
+              required
+            />
+          </>
+        )}
+
+        <button
+          type="submit"
           style={continueBtnStyle}
           onMouseOver={(e) => {
             e.target.style.background = 'linear-gradient(90deg, #e6a800 0%, #e6c200 100%)';
@@ -217,13 +261,16 @@ const GetStarted = () => {
             e.target.style.boxShadow = '0 2px 8px rgba(246, 180, 14, 0.3)';
           }}
         >
-          Continue
+          {loading ? 'Please wait...' : step === 1 ? 'Continue' : 'Verify OTP'}
         </button>
       </form>
+
+      {message && <p style={{ color: '#888', marginTop: 10 }}>{message}</p>}
+
       <div style={loginTextStyle}>
         Already have an account?{' '}
-        <span 
-          style={linkStyle} 
+        <span
+          style={linkStyle}
           onClick={() => navigate('/login')}
           onMouseOver={(e) => e.target.style.color = '#e6a800'}
           onMouseOut={(e) => e.target.style.color = '#f6b40e'}
@@ -231,22 +278,23 @@ const GetStarted = () => {
           Log in
         </span>
       </div>
+
       <div style={footerStyle}>
-        <span 
+        <span
           style={linkStyle}
           onMouseOver={(e) => e.target.style.color = '#e6a800'}
           onMouseOut={(e) => e.target.style.color = '#f6b40e'}
         >
           Support
-        </span>•
-        <span 
+        </span> •
+        <span
           style={linkStyle}
           onMouseOver={(e) => e.target.style.color = '#e6a800'}
           onMouseOut={(e) => e.target.style.color = '#f6b40e'}
         >
           Privacy
-        </span>•
-        <span 
+        </span> •
+        <span
           style={linkStyle}
           onMouseOver={(e) => e.target.style.color = '#e6a800'}
           onMouseOut={(e) => e.target.style.color = '#f6b40e'}

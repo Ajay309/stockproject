@@ -89,7 +89,7 @@ export default function EnquiryForm() {
         maxWidth: 1150,
         margin: '60px auto',
         padding: '40px 20px',
-        borderRadius: 0,
+        borderRadius: '0',
         boxShadow: '0 8px 32px rgba(0,0,0,0.10)',
         background: 'linear-gradient(135deg, #f8fafc 60%, #e3f0ff 100%)',
         textAlign: 'center'
@@ -152,8 +152,7 @@ export default function EnquiryForm() {
     <div style={{
       maxWidth: 1150,
       margin: '60px auto',
-      padding: '0 20px',
-      borderRadius: 0,
+      borderRadius: '16px',
       boxShadow: '0 8px 32px rgba(0,0,0,0.10)',
       background: 'linear-gradient(135deg, #f8fafc 60%, #e3f0ff 100%)',
       overflow: 'hidden',

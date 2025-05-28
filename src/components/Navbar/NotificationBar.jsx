@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const notificationBarStyle = {
   width: '100%',
@@ -20,20 +21,25 @@ export default function NotificationBar() {
   useEffect(() => {
     axios.get('https://dtc.sinfode.com/api/v1/notification')
       .then(response => {
-        console.log(response.data.data);
-        setNotification(response.data.data); // assuming API returns { data: [...] }
+        const data = response.data.data;
+
+        // Check if it's an array and has at least one item
+        if (Array.isArray(data) && data.length > 0) {
+          setNotification(data[0].name); // show first notification
+        } else if (typeof data === 'object' && data !== null) {
+          setNotification(data.name); // if it's a single object
+        }
       })
       .catch(error => {
-        console.error('Error fetching FAQs:', error);
+        console.error('Error fetching notification:', error);
       });
   }, []);
 
+  if (!notification) return null; // Hide bar if empty
 
-  if (!notification) return null; // Hide if empty
-
- return (
+  return (
     <div style={notificationBarStyle}>
-      <span>🔔 Welcome! Check out our latest updates and offers.</span>
+      <span>{notification}</span>
     </div>
   );
-} 
+}

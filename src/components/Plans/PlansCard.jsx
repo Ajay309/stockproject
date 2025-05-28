@@ -29,8 +29,9 @@ const handleGetStarted = () => {
                 <ul className="feature-list">
                   <div dangerouslySetInnerHTML={{ __html: plan.features }} />
                 </ul>
+                <div className="button d-flex justify-content-center">
                 <button className='btn btn-primary' onClick={handleGetStarted}>Get Started</button>
-
+</div>
               </div>
             </div>
           </div>

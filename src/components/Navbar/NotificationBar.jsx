@@ -15,7 +15,6 @@ const notificationBarStyle = {
 };
 
 export default function NotificationBar() {
-<<<<<<< HEAD
   const [notification, setNotification] = useState('');
 
   useEffect(() => {
@@ -33,9 +32,6 @@ export default function NotificationBar() {
   if (!notification) return null; // Hide if empty
 
  return (
-=======
-  return (
->>>>>>> origin/master
     <div style={notificationBarStyle}>
       <span>🔔 Welcome! Check out our latest updates and offers.</span>
     </div>

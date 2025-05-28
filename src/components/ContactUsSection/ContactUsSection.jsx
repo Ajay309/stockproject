@@ -7,7 +7,7 @@ const ContactUsSection = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        phone: '',
+        phone_number: '',
         message: ''
     });
     const [loading, setLoading] = useState(false);
@@ -30,7 +30,12 @@ const ContactUsSection = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({
+                    name: formData.name,
+                    email: formData.email,
+                    phone_number: formData.phone_number,
+                    message: formData.message
+                }),
             });
 
             const data = await response.json();
@@ -43,7 +48,7 @@ const ContactUsSection = () => {
             setFormData({
                 name: '',
                 email: '',
-                phone: '',
+                phone_number: '',
                 message: ''
             });
         } catch (err) {
@@ -185,10 +190,10 @@ const ContactUsSection = () => {
                             </div>
                             <input 
                                 type="tel" 
-                                name="phone" 
+                                name="phone_number" 
                                 className="form-control mb-3" 
                                 placeholder="Phone Number" 
-                                value={formData.phone} 
+                                value={formData.phone_number} 
                                 onChange={handleChange} 
                                 required 
                             />

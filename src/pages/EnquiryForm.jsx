@@ -25,7 +25,7 @@ export default function EnquiryForm() {
   const [form, setForm] = useState({
     name: '',
     email: '',
-    phone: '',
+    phone_number: '',
     message: '',
     agree: false
   });
@@ -57,7 +57,7 @@ export default function EnquiryForm() {
         body: JSON.stringify({
           name: form.name,
           email: form.email,
-          phone: form.phone,
+          phone_number: form.phone_number,
           message: form.message
         }),
       });
@@ -72,7 +72,7 @@ export default function EnquiryForm() {
       setForm({
         name: '',
         email: '',
-        phone: '',
+        phone_number: '',
         message: '',
         agree: false
       });
@@ -225,8 +225,8 @@ export default function EnquiryForm() {
             </label>
             <input
               type="tel"
-              name="phone"
-              value={form.phone}
+              name="phone_number"
+              value={form.phone_number}
               onChange={handleChange}
               required
               style={{ width: '100%', padding: '12px 14px', borderRadius: 6, border: '1.5px solid #bcd0ee', fontSize: 16, outline: 'none', transition: 'border 0.2s', boxSizing: 'border-box' }}

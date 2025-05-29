@@ -60,8 +60,8 @@ const sliderSettings = {
 const NextArrow = (props) => {
     const { onClick } = props;
     return (
-      <button className="btn  btn-dark rounded-circle position-absolute bottom-50 translate-middle-y me-2" onClick={onClick}>
-        <ArrowRight size={20} />
+      <button className="custom-arrow next-arrow" onClick={onClick} aria-label="Next">
+        <ArrowRight size={22} />
       </button>
     );
   };
@@ -69,8 +69,8 @@ const NextArrow = (props) => {
   const PrevArrow = (props) => {
     const { onClick } = props;
     return (
-      <button className="btn  btn-light rounded-circle position-absolute  bottom-50 translate-middle-y ms-2" onClick={onClick}>
-        <ArrowLeft size={20} />
+      <button className="custom-arrow prev-arrow" onClick={onClick} aria-label="Previous">
+        <ArrowLeft size={22} />
       </button>
     );
   };
@@ -96,7 +96,7 @@ export default function Process() {
         </h2>
         </div>
       </div>
-      <Slider {...sliderSettings}>
+      <Slider {...sliderSettings} nextArrow={<NextArrow />} prevArrow={<PrevArrow />}>
           {cards.map((card, index) => (
             <div key={index} className="step-card mb-4 p-4 g-4 rounded  ">
             {/* <div key={index} className="p-3"> */}

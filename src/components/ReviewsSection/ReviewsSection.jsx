@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Slider from 'react-slick';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { FaStar } from 'react-icons/fa';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './ReviewsSection.css';
@@ -49,6 +50,17 @@ const ReviewsSection = () => {
     arrows: false,
   };
 
+  const renderStars = (rating) => {
+    return [...Array(5)].map((_, index) => (
+      <FaStar
+        key={index}
+        className="star-icon"
+        color={index < rating ? "#f6b40e" : "#e4e5e9"}
+        size={20}
+      />
+    ));
+  };
+
   return (
     <div className="container my-5">
       <h2 className="heading-3 mb-2 display-3 text-start text-black">What Our Customers Say</h2>
@@ -75,6 +87,10 @@ const ReviewsSection = () => {
                   <h5 className="font-weight-bold head mb-3">{testimonial.name}</h5>
                   {/* <h6 className="text-muted mt-3 mb-1">Department</h6> */}
                   <h5 className="font-weight-bold head">{testimonial.department}</h5>
+                  {/* Add rating stars */}
+                  <div className="rating-stars mb-3">
+                    {renderStars(testimonial.rating || 5)}
+                  </div>
                 </div>
 
                 {/* Right Section - Testimonial */}

@@ -337,4 +337,29 @@
   /* Add or adjust padding/margins as needed */
 }
 
+.rating-stars {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin: 10px 0;
+}
+
+.star-icon {
+  transition: transform 0.2s ease;
+}
+
+.star-icon:hover {
+  transform: scale(1.2);
+}
+
+@media (max-width: 768px) {
+  .rating-stars {
+    margin: 8px 0;
+  }
+  
+  .star-icon {
+    size: 16px;
+  }
+}
+
 

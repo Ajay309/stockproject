@@ -71,14 +71,18 @@ body {
         }
         
         .pricing-card {
-            border-radius: 16px;
+            border-radius: 14px;
             overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            transition: all 0.4s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
             height: 100%;
             border: none;
             background-color: white;
             position: relative;
+            padding: 18px 10px 10px 10px;
+            min-height: 340px;
+            max-width: 340px;
+            margin: 0 auto;
         }
         
         .pricing-card:hover {
@@ -392,8 +396,11 @@ body {
   background-color: #ffffff;
   border-radius: 15px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  padding: 20px;
+  padding: 14px 10px;
   text-align: center;
+  min-height: 340px;
+  max-width: 340px;
+  margin: 0 auto;
 }
 
 .plan-card:hover {
@@ -436,4 +443,157 @@ body {
   font-size: 36px !important;
   font-weight: 500 !important;
   padding: 30px 20px 0 20px !important;
+}
+
+.timer-section {
+    /* background-color: #0a0f2d; */
+    color: white;
+}
+
+.timer-heading {
+    font-size: 2.5rem;
+    color: #000;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+.timer-box {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 10px 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  min-width: 70px;
+}
+
+.timer-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 5px;
+}
+
+.timer-label {
+  font-size: 1.2rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.forex-indian-market {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #0a58ca;
+  background: linear-gradient(90deg, #fbba07 0%, #fffbe7 100%);
+  padding: 4px 16px;
+  border-radius: 8px;
+  display: inline-block;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.pricing-card.mentorship {
+  background: transparent;
+  box-shadow: none;
+  border: 2px dashed #fbba07;
+  position: relative;
+}
+
+.mentorship-badge {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: #fbba07;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 4px 14px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  z-index: 2;
+}
+
+.pricing-card.mentorship .plan-name {
+  color: #0a58ca;
+  font-weight: 800;
+}
+
+.col-md-4 {
+  padding-left: 2px !important;
+  padding-right: 2px !important;
+}
+
+.row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.plan-card, .pricing-card {
+  max-width: 100%;
+  margin: 0 !important;
+}
+
+.with-navbar-padding {
+  padding-top: 90px !important;
+}
+
+@media (max-width: 600px) {
+  .timer-section {
+    padding: 1rem 0.2rem;
+  }
+  .timer-heading {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+  .timer-section .d-flex {
+    flex-direction: column !important;
+    gap: 12px !important;
+    align-items: center !important;
+  }
+  .timer-box {
+    min-width: 90px;
+    padding: 8px 10px;
+    margin-bottom: 0.5rem;
+  }
+  .timer-value {
+    font-size: 1.3rem;
+  }
+  .timer-label {
+    font-size: 1rem;
+  }
+}
+
+.plan-tabs-btn {
+  border: none;
+  outline: none;
+  background: #fff;
+  color: #222;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 0.7rem 2.2rem;
+  border-radius: 999px;
+  margin: 0 0.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  border: 2px solid #eee;
+  position: relative;
+}
+.plan-tabs-btn.selected, .plan-tabs-btn:focus {
+  background: #fbba07;
+  color: #fff;
+  border-color: #fbba07;
+  box-shadow: 0 4px 16px rgba(251,186,7,0.15);
+  z-index: 1;
+}
+.plan-tabs-btn:hover:not(.selected) {
+  background: #f7f7f7;
+  color: #222;
+  border-color: #fbba07;
+}
+@media (max-width: 600px) {
+  .plan-tabs-btn {
+    font-size: 1rem;
+    padding: 0.6rem 1.2rem;
+    margin: 0 0.2rem 0.5rem 0.2rem;
+  }
 }

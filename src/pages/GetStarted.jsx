@@ -6,7 +6,9 @@ const GetStarted = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
-  const [step, setStep] = useState(1); // 1: Enter email, 2: Enter OTP
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+  const [step, setStep] = useState(1); // 1: Enter email, 2: Enter OTP, 3: Enter name, 4: Enter password
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const googleCallback = useRef(null);
@@ -63,11 +65,49 @@ const GetStarted = () => {
     setLoading(true);
     try {
       const res = await axios.post('https://dtc.sinfode.com/api/v1/verify-otp', { email, otp });
-      localStorage.setItem('auth_token', res.data.token);
-      setMessage('✅ Logged in successfully!');
-      setTimeout(() => navigate('/'), 1000);
+      setMessage(' OTP verified successfully!');
+      setStep(3); // Move to name input step
     } catch (err) {
       setMessage(err.response?.data?.message || 'OTP verification failed');
+    }
+    setLoading(false);
+  };
+
+  const handleNameSubmit = async (e) => {
+    e.preventDefault();
+    if (name.trim().length < 2) {
+      setMessage('Please enter a valid name');
+      return;
+    }
+    setStep(4); // Move to password step
+  };
+
+  const handlePasswordSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const res = await axios.post('https://dtc.sinfode.com/api/v1/verify-otp', {
+        email,
+        name,
+        password,
+        otp
+      });
+      
+      // Store auth token
+      localStorage.setItem('auth_token', res.data.token);
+      
+      // Store user profile information
+      const userProfile = {
+        email,
+        name,
+        isLoggedIn: true
+      };
+      localStorage.setItem('userProfile', JSON.stringify(userProfile));
+      
+      setMessage(' Account created successfully!');
+      setTimeout(() => navigate('/'), 1000);
+    } catch (err) {
+      setMessage(err.response?.data?.message || 'Registration failed');
     }
     setLoading(false);
   };
@@ -206,6 +246,8 @@ const GetStarted = () => {
     width: '100%',
   };
 
+  const userProfile = JSON.parse(localStorage.getItem('userProfile'));
+
   return (
     <div style={containerStyle}>
       <div style={headingStyle}>Welcome to Stock App</div>
@@ -222,8 +264,18 @@ const GetStarted = () => {
         <div style={lineStyle}></div>
       </div>
 
-      <form onSubmit={step === 1 ? handleSendOtp : handleVerifyOtp} style={formStyle}>
-        <label style={labelStyle}>{step === 1 ? 'Email address' : 'Enter OTP sent to your email'}</label>
+      <form onSubmit={
+        step === 1 ? handleSendOtp :
+        step === 2 ? handleVerifyOtp :
+        step === 3 ? handleNameSubmit :
+        handlePasswordSubmit
+      } style={formStyle}>
+        <label style={labelStyle}>
+          {step === 1 ? 'Email address' :
+           step === 2 ? 'Enter OTP sent to your email' :
+           step === 3 ? 'Enter your name' :
+           'Create a password'}
+        </label>
 
         {step === 1 ? (
           <input
@@ -234,17 +286,34 @@ const GetStarted = () => {
             style={inputStyle}
             required
           />
+        ) : step === 2 ? (
+          <input
+            type="text"
+            value={otp}
+            onChange={e => setOtp(e.target.value)}
+            placeholder="Enter OTP"
+            style={inputStyle}
+            required
+          />
+        ) : step === 3 ? (
+          <input
+            type="text"
+            value={name}
+            onChange={e => setName(e.target.value)}
+            placeholder="Enter your full name"
+            style={inputStyle}
+            required
+          />
         ) : (
-          <>
-            <input
-              type="text"
-              value={otp}
-              onChange={e => setOtp(e.target.value)}
-              placeholder="Enter OTP"
-              style={inputStyle}
-              required
-            />
-          </>
+          <input
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            placeholder="Create a strong password"
+            style={inputStyle}
+            required
+            minLength="6"
+          />
         )}
 
         <button
@@ -261,7 +330,11 @@ const GetStarted = () => {
             e.target.style.boxShadow = '0 2px 8px rgba(246, 180, 14, 0.3)';
           }}
         >
-          {loading ? 'Please wait...' : step === 1 ? 'Continue' : 'Verify OTP'}
+          {loading ? 'Please wait...' : 
+           step === 1 ? 'Continue' :
+           step === 2 ? 'Verify OTP' :
+           step === 3 ? 'Next' :
+           'Create Account'}
         </button>
       </form>
 

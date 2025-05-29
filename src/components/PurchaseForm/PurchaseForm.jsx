@@ -4,15 +4,14 @@ import { useNavigate } from 'react-router-dom';
 
 const PurchaseForm = ({ plan, onClose }) => {
   const { user, userEmail } = useAuth();
+  const [email, setEmail] = useState(userEmail || '');
   const [phone, setPhone] = useState('');
   const [coupon, setCoupon] = useState('');
   const navigate = useNavigate();
 
   const handlePayment = async () => {
-    // 🚫 Prevent payment if not logged in
-    if (!userEmail) {
-      alert('❌ You need to log in to purchase a plan.');
-      navigate('/login');
+    if (!email || !phone) {
+      alert('❗ Email and phone are required.');
       return;
     }
 
@@ -21,10 +20,10 @@ const PurchaseForm = ({ plan, onClose }) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          user_id: user?.id,
+          user_id: user?.id || null, // Optional
           plan: plan.name,
           amount: plan.price,
-          email: userEmail,
+          email,
           phone,
           coupon,
         }),
@@ -43,7 +42,7 @@ const PurchaseForm = ({ plan, onClose }) => {
         },
         prefill: {
           name: user?.name || '',
-          email: user?.email || userEmail,
+          email,
           contact: phone,
         },
         theme: {
@@ -55,6 +54,7 @@ const PurchaseForm = ({ plan, onClose }) => {
       rzp.open();
     } catch (error) {
       console.error('Payment error:', error);
+      alert('❌ Payment failed. Please try again.');
     }
   };
 
@@ -65,7 +65,18 @@ const PurchaseForm = ({ plan, onClose }) => {
           <div className="row justify-content-center">
             <div className="col-6">
               <h4>Purchase {plan.name} Plan</h4>
-              <p>Email: <strong>{userEmail || 'Not Logged In'}</strong></p>
+
+              <div className="mb-3">
+                <label>Email:</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  required
+                />
+              </div>
 
               <div className="mb-3">
                 <label>Phone:</label>
@@ -73,7 +84,8 @@ const PurchaseForm = ({ plan, onClose }) => {
                   className="form-control"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  disabled={!userEmail}
+                  placeholder="Enter your phone number"
+                  required
                 />
               </div>
 
@@ -83,7 +95,6 @@ const PurchaseForm = ({ plan, onClose }) => {
                   className="form-control"
                   value={coupon}
                   onChange={(e) => setCoupon(e.target.value)}
-                  disabled={!userEmail}
                 />
               </div>
 
@@ -91,7 +102,6 @@ const PurchaseForm = ({ plan, onClose }) => {
                 <button
                   className="login bg-warning border-0"
                   onClick={handlePayment}
-                  disabled={!userEmail}
                 >
                   Proceed to Pay ₹{plan.price}
                 </button>
@@ -100,11 +110,6 @@ const PurchaseForm = ({ plan, onClose }) => {
                 </button>
               </div>
 
-              {!userEmail && (
-                <div className="alert alert-warning mt-3">
-                  Please <a onClick={() => navigate('/login')} style={{ cursor: 'pointer' }}>log in</a> to continue.
-                </div>
-              )}
             </div>
           </div>
         </div>

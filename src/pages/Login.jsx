@@ -14,7 +14,7 @@ const Login = () => {
   const navigate = useNavigate();
 const handleLogin = async () => {
     try {
-      const response = await axios.post('https://your-domain.com/api/login', {
+      const response = await axios.post('https://dtc.sinfode.com/api/v1/login', {
         email,
         password
       });

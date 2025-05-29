@@ -12,7 +12,23 @@ const Login = () => {
   const { login } = useAuth();
 
   const navigate = useNavigate();
+const handleLogin = async () => {
+    try {
+      const response = await axios.post('https://your-domain.com/api/login', {
+        email,
+        password
+      });
 
+      // Save token and user if needed
+      localStorage.setItem('authToken', response.data.token);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+
+      alert('Login successful!');
+    } catch (error) {
+      console.error(error.response.data);
+      alert(error.response?.data?.message || 'Login failed');
+    }
+  };
   const handleSendOtp = async () => {
     setLoading(true);
     try {

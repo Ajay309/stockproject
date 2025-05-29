@@ -46,7 +46,7 @@ const GetStarted = () => {
   e.preventDefault();
   setLoading(true);
   try {
-    const res = await axios.post('http://dtc.sinfode.com/api/v1/send-otp', { email });
+    const res = await axios.post('https://dtc.sinfode.com/api/v1/send-otp', { email });
 
     if (res.data.already_registered) {
       setMessage('Email already registered. Redirecting to login...');

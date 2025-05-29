@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { getPackages, getPlans } from '../../api'; // Import named exports
 import PlansCard from './PlansCard'; // Assume you have this component
 import './PlansSection.css'; // Import your CSS file
+import { useLocation } from 'react-router-dom';
+import Timer from './Timer';
 
 const PlansSection = () => {
   const [packages, setPackages] = useState([]);
@@ -10,6 +12,8 @@ const PlansSection = () => {
   const [plans, setPlans] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
 
   // Fetch packages on mount
   useEffect(() => {
@@ -51,26 +55,29 @@ const PlansSection = () => {
   if (loading) return <div className="text-center">Loading...</div>;
   if (error) return <div className="text-red-500 text-center">{error}</div>;
 
-
   return (
+    <div className={isHomePage ? "container py-5" : ""}>
+      {!isHomePage && (
+        <header className="pricing-header text-center py-5">
+          <div className="container">
+            <h1 className="display-4">Elevate Your Experience</h1>
+            <p>Choose the perfect plan tailored to your needs and unlock premium features designed to help you succeed.</p>
+          </div>
+        </header>
+      )}
+      {/* Timer Section */}
+      <div className="container"> {/* Add this container div */}
+        <Timer /> {/* Add the Timer component here */}
+      </div> {/* Close the container div */}
 
-    
-    <div className="">
-<header className="pricing-header text-center py-5">
-        <div className="container">
-          <h1 className="display-4">Elevate Your Experience</h1>
-          <p>Choose the perfect plan tailored to your needs and unlock premium features designed to help you succeed.</p>
-        </div>
-      </header>
+      
 
       {/* Package Tabs */}
-      <div className="d-flex justify-content-center space-x-4 gs-3 mt-4 mb-6">
+      <div className="d-flex justify-content-center flex-wrap mb-4">
         {packages.map((pkg) => (
           <button
             key={pkg.id}
-            className={`px-4 py-2 rounded ${
-              selectedPackage?.id === pkg.id ? 'bg-warning text-white' : 'bg-gray-200'
-            }`}
+            className={`plan-tabs-btn${selectedPackage?.id === pkg.id ? ' selected' : ''}`}
             onClick={() => setSelectedPackage(pkg)}
           >
             {pkg.name}
@@ -81,10 +88,14 @@ const PlansSection = () => {
       {/* Plans Display */}
       {selectedPackage && (
         <div>
-          <h2 className="text-2xl text-center mt-3 font-semibold mb-4">{selectedPackage.name} Plans</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 d-flex">
+          {!isHomePage && (
+            <h2 className="text-2xl text-center mt-3 font-semibold mb-4">{selectedPackage.name} Plans</h2>
+          )}
+          <div className="row">
             {plans.map((plan) => (
-              <PlansCard key={plan.id} plan={plan} />
+              <div key={plan.id} className="col-md-4 mb-4">
+                <PlansCard plan={plan} isHomePage={isHomePage} />
+              </div>
             ))}
           </div>
         </div>

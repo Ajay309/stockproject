@@ -7,7 +7,7 @@ import { getHomeData } from "../services/home";
 export default function Blogs ()  {
   return (
     <>
-    <div className="container-fluid py-5">
+    <div className="container-fluid py-5 pt-5 with-navbar-padding" style={{paddingTop: '110px'}}>
       <BlogsSection />
       </div>
     <Footer/>

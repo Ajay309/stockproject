@@ -128,6 +128,8 @@ const GetStarted = () => {
     setLoading(false);
   };
 
+  
+
   const containerStyle = {
     display: 'flex',
     flexDirection: 'column',

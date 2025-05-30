@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios'; // Import axios
+import { useOfferTimer } from '../../context/OfferTimerContext';
 
 const Timer = () => {
   const [timeLeft, setTimeLeft] = useState({
@@ -8,30 +10,41 @@ const Timer = () => {
     seconds: 0
   });
 
+  const { endTime, isLoading: timerLoading, error: timerError } = useOfferTimer();
+
+  console.log('Timer.jsx - Context values:', { endTime, timerLoading, timerError });
+
   useEffect(() => {
-    // Set the target date (e.g., 7 days from now)
-    const targetDate = new Date();
-    targetDate.setDate(targetDate.getDate() + 7);
+    let timerId; // Use a local variable for the timer ID
 
-    const timer = setInterval(() => {
-      const now = new Date();
-      const difference = targetDate - now;
+    if (endTime) {
+      timerId = setInterval(() => {
+        const now = new Date();
+        const difference = endTime - now;
 
-      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+        if (difference <= 0) {
+          clearInterval(timerId);
+          setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        } else {
+          const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+          setTimeLeft({ days, hours, minutes, seconds });
+        }
+      }, 1000);
+    }
 
-      setTimeLeft({ days, hours, minutes, seconds });
+    return () => { // Cleanup function
+       console.log('Clearing plans timer interval:', timerId);
+       clearInterval(timerId); // Clear using local variable in cleanup
+    };
+  }, [endTime]); // Rerun timer effect if endTime from context changes
 
-      if (difference < 0) {
-        clearInterval(timer);
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-      }
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
+   if (timerLoading) return <div className="text-center">Loading timer...</div>;
+   if (timerError) return <div className="text-red-500 text-center">Error loading timer.</div>;
+   // Optionally, hide if endTime is null after loading
+   if (!endTime) return null;
 
   return (
     <div className="timer-section text-center py-4">

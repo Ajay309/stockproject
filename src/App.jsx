@@ -5,17 +5,18 @@ import Navbar from './components/Navbar/Navbar';
 import NotificationBar from './components/Navbar/NotificationBar';
 import Home from './pages/Home';  
 import FeaturesSection from './components/FeatureSection/FeatureSection';
-
+import Popup from './components/popup/Popup';
 
 function App() {
   return (
     <>
-    <BrowserRouter>
-      <NotificationBar />
-      <Navbar />
+      <Popup />
+      <BrowserRouter>
+        <NotificationBar />
+        <Navbar />
         <AppRoutes />
-    </BrowserRouter>
-  </>
+      </BrowserRouter>
+    </>
   );
 }
 

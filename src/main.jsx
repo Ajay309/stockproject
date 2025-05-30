@@ -12,12 +12,15 @@ import 'aos/dist/aos.css';
 
 import Header from './components/Navbar/Navbar.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
+import { OfferTimerProvider } from './context/OfferTimerContext.jsx';
 
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>
   <AuthProvider>
-    <App />
+    <OfferTimerProvider>
+      <App />
+    </OfferTimerProvider>
   </AuthProvider>
   </StrictMode>
 )

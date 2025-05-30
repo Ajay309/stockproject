@@ -2,9 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Footer.css';
 
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa';
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube, FaWhatsapp } from 'react-icons/fa';
 
 const Footer = () => {
+  const handleWhatsAppClick = () => {
+    window.open('https://wa.me/your_phone_number', '_blank'); // Remember to replace 'your_phone_number' with your actual number
+  };
+
   return (
     <footer className="footer-section bg-dark text-white py-3 position-relative">
       <div className="container">
@@ -37,7 +41,16 @@ const Footer = () => {
   <p>
     This does not represent our full disclaimer. Please read our full disclaimer.
   </p>
-        <div className="floating-btn position-fixed rounded-circle bg-white d-flex align-items-center justify-content-center shadow" style={{ bottom: '30px', right: '30px', width: '60px', height: '60px' }}>
+        {/* WhatsApp Floating Button (above the image button) */}
+        <div
+          className="floating-btn position-fixed rounded-circle bg-success d-flex align-items-center justify-content-center shadow"
+          style={{ bottom: '100px', right: '30px', width: '60px', height: '60px', zIndex: 1000, cursor: 'pointer' }}
+          onClick={handleWhatsAppClick}
+        >
+          <FaWhatsapp size={32} color="#fff" />
+        </div>
+        {/* Existing Floating Button */}
+        <div className="floating-btn position-fixed rounded-circle bg-white d-flex align-items-center justify-content-center shadow" style={{ bottom: '30px', right: '30px', width: '60px', height: '60px', zIndex: 1000 }}>
           <img src="/path/to/icon.png" alt="Floating Button" width="30" height="30" />
         </div> 
       <hr className='container'></hr>

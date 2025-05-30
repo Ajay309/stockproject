@@ -14,7 +14,9 @@ export default function Home() {
     <div className="">
     <HeaderSection/>
     </div>
-    <FeaturesSection/>
+    <div className="with-navbar-padding">
+      <FeaturesSection/>
+    </div>
     <div className="container-fluid">
 <Process />    
     </div>

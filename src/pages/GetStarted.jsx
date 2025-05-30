@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
 
 const GetStarted = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
   const [name, setName] = useState('');
@@ -85,6 +87,7 @@ const GetStarted = () => {
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    console.log('GetStarted - Name state before submission:', name);
     try {
       const res = await axios.post('https://dtc.sinfode.com/api/v1/verify-otp', {
         email,
@@ -96,15 +99,28 @@ const GetStarted = () => {
       // Store auth token
       localStorage.setItem('auth_token', res.data.token);
       
-      // Store user profile information
+      // Generate initials for profile image
+      const nameParts = name.trim().split(/\s+/);
+      let initials;
+      if (nameParts.length > 1) {
+        initials = `${nameParts[0][0].toUpperCase()}${nameParts[nameParts.length - 1][0].toUpperCase()}`;
+      } else {
+        // If only one part, use first two letters if available
+        initials = nameParts[0].slice(0, 2).toUpperCase();
+      }
+      
+      // Create user profile with profile image
       const userProfile = {
         email,
-        name,
-        isLoggedIn: true
+        name: name || email.split('@')[0], // Use email prefix as fallback
+        isLoggedIn: true,
+        profileImage: res.data.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=f6b40e&color=fff&bold=true`
       };
-      localStorage.setItem('userProfile', JSON.stringify(userProfile));
       
-      setMessage(' Account created successfully!');
+      // Use AuthContext login function
+      login(userProfile);
+      
+      setMessage('Account created successfully!');
       setTimeout(() => navigate('/'), 1000);
     } catch (err) {
       setMessage(err.response?.data?.message || 'Registration failed');

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const Timer = () => {
   const [targetDate, setTargetDate] = useState(null);
@@ -8,10 +9,6 @@ const Timer = () => {
     minutes: 0,
     seconds: 0
   });
-
-  const { endTime, isLoading: timerLoading, error: timerError } = useOfferTimer();
-
-  console.log('Timer.jsx - Context values:', { endTime, timerLoading, timerError });
 
   // Fetch the timer date from the API
   useEffect(() => {
@@ -31,13 +28,17 @@ const Timer = () => {
 
   // Countdown logic
   useEffect(() => {
-    // Set the target date (e.g., 7 days from now)
-    const targetDate = new Date();
-    targetDate.setDate(targetDate.getDate() + 7);
+    if (!targetDate) return;
 
     const timer = setInterval(() => {
       const now = new Date();
       const difference = targetDate - now;
+
+      if (difference <= 0) {
+        clearInterval(timer);
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        return;
+      }
 
       const days = Math.floor(difference / (1000 * 60 * 60 * 24));
       const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -45,15 +46,10 @@ const Timer = () => {
       const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
       setTimeLeft({ days, hours, minutes, seconds });
-
-      if (difference < 0) {
-        clearInterval(timer);
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-      }
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [targetDate]);
 
   return (
     <div className="timer-section text-center py-4">

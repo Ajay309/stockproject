@@ -40,20 +40,26 @@ const Login = () => {
     try {
       const res = await axios.post('https://dtc.sinfode.com/api/v1/google-login', { token: credential });
       
+      console.log('Google Login API response name:', res.data.name);
+
       // Store auth token
       localStorage.setItem('auth_token', res.data.token);
       
       // Generate initials for profile image
       const name = res.data.name || res.data.email.split('@')[0];
-      const nameParts = name.split(' ');
-      const initials = nameParts.length > 1 
-        ? `${nameParts[0][0]}${nameParts[nameParts.length - 1][0]}`
-        : nameParts[0][0];
+      const nameParts = name.trim().split(/\s+/);
+      let initials;
+      if (nameParts.length > 1) {
+        initials = `${nameParts[0][0].toUpperCase()}${nameParts[nameParts.length - 1][0].toUpperCase()}`;
+      } else {
+        // If only one part, use first two letters if available
+        initials = nameParts[0].slice(0, 2).toUpperCase();
+      }
       
       // Create user profile
       const userProfile = {
         email: res.data.email,
-        name: res.data.name,
+        name: res.data.name || res.data.email.split('@')[0],
         isLoggedIn: true,
         profileImage: res.data.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=f6b40e&color=fff&bold=true`
       };
@@ -84,20 +90,26 @@ const Login = () => {
         password
       });
       
+      console.log('Login API response name:', res.data.name);
+
       // Store auth token
       localStorage.setItem('auth_token', res.data.token);
       
       // Generate initials for profile image
       const name = res.data.name || email.split('@')[0];
-      const nameParts = name.split(' ');
-      const initials = nameParts.length > 1 
-        ? `${nameParts[0][0]}${nameParts[nameParts.length - 1][0]}`
-        : nameParts[0][0];
+      const nameParts = name.trim().split(/\s+/);
+      let initials;
+      if (nameParts.length > 1) {
+        initials = `${nameParts[0][0].toUpperCase()}${nameParts[nameParts.length - 1][0].toUpperCase()}`;
+      } else {
+        // If only one part, use first two letters if available
+        initials = nameParts[0].slice(0, 2).toUpperCase();
+      }
       
       // Create user profile
       const userProfile = {
         email,
-        name: res.data.name,
+        name: res.data.name || email.split('@')[0],
         isLoggedIn: true,
         profileImage: res.data.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=f6b40e&color=fff&bold=true`
       };

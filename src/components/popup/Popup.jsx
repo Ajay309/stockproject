@@ -2,29 +2,39 @@ import React, { useState, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
 
 const Popup = () => {
+  console.log('POPUP COMPONENT RENDERED'); // This should show immediately when component mounts
+
   const [isVisible, setIsVisible] = useState(false);
+  const [timerStarted, setTimerStarted] = useState(false);
 
   useEffect(() => {
-    // Check if user has seen the popup before
-    const hasSeenPopup = localStorage.getItem('hasSeenPopup');
+    console.log('POPUP EFFECT RUNNING'); // This should show when effect runs
     
-    if (!hasSeenPopup) {
-      // Show popup after 2 seconds if user hasn't seen it
-      const timer = setTimeout(() => {
-        setIsVisible(true);
-      }, 2000);
+    // Force show popup for testing
+    const timer = setTimeout(() => {
+      console.log('POPUP TIMER COMPLETED - SHOWING POPUP');
+      setIsVisible(true);
+    }, 7000);
 
-      return () => clearTimeout(timer);
-    }
-  }, []);
+    return () => {
+      console.log('POPUP CLEANUP RUNNING');
+      clearTimeout(timer);
+    };
+  }, []); // Empty dependency array means this runs once on mount
 
   const handleClose = () => {
+    console.log('POPUP CLOSING');
     setIsVisible(false);
-    // Set flag in localStorage when popup is closed
-    localStorage.setItem('hasSeenPopup', 'true');
   };
 
-  if (!isVisible) return null;
+  console.log('POPUP VISIBILITY:', isVisible);
+
+  if (!isVisible) {
+    console.log('POPUP NOT VISIBLE - RETURNING NULL');
+    return null;
+  }
+
+  console.log('POPUP RENDERING CONTENT');
 
   return (
     <div style={{
@@ -37,7 +47,7 @@ const Popup = () => {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      zIndex: 1000,
+      zIndex: 99999,
       animation: 'fadeIn 0.3s ease-in'
     }}>
       <div style={{

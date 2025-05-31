@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const Timer = () => {
+  const [targetDate, setTargetDate] = useState(null);
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -8,14 +10,35 @@ const Timer = () => {
     seconds: 0
   });
 
+  // Fetch the timer date from the API
   useEffect(() => {
-    // Set the target date (e.g., 7 days from now)
-    const targetDate = new Date();
-    targetDate.setDate(targetDate.getDate() + 7);
+    axios.get('https://dtc.sinfode.com/api/v1/offertimer')
+      .then((res) => {
+        const offerData = res.data?.data?.[0];
+        if (offerData?.end_time) {
+          // Convert string to Date object
+          const formattedDate = new Date(offerData.end_time.replace(' ', 'T'));
+          setTargetDate(formattedDate);
+        }
+      })
+      .catch((err) => {
+        console.error('Failed to fetch offer timer:', err);
+      });
+  }, []);
+
+  // Countdown logic
+  useEffect(() => {
+    if (!targetDate) return;
 
     const timer = setInterval(() => {
       const now = new Date();
       const difference = targetDate - now;
+
+      if (difference <= 0) {
+        clearInterval(timer);
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        return;
+      }
 
       const days = Math.floor(difference / (1000 * 60 * 60 * 24));
       const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -23,15 +46,10 @@ const Timer = () => {
       const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
       setTimeLeft({ days, hours, minutes, seconds });
-
-      if (difference < 0) {
-        clearInterval(timer);
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-      }
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [targetDate]);
 
   return (
     <div className="timer-section text-center py-4">

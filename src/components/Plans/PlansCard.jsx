@@ -18,7 +18,7 @@ const PlansCard = ({ plan, isHomePage = false }) => {
                             <div className="pricing-card-header">
                                 <h3 className="plan-name">{plan.name}</h3>
                                 <div className="price">
-                                    <span className="price-currency">$</span>
+                                    <span className="price-currency">₹</span>
                                     {plan.price}
                                     <span className="price-period">{plan.duration}</span>
                                 </div>

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'; // Import axios
-import { useOfferTimer } from '../../context/OfferTimerContext';
+import axios from 'axios';
 
 const Timer = () => {
+  const [targetDate, setTargetDate] = useState(null);
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -10,41 +10,46 @@ const Timer = () => {
     seconds: 0
   });
 
-  const { endTime, isLoading: timerLoading, error: timerError } = useOfferTimer();
-
-  console.log('Timer.jsx - Context values:', { endTime, timerLoading, timerError });
-
+  // Fetch the timer date from the API
   useEffect(() => {
-    let timerId; // Use a local variable for the timer ID
-
-    if (endTime) {
-      timerId = setInterval(() => {
-        const now = new Date();
-        const difference = endTime - now;
-
-        if (difference <= 0) {
-          clearInterval(timerId);
-          setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-        } else {
-          const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-          const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-          const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-          setTimeLeft({ days, hours, minutes, seconds });
+    axios.get('https://dtc.sinfode.com/api/v1/offertimer')
+      .then((res) => {
+        const offerData = res.data?.data?.[0];
+        if (offerData?.end_time) {
+          // Convert string to Date object
+          const formattedDate = new Date(offerData.end_time.replace(' ', 'T'));
+          setTargetDate(formattedDate);
         }
-      }, 1000);
-    }
+      })
+      .catch((err) => {
+        console.error('Failed to fetch offer timer:', err);
+      });
+  }, []);
 
-    return () => { // Cleanup function
-       console.log('Clearing plans timer interval:', timerId);
-       clearInterval(timerId); // Clear using local variable in cleanup
-    };
-  }, [endTime]); // Rerun timer effect if endTime from context changes
+  // Countdown logic
+  useEffect(() => {
+    if (!targetDate) return;
 
-   if (timerLoading) return <div className="text-center">Loading timer...</div>;
-   if (timerError) return <div className="text-red-500 text-center">Error loading timer.</div>;
-   // Optionally, hide if endTime is null after loading
-   if (!endTime) return null;
+    const timer = setInterval(() => {
+      const now = new Date();
+      const difference = targetDate - now;
+
+      if (difference <= 0) {
+        clearInterval(timer);
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        return;
+      }
+
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+      setTimeLeft({ days, hours, minutes, seconds });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [targetDate]);
 
   return (
     <div className="timer-section text-center py-4">

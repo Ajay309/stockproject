@@ -8,7 +8,46 @@ const PurchaseForm = ({ plan, onClose }) => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [coupon, setCoupon] = useState('');
+  const [discount, setDiscount] = useState(0);
+  const [isCouponValid, setIsCouponValid] = useState(null);
+  const [loadingCoupon, setLoadingCoupon] = useState(false);
+
   const navigate = useNavigate();
+
+  const validateCoupon = async () => {
+    if (!coupon) return;
+
+    setLoadingCoupon(true);
+    try {
+      const res = await fetch('http://127.0.0.1:8000/api/v1/coupon');
+      const result = await res.json();
+
+      const found = result.data.find(
+        (c) =>
+          c.code === coupon &&
+          c.is_active === 1 &&
+          new Date(c.expire_at) > new Date()
+      );
+
+      if (found) {
+        setDiscount(found.discount);
+        setIsCouponValid(true);
+      } else {
+        setDiscount(0);
+        setIsCouponValid(false);
+      }
+    } catch (err) {
+      console.error('Coupon validation error:', err);
+      setDiscount(0);
+      setIsCouponValid(false);
+    } finally {
+      setLoadingCoupon(false);
+    }
+  };
+
+  const calculateDiscountedPrice = () => {
+    return plan.price - (plan.price * discount) / 100;
+  };
 
   const handlePayment = async () => {
     if (!email || !phone) {
@@ -17,13 +56,13 @@ const PurchaseForm = ({ plan, onClose }) => {
     }
 
     try {
-      const res = await fetch('https://dtc.sinfode.com/api/v1/create-order', {
+      const res = await fetch('http://127.0.0.1:8000/api/v1/create-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          user_id: user?.id || null, // Optional
+          user_id: user?.id || null,
           plan: plan.name,
-          amount: plan.price,
+          amount: calculateDiscountedPrice(),
           email,
           phone,
           coupon,
@@ -92,11 +131,40 @@ const PurchaseForm = ({ plan, onClose }) => {
 
               <div className="mb-3">
                 <label>Coupon Code (optional):</label>
-                <input
-                  className="form-control"
-                  value={coupon}
-                  onChange={(e) => setCoupon(e.target.value)}
-                />
+                <div className="d-flex">
+                  <input
+                    className="form-control"
+                    value={coupon}
+                    onChange={(e) => {
+                      setCoupon(e.target.value);
+                      setIsCouponValid(null);
+                    }}
+                    placeholder="Enter coupon code"
+                  />
+                  <button 
+                    type="button"
+                    className="login bg-warning rounded border-0 ms-2"
+                    onClick={validateCoupon}
+                    disabled={loadingCoupon}
+                    style={{height:51}}
+                  >
+                    {loadingCoupon ? 'Checking...' : 'Apply'}
+                  </button>
+                </div>
+                {isCouponValid === true && (
+                  <small className="text-success">
+                    ✅ Coupon applied! {discount}% off
+                  </small>
+                )}
+                {isCouponValid === false && (
+                  <small className="text-danger">
+                    ❌ Invalid or expired coupon
+                  </small>
+                )}
+              </div>
+
+              <div className="mb-3">
+                <strong>Total Payable: ₹{calculateDiscountedPrice()}</strong>
               </div>
 
               <div className="d-flex gap-2">
@@ -104,7 +172,7 @@ const PurchaseForm = ({ plan, onClose }) => {
                   className="login bg-warning border-0"
                   onClick={handlePayment}
                 >
-                  Proceed to Pay ₹{plan.price}
+                  Proceed to Pay ₹{calculateDiscountedPrice()}
                 </button>
                 <button className="login bg-warning border-0" onClick={onClose}>
                   Cancel

@@ -23,7 +23,6 @@ const Login = () => {
         callback: (response) => {
           if (response.credential) {
             console.log('Google sign-in successful, token:', response.credential);
-            // Handle Google sign-in response
             handleGoogleLogin(response.credential);
           }
         }
@@ -40,16 +39,21 @@ const Login = () => {
     try {
       const res = await axios.post('https://dtc.sinfode.com/api/v1/google-login', { token: credential });
       
+      console.log('Google Login API response:', res.data);
       console.log('Google Login API response name:', res.data.name);
 
       // Store auth token
       localStorage.setItem('auth_token', res.data.token);
       
+      // Get name, prioritizing res.data.name or a name from localStorage if available, fallback to email prefix
+      const storedProfile = JSON.parse(localStorage.getItem('userProfile'));
+      const name = res.data.name || (storedProfile ? storedProfile.name : null) || res.data.email.split('@')[0];
+
       // Generate initials for profile image
-      const name = res.data.name || res.data.email.split('@')[0];
       const nameParts = name.trim().split(/\s+/);
       let initials;
       if (nameParts.length > 1) {
+        // Take first letter of first name and first letter of last name
         initials = `${nameParts[0][0].toUpperCase()}${nameParts[nameParts.length - 1][0].toUpperCase()}`;
       } else {
         // If only one part, use first two letters if available
@@ -63,6 +67,9 @@ const Login = () => {
         isLoggedIn: true,
         profileImage: res.data.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=f6b40e&color=fff&bold=true`
       };
+      
+      // Store user profile in localStorage
+      localStorage.setItem('userProfile', JSON.stringify(userProfile));
       
       // Use AuthContext login function
       login(userProfile);
@@ -90,16 +97,21 @@ const Login = () => {
         password
       });
       
+      console.log('Login API response:', res.data);
       console.log('Login API response name:', res.data.name);
 
       // Store auth token
       localStorage.setItem('auth_token', res.data.token);
       
+      // Get name, prioritizing res.data.name or a name from localStorage if available, fallback to email prefix
+      const storedProfile = JSON.parse(localStorage.getItem('userProfile'));
+      const name = res.data.name || (storedProfile ? storedProfile.name : null) || email.split('@')[0];
+
       // Generate initials for profile image
-      const name = res.data.name || email.split('@')[0];
       const nameParts = name.trim().split(/\s+/);
       let initials;
       if (nameParts.length > 1) {
+        // Take first letter of first name and first letter of last name
         initials = `${nameParts[0][0].toUpperCase()}${nameParts[nameParts.length - 1][0].toUpperCase()}`;
       } else {
         // If only one part, use first two letters if available
@@ -113,6 +125,9 @@ const Login = () => {
         isLoggedIn: true,
         profileImage: res.data.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=f6b40e&color=fff&bold=true`
       };
+      
+      // Store user profile in localStorage
+      localStorage.setItem('userProfile', JSON.stringify(userProfile));
       
       // Use AuthContext login function
       login(userProfile);

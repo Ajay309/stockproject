@@ -36,9 +36,25 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (profile) => {
-    setUserProfile(profile);
-    setUserEmail(profile.email);
-    localStorage.setItem('userProfile', JSON.stringify(profile));
+    // Read existing profile from localStorage
+    const existingProfileString = localStorage.getItem('userProfile');
+    const existingProfile = existingProfileString ? JSON.parse(existingProfileString) : {};
+
+    // Merge existing profile with new profile data
+    // Prioritize name from existing profile if available and valid
+    const mergedProfile = {
+      ...existingProfile,
+      ...profile,
+      // Keep the existing name if it exists and the new name is just the email prefix
+      name: (existingProfile.name && profile.name && profile.name.includes('@') === false) ? existingProfile.name : profile.name || existingProfile.name || profile.email.split('@')[0],
+      email: profile.email || existingProfile.email, // Ensure email is taken from new profile if available
+      isLoggedIn: true, // Always set to true on login
+      profileImage: profile.profileImage || existingProfile.profileImage // Prioritize new image if available
+    };
+
+    setUserProfile(mergedProfile);
+    setUserEmail(mergedProfile.email);
+    localStorage.setItem('userProfile', JSON.stringify(mergedProfile));
   };
 
   const logout = () => {

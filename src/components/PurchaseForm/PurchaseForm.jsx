@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import './PurchaseForm.css';
 
 const PurchaseForm = ({ plan, onClose }) => {
   const { user, userEmail } = useAuth();
-  const [email, setEmail] = useState(userEmail || '');
+  const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [coupon, setCoupon] = useState('');
   const navigate = useNavigate();

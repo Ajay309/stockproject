@@ -226,11 +226,17 @@ body{
 }
 
 /* Ensure active dropdown item has no blue background */
-.dropdown-item.active {
-    background-color: transparent !important;
+.dropdown-item.active,
+.dropdown-item:active,
+a.dropdown-item.active,
+.dropdown-item[href="/blogs"].active, /* Target specifically the blogs link when active */
+a.dropdown-item[href="/blogs"].active {
+    color: #000 !important; /* Set text color to black */
+    background-color: transparent !important; /* Remove blue background */
 }
 
 /* Ensure the active dropdown link itself has no blue background */
 a.dropdown-item.active {
-    background-color: transparent !important;
+    color: #000; /* Set text color to black */
+    background-color: transparent; /* Remove blue background */
 }

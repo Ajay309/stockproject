@@ -49,7 +49,7 @@ const GetStarted = () => {
   e.preventDefault();
   setLoading(true);
   try {
-    const res = await axios.post('http://127.0.0.1:8000/api/v1/send-otp', { email });
+    const res = await axios.post('https://dtc.sinfode.com/api/v1/send-otp', { email });
 
     if (res.data.already_registered) {
       setMessage('Email already registered. Redirecting to login...');
@@ -67,7 +67,7 @@ const GetStarted = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post('http://127.0.0.1:8000/api/v1/verify-otp', { email, otp });
+      const res = await axios.post('https://dtc.sinfode.com/api/v1/verify-otp', { email, otp });
       setMessage(' OTP verified successfully!');
       setStep(3); // Move to name input step
     } catch (err) {
@@ -90,7 +90,7 @@ const GetStarted = () => {
     setLoading(true);
     console.log('GetStarted - Name state before submission:', name);
     try {
-      const res = await axios.post('http://127.0.0.1:8000/api/v1/verify-otp', {
+      const res = await axios.post('https://dtc.sinfode.com/api/v1/verify-otp', {
         email,
         name,
         password,

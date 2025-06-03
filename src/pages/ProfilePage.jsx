@@ -7,40 +7,51 @@ const ProfilePage = () => {
   const { userProfile, isLoading: authLoading } = useAuth();
   const navigate = useNavigate();
 
-  const [fullUserProfile, setFullUserProfile] = useState(userProfile);
   const [userPayments, setUserPayments] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Fetch user payments
   useEffect(() => {
-  const fetchUserPayments = async () => {
-    
+    const fetchUserPayments = async () => {
+      try {
+        if (!userProfile || !userProfile.id) {
+          setError('User ID not found.');
+          setLoading(false);
+          return;
+        }
 
-    try {
-      const res = await axios.get(`https://dtc.sinfode.com/api/v1/user-payments/533`);
-      setUserPayments(res.data);
-    } catch (err) {
-      console.error('Error fetching user payments:', err);
-      setError('Failed to load user payment data.');
+        const response = await axios.get(`https://dtc.sinfode.com/api/v1/user-payments/${userProfile.id}`);
+        setUserPayments(response.data);
+      } catch (err) {
+        console.error('Error fetching user payments:', err);
+        setError('Failed to load user payment data.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (!authLoading && userProfile) {
+      fetchUserPayments();
     }
-  };
+  }, [authLoading, userProfile]);
 
-  if (userProfile && !authLoading) {
-    setFullUserProfile(userProfile);
-    fetchUserPayments();
+  // UI Conditions
+  if (authLoading) {
+    return <div className="container mt-5">Loading user session...</div>;
   }
-}, [userProfile, authLoading]);
 
+  if (!userProfile) {
+    return <div className="container mt-5">Please log in to view your profile.</div>;
+  }
 
-  if (authLoading) return <div className="container mt-5">Loading user session...</div>;
+  if (loading) {
+    return <div className="container mt-5">Loading profile details...</div>;
+  }
 
-  if (!userProfile) return <div className="container mt-5">Please log in to view your profile.</div>;
-
-  const displayProfile = fullUserProfile || userProfile;
-
-  if (loading) return <div className="container mt-5">Loading profile details...</div>;
-
-  if (error) return <div className="container mt-5 text-danger">{error}</div>;
+  if (error) {
+    return <div className="container mt-5 text-danger">{error}</div>;
+  }
 
   // Filter for successful payments
   const successfulPayments = userPayments.filter(payment => payment.status === 'success');
@@ -48,24 +59,30 @@ const ProfilePage = () => {
 
   return (
     <div className="container mt-5 py-5" style={{ paddingTop: '120px' }}>
-      <h2 className="mb-4 text-center" style={{ fontWeight: 700, letterSpacing: '-1px', fontSize: '2.5rem' }}>User Profile</h2>
+      <h2 className="mb-4 text-center" style={{ fontWeight: 700, letterSpacing: '-1px', fontSize: '2.5rem' }}>
+        User Profile
+      </h2>
 
       <div className="card p-4 mx-auto" style={{ maxWidth: '600px' }}>
         {/* Basic Info */}
         <div className="row mb-3">
           <div className="col-md-6 mb-2 mb-md-0">
-            <strong>Name:</strong> <span>{displayProfile.name || 'N/A'}</span>
+            <strong>Name:</strong> <span>{userProfile.name || 'N/A'}</span>
           </div>
           <div className="col-md-6">
-            <strong>Email:</strong> <span>{displayProfile.email || 'N/A'}</span>
+            <strong>Email:</strong> <span>{userProfile.email || 'N/A'}</span>
           </div>
         </div>
 
         {/* Subscription Details */}
         {hasSuccessfulPayment ? (
           <>
-            <div className="mb-2"><strong>Plan:</strong> {successfulPayments[0].plan_name}</div>
-            <div><strong>Plan Ends:</strong> {new Date(successfulPayments[0].end_date).toLocaleDateString()}</div>
+            <div className="mb-2">
+              <strong>Plan:</strong> {successfulPayments[0].plan_name}
+            </div>
+            <div>
+              <strong>Plan Ends:</strong> {new Date(successfulPayments[0].end_date).toLocaleDateString()}
+            </div>
           </>
         ) : (
           <div className="text-muted">No active subscription found.</div>
@@ -116,7 +133,7 @@ const ProfilePage = () => {
           )}
         </div>
 
-        {/* Change Password */}
+        {/* Change Password Button */}
         <div className="mt-4">
           <button className="btn btn-primary" onClick={() => navigate('/change-password')}>
             Change Password

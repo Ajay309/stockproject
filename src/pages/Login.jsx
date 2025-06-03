@@ -92,7 +92,7 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post('http://127.0.0.1:8000/api/v1/login', {
+      const res = await axios.post('https://dtc.sinfode.com/api/v1/login', {
         email,
         password
       });

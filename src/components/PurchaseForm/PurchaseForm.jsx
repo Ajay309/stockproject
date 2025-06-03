@@ -57,7 +57,7 @@ const PurchaseForm = ({ plan, onClose }) => {
     }
 
     try {
-      const res = await fetch('http://127.0.0.1:8000/api/v1/create-order', {
+      const res = await fetch('https://dtc.sinfode.com/api/v1/create-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -81,7 +81,7 @@ const PurchaseForm = ({ plan, onClose }) => {
         order_id: data.order_id,
         handler: async function (response) {
           try {
-            const verifyRes = await fetch('http://127.0.0.1:8000/api/v1/verify-payment', {
+            const verifyRes = await fetch('https://dtc.sinfode.com/api/v1/verify-payment', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -94,7 +94,7 @@ const PurchaseForm = ({ plan, onClose }) => {
             const verifyData = await verifyRes.json();
 
             if (verifyData.success) {
-              await fetch('http://127.0.0.1:8000/api/v1/payment-success', {
+              await fetch('https://dtc.sinfode.com/api/v1/payment-success', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

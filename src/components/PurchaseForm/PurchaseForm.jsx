@@ -12,6 +12,7 @@ const PurchaseForm = ({ plan, onClose }) => {
   const [loadingCoupon, setLoadingCoupon] = useState(false);
 
   const navigate = useNavigate();
+  const userId = localStorage.getItem('id');
 
   const validateCoupon = async () => {
     if (!coupon) return;
@@ -59,7 +60,7 @@ const PurchaseForm = ({ plan, onClose }) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          user_id: user?.id || null,
+          user: userId,
           plan: plan.name,
           amount: calculateDiscountedPrice(),
           email,
@@ -67,6 +68,7 @@ const PurchaseForm = ({ plan, onClose }) => {
           coupon,
         }),
       });
+
       const data = await res.json();
 
       const options = {
@@ -76,8 +78,46 @@ const PurchaseForm = ({ plan, onClose }) => {
         name: 'Your Company Name',
         description: plan.name,
         order_id: data.order_id,
-        handler: function (response) {
-          alert(`✅ Payment Successful! Razorpay ID: ${response.razorpay_payment_id}`);
+        handler: async function (response) {
+          try {
+            const verifyRes = await fetch('http://127.0.0.1:8000/api/v1/verify-payment', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature
+              }),
+            });
+
+            const verifyData = await verifyRes.json();
+
+            if (verifyData.success) {
+              await fetch('http://127.0.0.1:8000/api/v1/payment-success', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  order_id: response.razorpay_order_id,
+                  payment_id: response.razorpay_payment_id,
+                  user_id: userId,
+                  email,
+                  phone,
+                  plan: plan.name,
+                  amount: calculateDiscountedPrice(),
+                  coupon,
+                }),
+              });
+
+              alert('✅ Payment Verified and Successful!');
+              navigate('/profile');
+            } else {
+              alert('❌ Invalid payment signature.');
+              console.error('❌ Verification failed:', verifyData.message);
+            }
+          } catch (err) {
+            console.error('❌ Payment verification failed:', err);
+            alert('❌ Payment verification failed.');
+          }
         },
         prefill: {
           name: user?.name || '',
@@ -140,12 +180,12 @@ const PurchaseForm = ({ plan, onClose }) => {
                     }}
                     placeholder="Enter coupon code"
                   />
-                  <button 
+                  <button
                     type="button"
                     className="login bg-warning rounded border-0 ms-2"
                     onClick={validateCoupon}
                     disabled={loadingCoupon}
-                    style={{height:51}}
+                    style={{ height: 51 }}
                   >
                     {loadingCoupon ? 'Checking...' : 'Apply'}
                   </button>
@@ -177,7 +217,6 @@ const PurchaseForm = ({ plan, onClose }) => {
                   Cancel
                 </button>
               </div>
-
             </div>
           </div>
         </div>

@@ -17,11 +17,19 @@ const PlansCard = ({ plan, isHomePage = false }) => {
                             {!isHomePage && plan.featured && <div className="popular-badge">POPULAR</div>}
                             <div className="pricing-card-header">
                                 <h3 className="plan-name">{plan.name}</h3>
-                                <div className="price">
-                                    <span className="price-currency">₹</span>
-                                    {plan.price}
-                                    <span className="price-period">{plan.duration}</span>
-                                </div>
+                               <div className="price text-center">
+    {parseFloat(plan.discount_price) > parseFloat(plan.price) && (
+        <div className="text-muted text-decoration-line-through" style={{ fontSize: '42px' }}>
+            ₹{plan.discount_price}/ {plan.duration}
+        </div>
+    )}
+    <div style={{ fontSize: '32px', fontWeight: 'bold' }}>
+        <span className="price-currency"></span>
+       ₹{plan.price}
+        <span className="price-period"> / {plan.duration}</span>
+    </div>
+</div>
+
                             </div>
                             <div className="divider"></div>
                             <div className="pricing-card-body">

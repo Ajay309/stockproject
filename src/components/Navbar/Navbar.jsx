@@ -228,7 +228,8 @@ export default function Navbar() {
           {/* Mobile view: bottom of menu links */}
           <div className="d-flex d-lg-none flex-column gap-2 mt-3">
             {userProfile ? (
-              <div className="d-flex align-items-center justify-content-between">
+              <div className="mobile-logged-in-actions d-flex align-items-center justify-content-between p-3 border-top w-100">
+                 {/* Profile image/initials */}
                 <div className="d-flex align-items-center gap-2">
                   {userProfile.profileImage ? (
                     <img 
@@ -245,7 +246,6 @@ export default function Navbar() {
                       }} 
                       onError={e => {
                         e.target.onerror = null;
-                        e.target.style.display = 'none';
                         e.target.nextSibling.style.display = 'flex';
                       }}
                     />
@@ -277,26 +277,35 @@ export default function Navbar() {
                     })()}
                   </div>
                 </div>
-                <div className="d-flex gap-2">
-                  <Link 
-                    to="/profile" 
-                    className="btn btn-outline-primary"
-                    onClick={() => setShowDropdown(false)}
-                  >
-                    <i className="bi bi-person"></i>
-                  </Link>
-                  <button 
-                    className="btn btn-outline-danger"
-                    onClick={handleLogout}
-                  >
-                    <i className="bi bi-box-arrow-right"></i>
-                  </button>
+                {/* Profile, Change Password, Logout Links (Horizontal on mobile as per user image) */}
+                <div className="mobile-profile-actions d-flex align-items-center gap-3">
+                   <Link 
+                      to="/profile" 
+                      className="mobile-profile-link" 
+                      onClick={handleNavItemClick}
+                   >
+                      Profile
+                   </Link>
+                   <Link 
+                      to="/change-password" 
+                      className="mobile-change-password-link" 
+                      onClick={handleNavItemClick}
+                   >
+                      Change Password
+                   </Link>
+                   <button 
+                      onClick={() => { handleLogout(); handleNavItemClick(); }}
+                      className="mobile-logout-link" 
+                   >
+                      Logout
+                   </button>
                 </div>
               </div>
             ) : (
               <>
-                <Link to="/login" className="login">Login</Link>
-                <Link to="/get-started" className="btn btn-primary w-100">Get Started</Link>
+                {/* Ensure these also close the menu */}
+                <Link to="/login" className="login-mobile" onClick={handleNavItemClick}>Login</Link>
+                <Link to="/get-started" className="get-started-mobile" onClick={handleNavItemClick}>Get Started</Link>
               </>
             )}
           </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import './GetStarted.css'; // Import the CSS file
 
 const GetStarted = () => {
   const navigate = useNavigate();
@@ -103,6 +104,7 @@ const GetStarted = () => {
       const nameParts = name.trim().split(/\s+/);
       let initials;
       if (nameParts.length > 1) {
+        // Take first letter of first name and first letter of last name
         initials = `${nameParts[0][0].toUpperCase()}${nameParts[nameParts.length - 1][0].toUpperCase()}`;
       } else {
         // If only one part, use first two letters if available
@@ -128,158 +130,22 @@ const GetStarted = () => {
     setLoading(false);
   };
 
-  
-
-  const containerStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: '100vh',
-    backgroundColor: '#fff',
-    width: '100vw',
-    padding: 0,
-    paddingTop: '105px',
-  };
-
-  const headingStyle = {
-    fontSize: '2.5rem',
-    fontWeight: 700,
-    marginBottom: '10px',
-    color: '#222',
-    textAlign: 'center',
-    letterSpacing: '-1px',
-  };
-
-  const subheadingStyle = {
-    color: '#666',
-    fontSize: '1.3rem',
-    marginBottom: '36px',
-    textAlign: 'center',
-  };
-
-  const googleBtnStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    maxWidth: 420,
-    background: '#fff',
-    border: '1.5px solid #ddd',
-    borderRadius: '7px',
-    padding: '18px',
-    fontSize: '1.15rem',
-    fontWeight: 600,
-    cursor: 'pointer',
-    marginBottom: '28px',
-    transition: 'box-shadow 0.2s',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-    gap: '12px',
-  };
-
-  const dividerStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    width: '100%',
-    maxWidth: 420,
-    margin: '24px 0',
-  };
-
-  const lineStyle = {
-    flex: 1,
-    height: '1.5px',
-    background: '#eee',
-  };
-
-  const orStyle = {
-    margin: '0 18px',
-    color: '#888',
-    fontWeight: 600,
-    fontSize: '1.1rem',
-  };
-
-  const formStyle = {
-    width: '100%',
-    maxWidth: 420,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'stretch',
-  };
-
-  const labelStyle = {
-    fontWeight: 600,
-    color: '#444',
-    fontSize: '1.05rem',
-    marginBottom: 6,
-  };
-
-  const inputStyle = {
-    width: '100%',
-    padding: '16px',
-    border: '1.5px solid #ddd',
-    borderRadius: '7px',
-    fontSize: '1.1rem',
-    marginBottom: '22px',
-    marginTop: '4px',
-  };
-
-  const continueBtnStyle = {
-    width: '100%',
-    background: 'linear-gradient(90deg, #f6b40e 0%, #ffc107 100%)',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '7px',
-    padding: '16px',
-    fontSize: '1.15rem',
-    fontWeight: '600',
-    cursor: 'pointer',
-    marginTop: '8px',
-    marginBottom: '18px',
-    transition: 'all 0.3s ease',
-    letterSpacing: '0.5px',
-    boxShadow: '0 2px 8px rgba(246, 180, 14, 0.3)'
-  };
-
-  const loginTextStyle = {
-    marginTop: 18,
-    color: '#666',
-    fontSize: '1.05rem',
-    textAlign: 'center',
-  };
-
-  const linkStyle = {
-    color: '#f6b40e',
-    textDecoration: 'underline',
-    cursor: 'pointer',
-    margin: '0 4px',
-    fontWeight: 500,
-    transition: 'color 0.2s ease'
-  };
-
-  const footerStyle = {
-    marginTop: '48px',
-    textAlign: 'center',
-    color: '#888',
-    fontSize: '1rem',
-    width: '100%',
-  };
-
   const userProfile = JSON.parse(localStorage.getItem('userProfile'));
 
   return (
-    <div style={containerStyle}>
-      <div style={headingStyle}>Welcome to Stock App</div>
-      <div style={subheadingStyle}>To get started, please sign up</div>
+    <div className="get-started-container">
+      <div className="get-started-heading">Welcome to Stock App</div>
+      <div className="get-started-subheading">To get started, please sign up</div>
 
-      <button style={googleBtnStyle} onClick={handleGoogleSignIn}>
-        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style={{ width: 26, marginRight: 12 }} />
+      <button className="google-btn" onClick={handleGoogleSignIn}>
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
         Continue with Google
       </button>
 
-      <div style={dividerStyle}>
-        <div style={lineStyle}></div>
-        <span style={orStyle}>or</span>
-        <div style={lineStyle}></div>
+      <div className="divider">
+        <div className="line"></div>
+        <span className="or">or</span>
+        <div className="line"></div>
       </div>
 
       <form onSubmit={
@@ -287,8 +153,8 @@ const GetStarted = () => {
         step === 2 ? handleVerifyOtp :
         step === 3 ? handleNameSubmit :
         handlePasswordSubmit
-      } style={formStyle}>
-        <label style={labelStyle}>
+      } className="get-started-form">
+        <label className="form-label">
           {step === 1 ? 'Email address' :
            step === 2 ? 'Enter OTP sent to your email' :
            step === 3 ? 'Enter your name' :
@@ -301,7 +167,7 @@ const GetStarted = () => {
             value={email}
             onChange={e => setEmail(e.target.value)}
             placeholder="Enter your email"
-            style={inputStyle}
+            className="form-input"
             required
           />
         ) : step === 2 ? (
@@ -310,7 +176,7 @@ const GetStarted = () => {
             value={otp}
             onChange={e => setOtp(e.target.value)}
             placeholder="Enter OTP"
-            style={inputStyle}
+            className="form-input"
             required
           />
         ) : step === 3 ? (
@@ -319,7 +185,7 @@ const GetStarted = () => {
             value={name}
             onChange={e => setName(e.target.value)}
             placeholder="Enter your full name"
-            style={inputStyle}
+            className="form-input"
             required
           />
         ) : (
@@ -328,7 +194,7 @@ const GetStarted = () => {
             value={password}
             onChange={e => setPassword(e.target.value)}
             placeholder="Create a strong password"
-            style={inputStyle}
+            className="form-input"
             required
             minLength="6"
           />
@@ -336,7 +202,7 @@ const GetStarted = () => {
 
         <button
           type="submit"
-          style={continueBtnStyle}
+          className="continue-btn"
           onMouseOver={(e) => {
             e.target.style.background = 'linear-gradient(90deg, #e6a800 0%, #e6c200 100%)';
             e.target.style.transform = 'translateY(-2px)';
@@ -358,10 +224,10 @@ const GetStarted = () => {
 
       {message && <p style={{ color: '#888', marginTop: 10 }}>{message}</p>}
 
-      <div style={loginTextStyle}>
+      <div className="login-text">
         Already have an account?{' '}
         <span
-          style={linkStyle}
+          className="link"
           onClick={() => navigate('/login')}
           onMouseOver={(e) => e.target.style.color = '#e6a800'}
           onMouseOut={(e) => e.target.style.color = '#f6b40e'}
@@ -370,23 +236,23 @@ const GetStarted = () => {
         </span>
       </div>
 
-      <div style={footerStyle}>
+      <div className="get-started-footer">
         <span
-          style={linkStyle}
+          className="link"
           onMouseOver={(e) => e.target.style.color = '#e6a800'}
           onMouseOut={(e) => e.target.style.color = '#f6b40e'}
         >
           Support
         </span> •
         <span
-          style={linkStyle}
+          className="link"
           onMouseOver={(e) => e.target.style.color = '#e6a800'}
           onMouseOut={(e) => e.target.style.color = '#f6b40e'}
         >
           Privacy
         </span> •
         <span
-          style={linkStyle}
+          className="link"
           onMouseOver={(e) => e.target.style.color = '#e6a800'}
           onMouseOut={(e) => e.target.style.color = '#f6b40e'}
         >

@@ -58,3 +58,185 @@ body{
     text-decoration: none;
     transition: background-color 0.25s;
 }
+
+/* Remove black outline/background on navbar toggler click/focus */
+.navbar-toggler:focus,
+.navbar-toggler:active {
+    outline: none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    border-color: transparent !important;
+}
+
+/* Mobile Menu Login and Get Started Styles */
+.login-mobile,
+.get-started-mobile {
+    display: block;
+    padding: 0.7em 1em;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.25s;
+    text-align: left;
+}
+
+.login-mobile {
+    color: #000000; /* Or your desired text color for login */
+}
+
+.get-started-mobile {
+    background-color: #f6b40e; /* Your desired background color for get started */
+    color: white; /* Your desired text color for get started */
+    border-radius: 4px;
+    margin-top: 5px; /* Add some space above the button */
+}
+
+.login-mobile:hover,
+.get-started-mobile:hover {
+    background-color: #eee; /* Hover effect */
+}
+
+/* Mobile view specific styles for logged-in user menu */
+@media (max-width: 991.98px) { /* Apply styles below large breakpoint */
+
+  /* Styles for the main container of mobile logged-in actions */
+  .navbar-collapse.show .mobile-logged-in-actions {
+      width: 100%;
+      padding: 15px !important; /* Add padding */
+      border-top: 1px solid #eee; /* Add a separator line at the top */
+      margin-top: 15px; /* Add space above this section */
+      display: flex; /* Use flexbox for horizontal layout */
+      justify-content: space-between; /* Space out items */
+      align-items: center; /* Vertically align items */
+      flex-wrap: wrap; /* Allow wrapping if needed */
+  }
+
+   /* Style for the profile image/initials container */
+    .navbar-collapse.show .mobile-logged-in-actions .d-flex.align-items-center.gap-2 {
+        flex-shrink: 0; /* Prevent shrinking */
+    }
+
+  /* Style for the container holding profile links */
+  .navbar-collapse.show .mobile-profile-links {
+      display: flex;
+      align-items: center;
+      gap: 15px; /* Space between links */
+      flex-wrap: wrap; /* Allow links to wrap */
+  }
+
+  /* Style for the profile and change password links */
+  .navbar-collapse.show .mobile-profile-link,
+  .navbar-collapse.show .mobile-change-password-link {
+      color: #000 !important; /* Set color to black */
+      text-decoration: none !important; /* Remove underline */
+      background-color: transparent !important; /* Ensure no background */
+      border: none !important; /* Remove border */
+      padding: 0.5rem 1rem !important; /* Add some padding to make them look like buttons */
+      font-size: 1rem; /* Adjust font size */
+      font-weight: 400; /* Normal font weight */
+      cursor: pointer;
+      display: block; /* Make them block elements */
+      text-align: left; /* Align text to the left */
+  }
+
+  .navbar-collapse.show .mobile-profile-link:hover,
+  .navbar-collapse.show .mobile-change-password-link:hover {
+      text-decoration: none !important; /* Keep no underline on hover */
+      color: #000 !important; /* Keep color black on hover */
+      background-color: #f8f9fa !important; /* Add a slight background on hover */
+  }
+
+  /* Style for the logout link */
+  .navbar-collapse.show .mobile-logout-link {
+      color: #000 !important; /* Set color to black */
+      text-decoration: none !important; /* Remove underline */
+      background: transparent !important; /* Ensure no background */
+      border: none !important; /* Ensure no border */
+      padding: 0.5rem 1rem !important; /* Add some padding */
+      font-size: 1rem; /* Adjust font size */
+      font-weight: 400; /* Normal font weight */
+      cursor: pointer;
+      display: block; /* Make it a block element */
+      text-align: left; /* Align text to the left */
+  }
+
+    .navbar-collapse.show .mobile-logout-link:hover {
+        text-decoration: none !important; /* Keep no underline on hover */
+        color: #000 !important; /* Keep color black on hover */
+        background-color: #f8f9fa !important; /* Add a slight background on hover */
+    }
+
+   /* Ensure profile image/initials size */
+     .navbar-collapse.show .mobile-logged-in-actions img,
+     .navbar-collapse.show .mobile-logged-in-actions > .d-flex.align-items-center.gap-2 > div[style] {
+         width: 40px !important;
+         height: 40px !important;
+         font-size: 1.2rem !important;
+     }
+
+     /* Hide email in this horizontal layout */
+     .navbar-collapse.show .mobile-logged-in-actions .text-muted.fw-bold {
+         display: none;
+     }
+
+  /* Prevent visited links from turning blue */
+  .navbar-collapse.show .dropdown-item:visited {
+      color: inherit !important; /* Inherit color from parent or default link color */
+  }
+
+  /* Remove blue background/outline on focus/active for dropdown items */
+  .navbar-collapse.show .dropdown-item:focus,
+  .navbar-collapse.show .dropdown-item:active {
+      background-color: transparent !important; /* Remove blue background */
+      outline: none !important; /* Remove outline */
+      box-shadow: none !important; /* Remove box shadow */
+  }
+
+}
+
+@media (max-width: 480px) {
+  /* Further adjustments for smaller mobile screens */
+    .navbar-collapse.show .mobile-logged-in-actions {
+        padding: 10px !important;
+        gap: 8px; /* Adjust gap in the main container */
+    }
+
+    .navbar-collapse.show .mobile-profile-links {
+        gap: 10px; /* Adjust gap between links */
+    }
+
+     .navbar-collapse.show .mobile-profile-link,
+     .navbar-collapse.show .mobile-change-password-link,
+     .navbar-collapse.show .mobile-logout-link {
+         font-size: 0.9rem; /* Slightly smaller font size */
+     }
+
+      .navbar-collapse.show .mobile-logged-in-actions img,
+      .navbar-collapse.show .mobile-logged-in-actions > .d-flex.align-items-center.gap-2 > div[style] {
+         width: 35px !important;
+         height: 35px !important;
+         font-size: 1.1rem !important;
+     }
+
+}
+
+/* Ensure dropdown items are not blue when active or visited */
+.dropdown-item:active,
+.dropdown-item:visited {
+    color: inherit !important; /* Inherit color from parent */
+}
+
+/* Ensure active dropdown item has no blue background */
+.dropdown-item.active,
+.dropdown-item:active,
+a.dropdown-item.active,
+.dropdown-item[href="/blogs"].active, /* Target specifically the blogs link when active */
+a.dropdown-item[href="/blogs"].active {
+    color: #000 !important; /* Set text color to black */
+    background-color: transparent !important; /* Remove blue background */
+}
+
+/* Ensure the active dropdown link itself has no blue background */
+a.dropdown-item.active {
+    color: #000; /* Set text color to black */
+    background-color: transparent; /* Remove blue background */
+}

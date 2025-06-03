@@ -39,7 +39,6 @@ export const AuthProvider = ({ children }) => {
     setUserProfile(profile);
     setUserEmail(profile.email);
     localStorage.setItem('userProfile', JSON.stringify(profile));
-    
   };
 
   const logout = () => {

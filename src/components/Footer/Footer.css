@@ -139,3 +139,82 @@
     font-size: 16px !important;
     font-weight: 500 !important;
 }
+
+/* Floating button styles */
+.floating-btn {
+  transition: all 0.3s ease;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  cursor: pointer;
+}
+
+.floating-btn.whatsapp {
+  background-color: #25D366;
+  bottom: 100px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+}
+
+.floating-btn.whatsapp svg {
+  width: 32px;
+  height: 32px;
+  color: #fff;
+}
+
+.floating-btn.other {
+  background-color: #fff;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+}
+
+@media (max-width: 768px) {
+  .floating-btn {
+    width: 50px !important;
+    height: 50px !important;
+  }
+  
+  .floating-btn.whatsapp {
+    bottom: 80px !important;
+    right: 20px !important;
+  }
+  
+  .floating-btn.other {
+    bottom: 20px !important;
+    right: 20px !important;
+  }
+  
+  .floating-btn svg {
+    width: 24px !important;
+    height: 24px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .floating-btn {
+    width: 45px !important;
+    height: 45px !important;
+  }
+  
+  .floating-btn.whatsapp {
+    bottom: 70px !important;
+    right: 15px !important;
+  }
+  
+  .floating-btn.other {
+    bottom: 15px !important;
+    right: 15px !important;
+  }
+  
+  .floating-btn svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+}

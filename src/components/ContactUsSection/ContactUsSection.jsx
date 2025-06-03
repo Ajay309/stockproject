@@ -188,24 +188,32 @@ const ContactUsSection = () => {
                                     />
                                 </div>
                             </div>
-                            <input 
-                                type="tel" 
-                                name="phone_number" 
-                                className="form-control mb-3" 
-                                placeholder="Phone Number" 
-                                value={formData.phone_number} 
-                                onChange={handleChange} 
-                                required 
-                            />
-                            <textarea 
-                                name="message" 
-                                className="form-control mb-3" 
-                                rows="5" 
-                                placeholder="Your Message" 
-                                value={formData.message} 
-                                onChange={handleChange} 
-                                required
-                            ></textarea>
+                            <div className="row">
+                                <div className="col-12">
+                                    <input 
+                                        type="tel" 
+                                        name="phone_number" 
+                                        className="form-control mb-3" 
+                                        placeholder="Phone Number" 
+                                        value={formData.phone_number} 
+                                        onChange={handleChange} 
+                                        required 
+                                    />
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-12">
+                                    <textarea 
+                                        name="message" 
+                                        className="form-control mb-3" 
+                                        rows="5" 
+                                        placeholder="Your Message" 
+                                        value={formData.message} 
+                                        onChange={handleChange} 
+                                        required
+                                    ></textarea>
+                                </div>
+                            </div>
                             <button 
                                 type="submit" 
                                 className="btn btn-primary w-100"

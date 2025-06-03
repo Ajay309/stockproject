@@ -1,0 +1,69 @@
+/* PurchaseForm.css */
+
+/* Ensure container padding is adjusted on mobile */
+@media (max-width: 768px) {
+  .purchase-form-modal .container {
+    padding: 0 15px !important; /* Reduce horizontal padding */
+  }
+
+  .purchase-form h4 {
+    font-size: 1.5rem !important; /* Adjust heading size */
+    text-align: center;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .purchase-form .col-6 {
+    width: 100% !important; /* Make column take full width */
+    padding: 0 !important; /* Remove padding from column */
+  }
+
+  .purchase-form .mb-3 {
+    margin-bottom: 1rem !important; /* Reduce margin between form groups */
+  }
+
+  .purchase-form label {
+    font-size: 0.9rem !important; /* Adjust label font size */
+    margin-bottom: 0.3rem !important;
+  }
+
+  .purchase-form .form-control {
+    font-size: 1rem !important; /* Adjust input font size */
+    padding: 0.6rem 0.75rem !important; /* Adjust input padding */
+  }
+
+  .purchase-form .d-flex.gap-2 {
+    flex-direction: column !important; /* Stack buttons vertically */
+    gap: 0.8rem !important; /* Adjust gap for stacked buttons */
+  }
+
+  .purchase-form button {
+    width: 100% !important; /* Make buttons take full width */
+    padding: 0.7rem 1rem !important; /* Adjust button padding */
+    font-size: 1rem !important; /* Adjust button font size */
+  }
+}
+
+@media (max-width: 480px) {
+  .purchase-form h4 {
+    font-size: 1.3rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .purchase-form label {
+    font-size: 0.85rem !important;
+  }
+
+  .purchase-form .form-control {
+    font-size: 0.9rem !important;
+    padding: 0.5rem 0.6rem !important;
+  }
+
+  .purchase-form .d-flex.gap-2 {
+    gap: 0.6rem !important;
+  }
+
+  .purchase-form button {
+    padding: 0.6rem 0.8rem !important;
+    font-size: 0.9rem !important;
+  }
+} 

@@ -43,14 +43,13 @@ const Footer = () => {
   </p>
         {/* WhatsApp Floating Button (above the image button) */}
         <div
-          className="floating-btn position-fixed rounded-circle bg-success d-flex align-items-center justify-content-center shadow"
-          style={{ bottom: '100px', right: '30px', width: '60px', height: '60px', zIndex: 1000, cursor: 'pointer' }}
+          className="floating-btn whatsapp"
           onClick={handleWhatsAppClick}
         >
-          <FaWhatsapp size={32} color="#fff" />
+          <FaWhatsapp />
         </div>
         {/* Existing Floating Button */}
-        <div className="floating-btn position-fixed rounded-circle bg-white d-flex align-items-center justify-content-center shadow" style={{ bottom: '30px', right: '30px', width: '60px', height: '60px', zIndex: 1000 }}>
+        <div className="floating-btn other">
           <img src="/path/to/icon.png" alt="Floating Button" width="30" height="30" />
         </div> 
       <hr className='container'></hr>
@@ -58,44 +57,44 @@ const Footer = () => {
       <div className="container mx-auto mt-16 pb-8">
         <div className="footer-menu-responsive">
           <div className="footer-column">
-            <a href="/" className="hover:text-white transition">Home</a>
-            <a href="/blog" className="hover:text-white transition">Blog</a>
-            <a href="/faq" className="hover:text-white transition">FAQ</a>
-            <a href="/privacy" className="hover:text-white transition">Privacy Policy</a>
-            <a href="/terms" className="hover:text-white transition">Terms of Service</a>
-            <a href="/security" className="hover:text-white transition">Security</a>
+            <Link to="/" className="hover:text-white transition">Home</Link>
+            <Link to="/blogs" className="hover:text-white transition">Blog</Link>
+            <Link to="/plans" className="hover:text-white transition">FAQ</Link>
+            <Link to="/privacy" className="hover:text-white transition">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-white transition">Terms of Service</Link>
+            <Link to="/security" className="hover:text-white transition">Security</Link>
           </div>
           <div className="footer-column">
-            <a href="/about" className="hover:text-white transition">Plans</a>
-            <a href="/features" className="hover:text-white transition">Features</a>
-            <a href="/solutions" className="hover:text-white transition">Solutions</a>
-            <a href="/integrations" className="hover:text-white transition">Integrations</a>
-            <a href="/api" className="hover:text-white transition">API</a>
-            <a href="/developers" className="hover:text-white transition">Developers</a>
+            <Link to="/plans" className="hover:text-white transition">Plans</Link>
+            <Link to="/features" className="hover:text-white transition">Features</Link>
+            <Link to="/solutions" className="hover:text-white transition">Solutions</Link>
+            <Link to="/integrations" className="hover:text-white transition">Integrations</Link>
+            <Link to="/api" className="hover:text-white transition">API</Link>
+            <Link to="/developers" className="hover:text-white transition">Developers</Link>
           </div>
           <div className="footer-column">
-            <a href="/services" className="hover:text-white transition">Resource</a>
-            <a href="/webinars" className="hover:text-white transition">Webinars</a>
-            <a href="/events" className="hover:text-white transition">Events</a>
-            <a href="/case-studies" className="hover:text-white transition">Case Studies</a>
-            <a href="/success-stories" className="hover:text-white transition">Success Stories</a>
-            <a href="/customer-stories" className="hover:text-white transition">Customer Stories</a>
+            <Link to="/services" className="hover:text-white transition">Resource</Link>
+            <Link to="/webinars" className="hover:text-white transition">Webinars</Link>
+            <Link to="/events" className="hover:text-white transition">Events</Link>
+            <Link to="/case-studies" className="hover:text-white transition">Case Studies</Link>
+            <Link to="/success-stories" className="hover:text-white transition">Success Stories</Link>
+            <Link to="/customer-stories" className="hover:text-white transition">Customer Stories</Link>
           </div>
           <div className="footer-column">
-            <a href="/pricing" className="hover:text-white transition">About Us</a>
-            <a href="/company" className="hover:text-white transition">Company</a>
-            <a href="/careers" className="hover:text-white transition">Careers</a>
-            <a href="/team" className="hover:text-white transition">Team</a>
-            <a href="/partners" className="hover:text-white transition">Partners</a>
-            <a href="/investors" className="hover:text-white transition">Investors</a>
+            <Link to="/about-us" className="hover:text-white transition">About Us</Link>
+            <Link to="/company" className="hover:text-white transition">Company</Link>
+            <Link to="/careers" className="hover:text-white transition">Careers</Link>
+            <Link to="/team" className="hover:text-white transition">Team</Link>
+            <Link to="/partners" className="hover:text-white transition">Partners</Link>
+            <Link to="/investors" className="hover:text-white transition">Investors</Link>
           </div>
           <div className="footer-column">
-            <a href="/contact" className="hover:text-white transition">Contact</a>
-            <a href="/support" className="hover:text-white transition">Support</a>
-            <a href="/help" className="hover:text-white transition">Help Center</a>
-            <a href="/community" className="hover:text-white transition">Community</a>
-            <a href="/feedback" className="hover:text-white transition">Feedback</a>
-            <a href="/contact-us" className="hover:text-white transition">Contact Us</a>
+            <Link to="/contact-us" className="hover:text-white transition">Contact</Link>
+            <Link to="/support" className="hover:text-white transition">Support</Link>
+            <Link to="/help" className="hover:text-white transition">Help Center</Link>
+            <Link to="/community" className="hover:text-white transition">Community</Link>
+            <Link to="/feedback" className="hover:text-white transition">Feedback</Link>
+            <Link to="/contact-us" className="hover:text-white transition">Contact Us</Link>
           </div>
         </div>
       </div>

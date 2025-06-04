@@ -5,11 +5,14 @@ import PlansCard from './PlansCard'; // Assume you have this component
 import './PlansSection.css'; // Import your CSS file
 import { useLocation } from 'react-router-dom';
 import Timer from './Timer';
+import NotificationOnlyBar from './NotificationOnlyBar'; // Import the notification bar component
+
 
 const PlansSection = () => {
   const [packages, setPackages] = useState([]);
   const [selectedPackage, setSelectedPackage] = useState(null);
   const [plans, setPlans] = useState([]);
+  const [selectedDuration, setSelectedDuration] = useState('monthly'); // 🆕 Duration state
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const location = useLocation();
@@ -52,6 +55,10 @@ const PlansSection = () => {
     }
   }, [selectedPackage]);
 
+  const filteredPlans = plans.filter(
+    (plan) => plan.duration.toLowerCase() === selectedDuration
+  );
+
   if (loading) return <div className="text-center">Loading...</div>;
   if (error) return <div className="text-red-500 text-center">{error}</div>;
 
@@ -59,18 +66,15 @@ const PlansSection = () => {
     <div className={`${isHomePage ? "container py-5 plans-section-homepage" : "py-5"}`}>
       {!isHomePage && (
         <header className="pricing-header text-center py-5">
-          {/* <div className="container"> */}
-            <h1 className="display-4">Elevate Your Experience</h1>
-            <p>Choose the perfect plan tailored to your needs and unlock premium features designed to help you succeed.</p>
-          {/* </div> */}
+          <h1 className="display-4">Elevate Your Experience</h1>
+          <p>Choose the perfect plan tailored to your needs and unlock premium features designed to help you succeed.</p>
         </header>
       )}
-      {/* Timer Section */}
-      <div className="container"> {/* Add this container div */}
-        <Timer /> {/* Add the Timer component here */}
-      </div> {/* Close the container div */}
 
-      
+      {/* Timer Section */}
+      <div className="container">
+        <Timer />
+      </div>
 
       {/* Package Tabs */}
       <div className="d-flex justify-content-center flex-wrap mb-4">
@@ -85,14 +89,33 @@ const PlansSection = () => {
         ))}
       </div>
 
+      {/* Toggle for Duration */}
+      <div className="d-flex justify-content-center gap-3 mb-4">
+        <button
+          className={`btn btn-outline-warning ${selectedDuration === 'monthly' ? 'active' : ''}`}
+          onClick={() => setSelectedDuration('monthly')}
+        >
+          Monthly
+        </button>
+        <button
+          className={`btn btn-outline-warning ${selectedDuration === 'annually' ? 'active' : ''}`}
+          onClick={() => setSelectedDuration('annually')}
+        >
+          Annually
+        </button>
+      </div>
+
+      {/* Notification Without Timer */}
+      <NotificationOnlyBar />
+
       {/* Plans Display */}
       {selectedPackage && (
         <div>
-          {!isHomePage && (
+          {/* {!isHomePage && (
             <h2 className="text-2xl text-center mt-3 font-semibold mb-4">{selectedPackage.name} Plans</h2>
-          )}
+          )} */}
           <div className="row">
-            {plans.map((plan) => (
+            {filteredPlans.map((plan) => (
               <div key={plan.id} className="col-md-4 mb-4">
                 <PlansCard plan={plan} isHomePage={isHomePage} />
               </div>

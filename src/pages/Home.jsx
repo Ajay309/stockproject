@@ -11,26 +11,26 @@ import PlansSection from '../components/Plans/PlansSection';
 export default function Home() {
   return (
     <>
-    <div className="">
-    <HeaderSection/>
-    </div>
-    <div className="with-navbar-padding">
-      <FeaturesSection/>
-    </div>
-    <div className="container-fluid">
-<Process />    
-    </div>
-     <div className="container-fluid">
-    <ReviewsSection />
-    </div>
-    <div className="container-fluid">
-      <PlansSection/>
-    </div>
-    <div className="container-fluid py-3">
-      <FaqSection/>
-    </div>
-    <EnquiryForm/>
-    <Footer/>
+      <div className="">
+        <HeaderSection />
+      </div>
+      <div className="with-navbar-padding">
+        <FeaturesSection />
+      </div>
+      <div className="container-fluid">
+        <Process />
+      </div>
+      <div className="container-fluid">
+        <ReviewsSection />
+      </div>
+      <div className="container-fluid">
+        <PlansSection />
+      </div>
+      <div className="container-fluid py-3">
+        <FaqSection />
+      </div>
+      <EnquiryForm />
+      <Footer />
     </>
   );
 }

@@ -27,7 +27,8 @@ const PurchaseForm = ({ plan, onClose }) => {
         (c) =>
           c.code === coupon &&
           c.is_active === 1 &&
-          new Date(c.expire_at) > new Date()
+          new Date(c.expire_at) > new Date() &&
+          (c.plan_id === plan.id || c.package_id === plan.package_id)
       );
 
       if (found) {
@@ -110,7 +111,19 @@ const PurchaseForm = ({ plan, onClose }) => {
               });
 
               alert('✅ Payment Verified and Successful!');
-              navigate('/profile');
+
+              navigate('/profile', {
+                state: {
+                  userId: userId,
+                  payment: {
+                    plan: plan.name,
+                    amount: calculateDiscountedPrice(),
+                    email,
+                    phone,
+                    coupon,
+                  }
+                }
+              });
             } else {
               alert('❌ Invalid payment signature.');
               console.error('❌ Verification failed:', verifyData.message);
@@ -198,7 +211,7 @@ const PurchaseForm = ({ plan, onClose }) => {
                 )}
                 {isCouponValid === false && (
                   <small className="text-danger">
-                    ❌ Invalid or expired coupon
+                    ❌ Invalid, expired, or not applicable for this plan
                   </small>
                 )}
               </div>

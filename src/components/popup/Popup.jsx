@@ -1,40 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
+import axios from 'axios';
 
 const Popup = () => {
-  console.log('POPUP COMPONENT RENDERED'); // This should show immediately when component mounts
-
   const [isVisible, setIsVisible] = useState(false);
-  const [timerStarted, setTimerStarted] = useState(false);
+  const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
-    console.log('POPUP EFFECT RUNNING'); // This should show when effect runs
-    
-    // Force show popup for testing
+    // Fetch image from API
+    axios.get('https://dtc.sinfode.com/api/v1/popup')
+      .then((res) => {
+        const data = res.data?.data;
+        if (data && data.length > 0) {
+          setImageUrl(`${data[0].image}`);
+        }
+      })
+      .catch((err) => {
+        console.error('Error fetching popup image:', err);
+      });
+
+    // Show popup after 7 seconds
     const timer = setTimeout(() => {
-      console.log('POPUP TIMER COMPLETED - SHOWING POPUP');
       setIsVisible(true);
     }, 7000);
 
-    return () => {
-      console.log('POPUP CLEANUP RUNNING');
-      clearTimeout(timer);
-    };
-  }, []); // Empty dependency array means this runs once on mount
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleClose = () => {
-    console.log('POPUP CLOSING');
     setIsVisible(false);
   };
 
-  console.log('POPUP VISIBILITY:', isVisible);
-
-  if (!isVisible) {
-    console.log('POPUP NOT VISIBLE - RETURNING NULL');
-    return null;
-  }
-
-  console.log('POPUP RENDERING CONTENT');
+  if (!isVisible) return null;
 
   return (
     <div style={{
@@ -58,7 +55,8 @@ const Popup = () => {
         width: '90%',
         position: 'relative',
         boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
-        animation: 'slideIn 0.3s ease-out'
+        animation: 'slideIn 0.3s ease-out',
+        textAlign: 'center'
       }}>
         <button
           onClick={handleClose}
@@ -70,46 +68,30 @@ const Popup = () => {
             border: 'none',
             fontSize: '20px',
             cursor: 'pointer',
-            color: '#666',
-            padding: '5px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            transition: 'color 0.2s ease'
+            color: '#666'
           }}
-          onMouseOver={(e) => e.target.style.color = '#333'}
-          onMouseOut={(e) => e.target.style.color = '#666'}
         >
           <FaTimes />
         </button>
 
-        <div style={{
-          textAlign: 'center',
-          marginBottom: '20px'
-        }}>
-          <h2 style={{
-            fontSize: '24px',
-            color: '#2c3e50',
-            marginBottom: '10px',
-            fontWeight: '600'
-          }}>
-            Welcome to StockProject!
-          </h2>
-          <p style={{
-            fontSize: '16px',
-            color: '#666',
-            lineHeight: '1.6',
-            marginBottom: '20px'
-          }}>
-            Get started with our platform and discover the best investment opportunities.
-          </p>
-        </div>
+        
 
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          gap: '15px'
-        }}>
+        {/* Show Image from API */}
+        {imageUrl && (
+          <img
+            src={imageUrl}
+            alt="Popup"
+            style={{
+              width: '100%',
+              height: 'auto',
+              borderRadius: '10px',
+              marginBottom: '20px',
+              boxShadow: '0 2px 12px rgba(0,0,0,0.1)'
+            }}
+          />
+        )}
+
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '15px' }}>
           <button
             onClick={handleClose}
             style={{
@@ -120,19 +102,7 @@ const Popup = () => {
               borderRadius: '6px',
               fontSize: '16px',
               fontWeight: '500',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              boxShadow: '0 2px 8px rgba(246, 180, 14, 0.3)'
-            }}
-            onMouseOver={(e) => {
-              e.target.style.backgroundColor = '#e6a800';
-              e.target.style.transform = 'translateY(-2px)';
-              e.target.style.boxShadow = '0 4px 12px rgba(246, 180, 14, 0.4)';
-            }}
-            onMouseOut={(e) => {
-              e.target.style.backgroundColor = '#f6b40e';
-              e.target.style.transform = 'translateY(0)';
-              e.target.style.boxShadow = '0 2px 8px rgba(246, 180, 14, 0.3)';
+              cursor: 'pointer'
             }}
           >
             Get Started
@@ -147,16 +117,7 @@ const Popup = () => {
               borderRadius: '6px',
               fontSize: '16px',
               fontWeight: '500',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease'
-            }}
-            onMouseOver={(e) => {
-              e.target.style.backgroundColor = '#f8f9fa';
-              e.target.style.color = '#333';
-            }}
-            onMouseOut={(e) => {
-              e.target.style.backgroundColor = 'transparent';
-              e.target.style.color = '#666';
+              cursor: 'pointer'
             }}
           >
             Maybe Later
@@ -170,7 +131,7 @@ const Popup = () => {
             from { opacity: 0; }
             to { opacity: 1; }
           }
-          
+
           @keyframes slideIn {
             from { transform: translateY(-20px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
@@ -181,4 +142,4 @@ const Popup = () => {
   );
 };
 
-export default Popup; 
+export default Popup;

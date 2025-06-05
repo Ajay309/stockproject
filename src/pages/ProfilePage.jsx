@@ -1,131 +1,167 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const ProfilePage = () => {
-  const { userProfile, isLoading: authLoading } = useAuth();
-  const navigate = useNavigate();
-
-  const [fullUserProfile, setFullUserProfile] = useState(userProfile);
-  const [userPayments, setUserPayments] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const { userProfile } = useAuth();
+  const [paymentData, setPaymentData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
-  const fetchUserPayments = async () => {
-    
+    const fetchPayments = async () => {
+      if (!userProfile || !userProfile.id) {
+        setLoading(false);
+        return;
+      }
 
-    try {
-      const res = await axios.get(`https://dtc.sinfode.com/api/v1/user-payments/534`);
-      setUserPayments(res.data);
-      console.log('User payments fetched:', res.data);
-    } catch (err) {
-      console.error('Error fetching user payments:', err);
-      setError('Failed to load user payment data.');
+      try {
+        const response = await axios.get(`https://dtc.sinfode.com/api/v1/user-payments/${userProfile.id}`);
+        if (Array.isArray(response.data) && response.data.length > 0) {
+          setPaymentData(response.data[0]);
+          setErrorMsg('');
+        } else {
+          setPaymentData(null);
+          setErrorMsg('No payment history found.');
+        }
+      } catch (error) {
+        setErrorMsg('Failed to fetch payment data.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPayments();
+  }, [userProfile]);
+
+  const openWhatsApp = () => {
+    if (!paymentData?.phone) {
+      alert('Phone number not available for WhatsApp.');
+      return;
     }
+    const phone = paymentData.phone.replace(/[^0-9]/g, '');
+    const message = encodeURIComponent(`Hello ${userProfile?.name}, thank you for your payment for the plan: ${paymentData.plan_name}.`);
+    window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
   };
 
-  if (userProfile && !authLoading) {
-    setFullUserProfile(userProfile);
-    fetchUserPayments();
-  }
-}, [userProfile, authLoading]);
-
-
-  if (authLoading) return <div className="container mt-5">Loading user session...</div>;
-
-  if (!userProfile) return <div className="container mt-5">Please log in to view your profile.</div>;
-
-  const displayProfile = fullUserProfile || userProfile;
-
-  if (loading) return <div className="container mt-5">Loading profile details...</div>;
-
-  if (error) return <div className="container mt-5 text-danger">{error}</div>;
-
-  // Filter for successful payments
-  const successfulPayments = userPayments.filter(payment => payment.status === 'success');
-  const hasSuccessfulPayment = successfulPayments.length > 0;
+  if (loading) return <div style={styles.loading}>Loading profile...</div>;
 
   return (
-    <div className="container mt-5 py-5" style={{ paddingTop: '120px' }}>
-      <h2 className="mb-4 text-center" style={{ fontWeight: 700, letterSpacing: '-1px', fontSize: '2.5rem' }}>User Profile</h2>
+    <div style={styles.page}>
+      <div style={styles.card}>
+        <h2 style={styles.heading} className='text-warning'>User Profile</h2>
 
-      <div className="card p-4 mx-auto" style={{ maxWidth: '600px' }}>
-        {/* Basic Info */}
-        <div className="row mb-3">
-          <div className="col-md-6 mb-2 mb-md-0">
-            <strong>Name:</strong> <span>{displayProfile.name || 'N/A'}</span>
-          </div>
-          <div className="col-md-6">
-            <strong>Email:</strong> <span>{displayProfile.email || 'N/A'}</span>
-          </div>
-        </div>
+        <p style={styles.info}><strong>Name:</strong> {userProfile?.name || 'N/A'}</p>
+        <p style={styles.info}><strong>Email:</strong> {userProfile?.email || 'N/A'}</p>
 
-        {/* Subscription Details */}
-        {hasSuccessfulPayment ? (
+        <hr style={styles.divider} />
+
+        <h3 style={styles.subheading}className='text-warning'>Subcription Details</h3>
+
+        {errorMsg ? (
+          <p style={styles.error}>{errorMsg}</p>
+        ) : paymentData ? (
           <>
-            <div className="mb-2"><strong>Plan:</strong> {successfulPayments[0].plan_name}</div>
-            <div><strong>Plan Ends:</strong> {new Date(successfulPayments[0].end_date).toLocaleDateString()}</div>
+            <p><strong>Plan Name:</strong> <span style={styles.highlight}>{paymentData.plan_name || 'N/A'}</span></p>
+            <p><strong>Plan End Date:</strong> <span style={styles.highlight}>{paymentData.end_date ? new Date(paymentData.end_date).toLocaleDateString() : 'N/A'}</span></p>
+            <p>
+              <strong>Status:</strong>{' '}
+              <span style={{ color: paymentData.status === 'success' ? '#28a745' : '#dc3545', fontWeight: '700' }}>
+                {paymentData.status}
+              </span>
+            </p>
+
+            {paymentData.status === 'success' && (
+              <button onClick={openWhatsApp} style={styles.whatsappButton} aria-label="Send WhatsApp Message">
+                📱 Send WhatsApp Message
+              </button>
+            )}
           </>
         ) : (
-          <div className="text-muted">No active subscription found.</div>
+          <p style={styles.info}>No payment data available.</p>
         )}
-
-        {/* WhatsApp Button */}
-        {hasSuccessfulPayment && (
-          <div className="mt-4 text-center">
-            <a
-              href="https://wa.me/91XXXXXXXXXX"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-success"
-            >
-              📱 Contact Us on WhatsApp
-            </a>
-          </div>
-        )}
-
-        {/* Payment History */}
-        <div className="border-top pt-3 mt-4">
-          <h5 className="mb-3" style={{ fontWeight: 600 }}>Payment History</h5>
-          {userPayments.length > 0 ? (
-            <table className="table table-bordered">
-              <thead>
-                <tr>
-                  <th>Plan</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                  <th>Start</th>
-                  <th>End</th>
-                </tr>
-              </thead>
-              <tbody>
-                {userPayments.map((payment) => (
-                  <tr key={payment.id || payment.order_id}>
-                    <td>{payment.plan_name}</td>
-                    <td>{payment.amount}</td>
-                    <td>{payment.status}</td>
-                    <td>{new Date(payment.start_date).toLocaleDateString()}</td>
-                    <td>{new Date(payment.end_date).toLocaleDateString()}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <p className="text-muted">No payment history found.</p>
-          )}
-        </div>
-
-        {/* Change Password */}
-        <div className="mt-4">
-          <button className="btn btn-primary" onClick={() => navigate('/change-password')}>
-            Change Password
-          </button>
-        </div>
       </div>
     </div>
   );
 };
+
+const styles = {
+  page: {
+    height: '100vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '20px',
+    fontFamily: "'Poppins', sans-serif",
+  },
+  card: {
+    backgroundColor: '#fff',
+    padding: '40px 50px',
+    borderRadius: 20,
+    marginTop: 40,
+    boxShadow: '0 15px 35px rgba(0, 0, 0, 0.2)',
+    maxWidth: 550,
+    width: '100%',
+    textAlign: 'center',
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+    cursor: 'default',
+  },
+  heading: {
+    marginBottom: 30,
+    fontSize: '2.2rem',
+    letterSpacing: '1px',
+    fontWeight: '700',
+  },
+  info: {
+    fontSize: '1.1rem',
+    margin: '12px 0',
+    color: '#444',
+  },
+  divider: {
+    margin: '30px 0',
+    border: 'none',
+    borderTop: '2px solid #eee',
+  },
+  subheading: {
+    fontSize: '1.5rem',
+    marginBottom: 20,
+    color: '#5a2a83',
+    fontWeight: '600',
+  },
+  highlight: {
+    color: '#764ba2',
+    fontWeight: '600',
+  },
+  error: {
+    color: '#e63946',
+    fontWeight: '700',
+    fontSize: '1rem',
+  },
+  whatsappButton: {
+    marginTop: 30,
+    backgroundColor: '#25D366',
+    color: '#fff',
+    border: 'none',
+    borderRadius: 50,
+    padding: '12px 35px',
+    fontSize: '1.1rem',
+    fontWeight: '700',
+    cursor: 'pointer',
+    boxShadow: '0 6px 15px rgba(37, 211, 102, 0.6)',
+    transition: 'background-color 0.3s ease, transform 0.2s ease',
+    userSelect: 'none',
+  },
+  loading: {
+    height: '100vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: '1.5rem',
+    color: '#fff',
+    fontWeight: '600',
+  },
+};
+
+// Optional: Hover effect on WhatsApp button using React inline styles (not possible directly, but can do with CSS classes in your app)
 
 export default ProfilePage;

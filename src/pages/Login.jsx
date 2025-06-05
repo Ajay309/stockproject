@@ -1,140 +1,55 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
-  const navigate = useNavigate();
-  const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
-  const googleCallback = useRef(null);
-
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://accounts.google.com/gsi/client';
-    script.async = true;
-    script.defer = true;
-    script.onload = () => {
-      window.google.accounts.id.initialize({
-        client_id: '181209510379-er7p6372agi93lnj2s186ilhofpplk36.apps.googleusercontent.com',
-        callback: (response) => {
-          if (response.credential) {
-            console.log('Google sign-in successful, token:', response.credential);
-            handleGoogleLogin(response.credential);
-          }
-        }
-      });
-    };
-    document.body.appendChild(script);
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
-
-  const handleGoogleLogin = async (credential) => {
-    setLoading(true);
-    try {
-      const res = await axios.post('https://dtc.sinfode.com/api/v1/google-login', { token: credential });
-      
-      console.log('Google Login API response:', res.data);
-      console.log('Google Login API response name:', res.data.name);
-
-      // Store auth token
-      localStorage.setItem('auth_token', res.data.token);
-      
-      // Get name, prioritizing res.data.name or a name from localStorage if available, fallback to email prefix
-      const storedProfile = JSON.parse(localStorage.getItem('userProfile'));
-      const name = res.data.name || (storedProfile ? storedProfile.name : null) || res.data.email.split('@')[0];
-
-      // Generate initials for profile image
-      const nameParts = name.trim().split(/\s+/);
-      let initials;
-      if (nameParts.length > 1) {
-        // Take first letter of first name and first letter of last name
-        initials = `${nameParts[0][0].toUpperCase()}${nameParts[nameParts.length - 1][0].toUpperCase()}`;
-      } else {
-        // If only one part, use first two letters if available
-        initials = nameParts[0].slice(0, 2).toUpperCase();
-      }
-      
-      // Create user profile
-      const userProfile = {
-        email: res.data.email,
-        name: res.data.name || res.data.email.split('@')[0],
-        isLoggedIn: true,
-        profileImage: res.data.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=f6b40e&color=fff&bold=true`
-      };
-      
-      // Store user profile in localStorage
-      localStorage.setItem('userProfile', JSON.stringify(userProfile));
-      
-      // Use AuthContext login function
-      login(userProfile);
-      
-      setMessage('Login successful!');
-      setTimeout(() => navigate('/'), 1000);
-    } catch (err) {
-      setMessage(err.response?.data?.message || 'Google login failed');
-    }
-    setLoading(false);
-  };
-
-  const handleGoogleSignIn = () => {
-    if (window.google && window.google.accounts && window.google.accounts.id) {
-      window.google.accounts.id.prompt();
-    }
-  };
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setMessage('');
     try {
       const res = await axios.post('https://dtc.sinfode.com/api/v1/login', {
         email,
         password
       });
-      
+
       console.log('Login API response:', res.data);
-      console.log('Login API response name:', res.data.name);
 
-      // Store auth token
       localStorage.setItem('auth_token', res.data.token);
-      
-      // Get name, prioritizing res.data.name or a name from localStorage if available, fallback to email prefix
-      const storedProfile = JSON.parse(localStorage.getItem('userProfile'));
-      const name = res.data.name || (storedProfile ? storedProfile.name : null) || email.split('@')[0];
 
-      // Generate initials for profile image
+      const userData = res.data.user || {};
+      const name = userData.name || email.split('@')[0];
       const nameParts = name.trim().split(/\s+/);
       let initials;
       if (nameParts.length > 1) {
-        // Take first letter of first name and first letter of last name
         initials = `${nameParts[0][0].toUpperCase()}${nameParts[nameParts.length - 1][0].toUpperCase()}`;
       } else {
-        // If only one part, use first two letters if available
         initials = nameParts[0].slice(0, 2).toUpperCase();
       }
-      
-      // Create user profile
+
       const userProfile = {
-        email,
-        name: res.data.name || email.split('@')[0],
+        id: userData.id,
+        email: userData.email || email,
+        name: name,
         isLoggedIn: true,
-        profileImage: res.data.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=f6b40e&color=fff&bold=true`
+        profileImage: userData.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=f6b40e&color=fff&bold=true`
       };
-      
-      // Store user profile in localStorage
+
       localStorage.setItem('userProfile', JSON.stringify(userProfile));
-      
-      // Use AuthContext login function
       login(userProfile);
-      
+
       setMessage('Login successful!');
       setTimeout(() => navigate('/'), 1000);
     } catch (err) {
+      console.error('Error logging in:', err);
       setMessage(err.response?.data?.message || 'Login failed');
     }
     setLoading(false);
@@ -150,7 +65,6 @@ const Login = () => {
     width: '100%',
     padding: '20px',
     boxSizing: 'border-box',
-    overflow: 'hidden',
     paddingTop: '70px',
   };
 
@@ -195,46 +109,6 @@ const Login = () => {
     marginTop: '2px',
   };
 
-  const googleBtnStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    maxWidth: 380,
-    background: '#fff',
-    border: '1.5px solid #ddd',
-    borderRadius: '7px',
-    padding: '12px',
-    fontSize: '1rem',
-    fontWeight: 600,
-    cursor: 'pointer',
-    marginBottom: '20px',
-    transition: 'box-shadow 0.2s',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-    gap: '10px',
-  };
-
-  const dividerStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    width: '100%',
-    maxWidth: 380,
-    margin: '16px 0',
-  };
-
-  const lineStyle = {
-    flex: 1,
-    height: '1.5px',
-    background: '#eee',
-  };
-
-  const orStyle = {
-    margin: '0 12px',
-    color: '#888',
-    fontWeight: 600,
-    fontSize: '0.9rem',
-  };
-
   const loginBtnStyle = {
     width: '100%',
     background: 'linear-gradient(90deg, #f6b40e 0%, #ffc107 100%)',
@@ -272,17 +146,6 @@ const Login = () => {
     <div style={containerStyle}>
       <div style={headingStyle}>Welcome Back</div>
       <div style={subheadingStyle}>Please login to your account</div>
-
-      <button style={googleBtnStyle} onClick={handleGoogleSignIn}>
-        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style={{ width: 20, marginRight: 10 }} />
-        Continue with Google
-      </button>
-
-      <div style={dividerStyle}>
-        <div style={lineStyle}></div>
-        <span style={orStyle}>or</span>
-        <div style={lineStyle}></div>
-      </div>
 
       <form onSubmit={handleLogin} style={formStyle}>
         <label style={labelStyle}>Email address</label>

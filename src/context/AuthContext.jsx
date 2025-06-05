@@ -23,23 +23,30 @@ export const AuthProvider = ({ children }) => {
     const loadProfile = () => {
       const savedProfile = localStorage.getItem('userProfile');
       const savedToken = localStorage.getItem('auth_token');
-      
+
       if (savedProfile && savedToken) {
         const profile = JSON.parse(savedProfile);
         setUserProfile(profile);
         setUserEmail(profile.email);
       }
+
       setIsLoading(false);
     };
 
     loadProfile();
   }, []);
 
+  // ✅ Modified login function to accept full response from backend
   const login = (profile) => {
-    setUserProfile(profile);
-    setUserEmail(profile.email);
-    localStorage.setItem('userProfile', JSON.stringify(profile));
-  };
+  if (!profile || !profile.email) {
+    console.error('Invalid profile passed to login:', profile);
+    return;
+  }
+  setUserProfile(profile);
+  setUserEmail(profile.email);
+  localStorage.setItem('userProfile', JSON.stringify(profile));
+};
+
 
   const logout = () => {
     localStorage.removeItem('auth_email');
@@ -50,7 +57,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   if (isLoading) {
-    return null; // or a loading spinner
+    return null; // You can return a loader here
   }
 
   return (

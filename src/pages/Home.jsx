@@ -7,6 +7,7 @@ import ReviewsSection from '../components/ReviewsSection/ReviewsSection';
 import Footer from '../components/Footer/Footer';
 import EnquiryForm from './EnquiryForm';
 import PlansSection from '../components/Plans/PlansSection';
+import VideoSection from '../components/VideoSection.jsx/VideoSection';
 
 export default function Home() {
   return (
@@ -17,6 +18,11 @@ export default function Home() {
       <div className="with-navbar-padding">
         <FeaturesSection />
       </div>
+      <div className="">
+        <VideoSection/>
+      </div>
+      
+
       <div className="container-fluid">
         <Process />
       </div>

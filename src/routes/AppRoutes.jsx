@@ -13,6 +13,7 @@ import PurchaseForm from '../pages/Purchase';
 import FeaturesSection from '../components/FeatureSection/FeatureSection';
 import ProfilePage from '../pages/ProfilePage';
 
+
 export default function AppRoutes() {
   return (
     <Routes>
@@ -28,6 +29,7 @@ export default function AppRoutes() {
       <Route path="/purchase" element={<PurchaseForm />} />
       <Route path="/get-started" element={<GetStarted/>} />
       <Route path="/profile" element={<ProfilePage/>} />
+      
     </Routes>
   );
 }

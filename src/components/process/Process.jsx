@@ -8,8 +8,8 @@ import Slider from 'react-slick';
 const cards = [
   
   {
-    title: 'Creative production',
-    desc: 'Accelerate creative work by automating workflows from start to finish.',
+    title: 'Choose Your Subscription Plan',
+    desc: 'Visit our website and select the best-suited DTC Indicator subscription plan based on your trading needs. Complete the secure payment process.',
     link: 'See creative production'
   },
 //   {
@@ -18,18 +18,18 @@ const cards = [
 //     link: 'See project intake'
 //   },
   {
-    title: 'Product launches',
-    desc: 'Coordinate teams, tasks, and timelines to keep every launch on schedule.',
+    title: ' Share Your TradingView Username',
+    desc: 'After payment, you will be automatically redirected to our DTC Support Team. Simply share your TradingView username with our team to activate access.',
     link: 'See project launches'
   },
   {
-    title: 'Product launches',
-    desc: 'Coordinate teams, tasks, and timelines to keep every launch on schedule.',
+    title: 'Access DTC Indicator on TradingView',
+    desc: 'Within 2–3 minutes, your TradingView account will get access to the DTC Indicator. Go to the “Invite-only scripts” section under Indicators on TradingView – you’ll find DTC Indicator listed there..',
     link: 'See project launches'
   },
   {
-    title: 'Product launches',
-    desc: 'Coordinate teams, tasks, and timelines to keep every launch on schedule.',
+    title: 'Get Educational Course & Support',
+    desc: 'Our team will send you the complete educational video course, PDF guides, and lifetime WhatsApp support on your registered email and WhatsApp number..',
     link: 'See project launches'
   },
   
@@ -90,10 +90,9 @@ export default function Process() {
     <div className="container">
       <div className=" mb-5">
         <div className="row">
-        <div className="col-lg-6">
+        <div className="col-lg-12">
         <h2 className="heading-3">
-          How DTC Club Keeps Work Moving
-        </h2>
+          How to Use DTC indicator setup</h2>
         </div>
       </div>
       <Slider {...sliderSettings} nextArrow={<NextArrow />} prevArrow={<PrevArrow />}>

@@ -134,7 +134,7 @@ const GetStarted = () => {
 
   return (
     <div className="get-started-container">
-      <div className="get-started-heading">Welcome to Stock App</div>
+      <div className="get-started-heading">Welcome to DTC Club</div>
       <div className="get-started-subheading">To get started, please sign up</div>
 
       <button className="google-btn" onClick={handleGoogleSignIn}>

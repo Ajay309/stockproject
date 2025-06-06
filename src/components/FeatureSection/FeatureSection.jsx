@@ -7,7 +7,7 @@ export default function FeaturesSection() {
   useEffect(() => {
     const fetchLogos = async () => {
       try {
-        const response = await fetch('https://dtc.sinfode.com/api/v1/platform');
+        const response = await fetch('https://dtc.sinfode.com/api/v1/platfrom');
         const result = await response.json();
         if (result.status === 'success') {
           setLogos(result.data); // result.data is an array of logos

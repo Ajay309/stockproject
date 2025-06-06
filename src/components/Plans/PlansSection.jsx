@@ -92,7 +92,7 @@ const PlansSection = () => {
       </div>
 
       {/* Toggle for Duration */}
-      <div className="d-flex justify-content-center gap-3 mb-4">
+      {/* <div className="d-flex justify-content-center gap-3 mb-4">
         <button
           className={`btn btn-outline-warning ${selectedDuration === 'monthly' ? 'active' : ''}`}
           onClick={() => setSelectedDuration('monthly')}
@@ -105,7 +105,7 @@ const PlansSection = () => {
         >
           Annually
         </button>
-      </div>
+      </div> */}
 
       {/* Plans Display */}
       {selectedPackage && (

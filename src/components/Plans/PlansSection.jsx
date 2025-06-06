@@ -76,6 +76,7 @@ const PlansSection = () => {
         <Timer />
       </div>
 
+
       {/* Package Tabs */}
       <div className="d-flex justify-content-center flex-wrap mb-4">
         {packages.map((pkg) => (
@@ -106,7 +107,6 @@ const PlansSection = () => {
       </div>
 
       {/* Notification Without Timer */}
-      <NotificationOnlyBar />
 
       {/* Plans Display */}
       {selectedPackage && (

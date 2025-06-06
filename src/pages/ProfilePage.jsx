@@ -7,7 +7,12 @@ const ProfilePage = () => {
   const [paymentData, setPaymentData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
 
+  // ✅ Fetch Admin Contact Phone from Settings API
+ 
+
+  // ✅ Fetch User Payment Data
   useEffect(() => {
     const fetchPayments = async () => {
       if (!userProfile || !userProfile.id) {
@@ -33,15 +38,44 @@ const ProfilePage = () => {
 
     fetchPayments();
   }, [userProfile]);
-
+ useEffect(() => {
+     const fetchSettings = async () => {
+       try {
+         const response = await fetch('https://dtc.sinfode.com/api/v1/settings');
+         const result = await response.json();
+         if (result.status === 'success' && result.data?.common_setting) {
+           const settings = result.data.common_setting;
+           setPhoneNumber(settings.phone_number || '');
+         }
+       } catch (error) {
+         console.error('Failed to fetch settings:', error);
+       }
+     };
+ 
+     fetchSettings();
+   }, []);
+ 
+   const handleWhatsAppClick = () => {
+     if (!phoneNumber) {
+       alert('WhatsApp number not available');
+       return;
+     }
+     // Format phone number for WhatsApp URL (remove spaces, +, etc. if needed)
+     const formattedNumber = phoneNumber.replace(/\D/g, '');
+     window.open(`https://wa.me/${formattedNumber}`, '_blank');
+   };
+  // ✅ Open WhatsApp Message
   const openWhatsApp = () => {
-    if (!paymentData?.phone) {
-      alert('Phone number not available for WhatsApp.');
+    if (!contactPhone) {
+      alert('Admin contact number not available.');
       return;
     }
-    const phone = paymentData.phone.replace(/[^0-9]/g, '');
-    const message = encodeURIComponent(`Hello ${userProfile?.name}, thank you for your payment for the plan: ${paymentData.plan_name}.`);
-    window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+
+    const message = encodeURIComponent(
+      `Hello ${userProfile?.name}, thank you for your payment for the plan: ${paymentData?.plan_name}.`
+    );
+
+    window.open(`https://wa.me/${contactPhone}?text=${message}`, '_blank');
   };
 
   if (loading) return <div style={styles.loading}>Loading profile...</div>;
@@ -56,7 +90,7 @@ const ProfilePage = () => {
 
         <hr style={styles.divider} />
 
-        <h3 style={styles.subheading}className='text-warning'>Subcription Details</h3>
+        <h3 style={styles.subheading} className='text-warning'>Subscription Details</h3>
 
         {errorMsg ? (
           <p style={styles.error}>{errorMsg}</p>
@@ -71,11 +105,10 @@ const ProfilePage = () => {
               </span>
             </p>
 
-            {paymentData.status === 'success' && (
-              <button onClick={openWhatsApp} style={styles.whatsappButton} aria-label="Send WhatsApp Message">
+
+              <button onClick={handleWhatsAppClick} style={styles.whatsappButton} aria-label="Send WhatsApp Message">
                 📱 Send WhatsApp Message
               </button>
-            )}
           </>
         ) : (
           <p style={styles.info}>No payment data available.</p>
@@ -161,7 +194,5 @@ const styles = {
     fontWeight: '600',
   },
 };
-
-// Optional: Hover effect on WhatsApp button using React inline styles (not possible directly, but can do with CSS classes in your app)
 
 export default ProfilePage;

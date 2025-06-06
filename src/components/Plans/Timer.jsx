@@ -55,7 +55,7 @@ const Timer = () => {
   return (
     <div className="timer-section text-center py-4">
       <h3 className="timer-heading">Limited Time Offer</h3>
-      <NotificationOnlyBar message="Hurry up! Offer ends soon!" />
+      <NotificationOnlyBar message="Hurry up! Offer ends soon!" className="text-warning" />
       <div className="d-flex justify-content-center gap-4">
         <div className="timer-box">
           <div className="timer-value" style={{ color: '#fbba07' }}>{timeLeft.days}</div>

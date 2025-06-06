@@ -205,7 +205,7 @@ const Footer = () => {
         </div>
 
         <p className="text-center text-white-300 mt-4">
-          &copy; {new Date().getFullYear()} Your Company Name. All rights reserved.
+          &copy; {new Date().getFullYear()} DTC Club. All rights reserved.
         </p>
       </div>
     </footer>

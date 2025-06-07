@@ -20,13 +20,13 @@ const PlansCard = ({ plan, isHomePage = false }) => {
                                <div className="price text-center">
     {parseFloat(plan.discount_price) > parseFloat(plan.price) && (
         <div className="text-muted text-decoration-line-through" style={{ fontSize: '42px' }}>
-            ₹{plan.discount_price}/ {plan.duration}
+            ₹{plan.discount_price} {plan.duration}
         </div>
     )}
     <div style={{ fontSize: '32px', fontWeight: 'bold' }}>
         <span className="price-currency"></span>
        ₹{plan.price}
-        <span className="price-period"> / {plan.duration}</span>
+        <span className="price-period"> {plan.duration}</span>
     </div>
 </div>
 

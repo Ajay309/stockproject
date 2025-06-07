@@ -29,7 +29,7 @@ const ProfilePage = () => {
           setPaymentData(null);
           setErrorMsg('No payment history found.');
         }
-      } catch (error) {
+      } catch (error) { 
         setErrorMsg('Failed to fetch payment data.');
       } finally {
         setLoading(false);

@@ -16,7 +16,7 @@ const PlansCard = ({ plan, isHomePage = false }) => {
                         <div className={`pricing-card ${!isHomePage && plan.featured ? 'featured' : ''} ${plan.name.toLowerCase()}`}>
                             {!isHomePage && plan.featured && <div className="popular-badge">POPULAR</div>}
                             <div className="pricing-card-header">
-                                <h3 className="plan-name">{plan.name}</h3>
+                                <h3 className="plan-name fs-1">{plan.name}</h3>
                                <div className="price text-center">
     {parseFloat(plan.discount_price) > parseFloat(plan.price) && (
         <div className="text-muted text-decoration-line-through" style={{ fontSize: '42px' }}>

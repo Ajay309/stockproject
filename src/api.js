@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://dtc.sinfode.com/api/v1',
+  baseURL: 'http://127.0.0.1:8000/api/v1',
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
@@ -19,14 +19,16 @@ export const getPackages = async () => {
   }
 };
 
+// api.js
 export const getPlans = async (packageId) => {
   try {
-    const response = await api.get(`/packages/${packageId}/plans`); // Use `api` instance
-    return response.data;
+    const response = await api.get(`/packages/${packageId}/plans`);
+    return response.data.data || []; // ✅ only return the array part
   } catch (error) {
     console.error(`Error fetching plans for package ${packageId}:`, error);
-    throw error;
+    return []; // ✅ fail-safe
   }
 };
+
 
 export default api; // Named export

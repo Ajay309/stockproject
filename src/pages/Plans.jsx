@@ -6,11 +6,11 @@ import Footer from '../components/Footer/Footer';
 export default function Plans () {
   return (
 <>
-        <div className="pt-5">
+<div className="pt-5">
 <PlansSection/>
 <FaqSection/>
 <Footer/>
-        </div>
+</div>
 
 </>
        );

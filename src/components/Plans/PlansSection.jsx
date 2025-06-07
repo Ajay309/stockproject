@@ -41,8 +41,7 @@ const PlansSection = () => {
         setLoading(true);
         try {
           const data = await getPlans(selectedPackage.id);
-          console.log('Plans:', data); // Debug log
-          setPlans(Array.isArray(data) ? data : []);
+          setPlans(data);
         } catch (err) {
           setError('Failed to load plans');
         } finally {
@@ -90,12 +89,12 @@ const PlansSection = () => {
             <h2 className="text-2xl text-center mt-3 font-semibold mb-4">{selectedPackage.name} Plans</h2>
           )}
           <div className="row">
-            {Array.isArray(plans) &&
-              plans.map((plan) => (
-                <div key={plan.id} className="col-md-4 mb-4">
-                  <PlansCard plan={plan} isHomePage={isHomePage} />
-                </div>
-              ))}
+            {Array.isArray(plans) && plans.map((plan) => (
+  <div key={plan.id} className="col-md-4 mb-4">
+    <PlansCard plan={plan} isHomePage={isHomePage} />
+  </div>
+))}
+
           </div>
         </div>
       )}

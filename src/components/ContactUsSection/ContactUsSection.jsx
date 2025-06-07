@@ -133,7 +133,7 @@ const ContactUsSection = () => {
                                 <i className="bi bi-geo-alt"></i>
                             </div>
                             <h5>Our Location</h5>
-                            <p className="text-muted">123 Business Avenue, Suite 100<br />New York, NY 10001</p>
+                            <p className="text-muted">Dream Trading club <br />Sikar Rajasthan India - 302021</p>
                         </div>
                     </div>
                     <div className="col-md-4 mb-4">
@@ -142,7 +142,7 @@ const ContactUsSection = () => {
                                 <i className="bi bi-envelope"></i>
                             </div>
                             <h5>Email Us</h5>
-                            <p className="text-muted">info@yourcompany.com<br />support@yourcompany.com</p>
+                            <p className="text-muted"> dtcclub1@gmail.com<br />Support@Dtcclub.com</p>
                         </div>
                     </div>
                     <div className="col-md-4">
@@ -151,7 +151,7 @@ const ContactUsSection = () => {
                                 <i className="bi bi-telephone"></i>
                             </div>
                             <h5>Call Us</h5>
-                            <p className="text-muted">+1 (555) 123-4567<br />+1 (555) 987-6543</p>
+                            <p className="text-muted">+917976326147<br />+49 17623312943</p>
                         </div>
                     </div>
                 </div>

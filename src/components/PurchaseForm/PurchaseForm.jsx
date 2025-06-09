@@ -71,9 +71,10 @@ const PurchaseForm = ({ plan, onClose }) => {
           amount: calculateDiscountedPrice(),
           email,
           phone,
-          coupon: coupon || '',
+          coupon: coupon?.trim() || 'NO_COUPON', // Fix applied here
         }),
       });
+      
 
       const responseText = await res.text();
       console.log('Raw response from create-order:', responseText);

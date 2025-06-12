@@ -1,4 +1,4 @@
- .heading-10{
+.heading-10{
     margin-top: 10px;
     font-size: 50px !important;
     font-weight: 700;
@@ -15,7 +15,7 @@
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
-    font-family: 'Ghost', sans-serif !important;
+    font-family: "TWK Lausanne", "Helvetica Neue", "Helvetica", sans-serif !important;
     font-size: 16px !important;
     font-weight: 500 !important;
     color: #333 !important;
@@ -26,13 +26,13 @@
 .navbar-link a{
     text-decoration: none !important;
     color: #ffffff !important;
-    font-family: 'Ghost', sans-serif !important;
+    font-family: "TWK Lausanne", "Helvetica Neue", "Helvetica", sans-serif !important;
     font-size: 16px !important;
     font-weight: 500 !important;
 }
 
 .footer-text{
-    font-family: 'Ghost', sans-serif !important;
+    font-family: "TWK Lausanne", "Helvetica Neue", "Helvetica", sans-serif !important;
     font-size: 16px !important;
     font-weight: 500 !important;
     color: #ffffff !important;
@@ -95,17 +95,30 @@
 
 .footer-menu-responsive {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 40px;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 32px;
   padding: 24px 0;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .footer-column {
-  min-width: 140px;
+  min-width: 120px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+@media (max-width: 1024px) {
+  .footer-menu-responsive {
+    gap: 20px;
+    max-width: 100%;
+    flex-wrap: wrap;
+  }
+  .footer-column {
+    min-width: 100px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -135,9 +148,16 @@
 .footer-column a {
     text-decoration: none !important;
     color: #ffffff !important;
-    font-family: 'Ghost', sans-serif !important;
+    font-family: "TWK Lausanne", "Helvetica Neue", "Helvetica", sans-serif !important;
     font-size: 16px !important;
     font-weight: 500 !important;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.footer-column a:hover {
+  color: #d9e3e4 !important;
+  transform: scale(1.06) translateX(4px);
+  text-shadow: 0 2px 8px rgba(178,235,242,0.12);
 }
 
 /* Floating button styles */
@@ -217,4 +237,45 @@
     width: 20px !important;
     height: 20px !important;
   }
+}
+
+.footer-top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.footer-logo-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff; /* or any color that fits your footer theme */
+}
+
+.social-media-links {
+  display: flex;
+  gap: 15px;
+}
+
+@media (max-width: 768px) {
+  .footer-top-section {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+.footer-column h5 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #fff;
+  letter-spacing: 0.5px;
+  transition: color 0.3s, transform 0.3s;
+  cursor: pointer;
+}
+
+.footer-column h5:hover {
+ 
+  transform: scale(1.08) translateY(-2px);
+  text-shadow: 0 2px 8px rgba(0,188,212,0.15);
 }

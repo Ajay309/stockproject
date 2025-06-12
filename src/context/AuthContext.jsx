@@ -47,7 +47,6 @@ export const AuthProvider = ({ children }) => {
   localStorage.setItem('userProfile', JSON.stringify(profile));
 };
 
-
   const logout = () => {
     localStorage.removeItem('auth_email');
     localStorage.removeItem('auth_token');

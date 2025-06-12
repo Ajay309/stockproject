@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Footer.css';
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube, FaWhatsapp } from 'react-icons/fa';
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube, FaWhatsapp, FaTelegram } from 'react-icons/fa';
 
 const Footer = () => {
   const [socialLinks, setSocialLinks] = useState({
@@ -9,7 +9,8 @@ const Footer = () => {
     twitter: '',
     instagram: '',
     linkedin: '',
-    youtube: ''
+    youtube: '',
+    telegram: ''
   });
 
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -26,7 +27,8 @@ const Footer = () => {
             twitter: settings.twitter || '',
             instagram: settings.instagram || '',
             linkedin: settings.linkedin || '',
-            youtube: settings.youtube || ''
+            youtube: settings.youtube || '',
+            telegram: settings.telegram || ''
           });
           setPhoneNumber(settings.phone_number || '');
         }
@@ -59,6 +61,139 @@ const Footer = () => {
             Get started
           </Link>
         </div>
+
+        <div className="footer-top-section">
+        {/* DTC Logo */}
+<div className="footer-logo-container">
+  <span className="footer-logo-text">DTC Trading Club</span>
+</div>
+
+
+          {/* Social Media Links Section */}
+          <div className="social-media-links">
+            {socialLinks.facebook && (
+              <a
+                href={socialLinks.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white me-3 fs-3"
+                aria-label="Facebook"
+              >
+                <FaFacebook />
+              </a>
+            )}
+            {socialLinks.twitter && (
+              <a
+                href={socialLinks.twitter}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white me-3 fs-3"
+                aria-label="Twitter"
+              >
+                <FaTwitter />
+              </a>
+            )}
+            {socialLinks.linkedin && (
+              <a
+                href={socialLinks.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white me-3 fs-3"
+                aria-label="LinkedIn"
+              >
+                <FaLinkedin />
+              </a>
+            )}
+            {socialLinks.youtube && (
+              <a
+                href={socialLinks.youtube}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white me-3 fs-3"
+                aria-label="YouTube"
+              >
+                <FaYoutube />
+              </a>
+            )}
+            {socialLinks.instagram && (
+              <a
+                href={socialLinks.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white fs-3"
+                aria-label="Instagram"
+              >
+                <FaInstagram />
+              </a>
+            )}
+            {socialLinks.telegram && (
+              <a
+                href={socialLinks.telegram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white fs-3"
+                aria-label="Telegram"
+              >
+                <FaTelegram />
+              </a>
+            )}
+          </div>
+        </div>
+
+        <hr className="container" />
+
+        {/* Page Links Section */}
+        <div className="container mx-auto mt-16 pb-8">
+          <div className="footer-menu-responsive">
+            <div className="footer-column">
+              <h5>Legal</h5>
+              <Link to="/" className="hover:text-white transition">Privacy Policy</Link>
+              <Link to="/blogs" className="hover:text-white transition">Terms of Service</Link>
+              <Link to="/plans" className="hover:text-white transition">Security</Link>
+              <Link to="/privacy" className="hover:text-white transition">Disclaimer</Link>
+              <Link to="/terms" className="hover:text-white transition">Cookie Policy</Link>
+              <Link to="/security" className="hover:text-white transition">Licensing & Compliance</Link>
+            </div>
+            <div className="footer-column">
+              <h5>Platforms</h5>
+              <Link to="/plans" className="hover:text-white transition">Plans</Link>
+              <Link to="/features" className="hover:text-white transition">Features</Link>
+              <Link to="/solutions" className="hover:text-white transition">Integrations</Link>
+              <Link to="/integrations" className="hover:text-white transition">API Access</Link>
+              <Link to="/api" className="hover:text-white transition">Mobile App</Link>
+              <Link to="/developers" className="hover:text-white transition">Trading Dashboard</Link>
+            </div>
+            <div className="footer-column">
+              <h5>Resources</h5>
+              <Link to="/services" className="hover:text-white transition">Blog</Link>
+              <Link to="/webinars" className="hover:text-white transition">Webinars</Link>
+              <Link to="/events" className="hover:text-white transition">Case Studies</Link>
+              <Link to="/case-studies" className="hover:text-white transition">Trading Guides</Link>
+              <Link to="/success-stories" className="hover:text-white transition">Market News</Link>
+              <Link to="/customer-stories" className="hover:text-white transition">Learning Center</Link>
+            </div>
+            <div className="footer-column">
+              <h5>Company</h5>
+              <Link to="/about-us" className="hover:text-white transition">About Us</Link>
+              <Link to="/company" className="hover:text-white transition">Team</Link>
+              <Link to="/careers" className="hover:text-white transition">Careers</Link>
+              <Link to="/team" className="hover:text-white transition">Partners</Link>
+              <Link to="/partners" className="hover:text-white transition">Press & News</Link>
+              <Link to="/investors" className="hover:text-white transition">Investors</Link>
+            </div>
+            <div className="footer-column">
+              <h5>Support</h5>
+              <Link to="/contact-us" className="hover:text-white transition">FAQs</Link>
+              <Link to="/support" className="hover:text-white transition">Contact Us</Link>
+              <Link to="/help" className="hover:text-white transition">Live Chat</Link>
+              <Link to="/community" className="hover:text-white transition">Feedback</Link>
+              <Link to="/feedback" className="hover:text-white transition">Help Center</Link>
+              <Link to="/contact-us" className="hover:text-white transition">Community </Link>
+            </div>
+          </div>
+        </div>
+
+        <hr className="container" />
 
         {/* Disclaimer paragraphs here */}
         <p className="footer-text text-start small">
@@ -96,113 +231,6 @@ const Footer = () => {
         </div> */}
 
         <hr className="container" />
-
-        {/* Page Links Section */}
-        <div className="container mx-auto mt-16 pb-8">
-          <div className="footer-menu-responsive">
-            <div className="footer-column">
-              <Link to="/" className="hover:text-white transition">Home</Link>
-              <Link to="/blogs" className="hover:text-white transition">Blog</Link>
-              <Link to="/plans" className="hover:text-white transition">FAQ</Link>
-              <Link to="/privacy" className="hover:text-white transition">Privacy Policy</Link>
-              <Link to="/terms" className="hover:text-white transition">Terms of Service</Link>
-              <Link to="/security" className="hover:text-white transition">Security</Link>
-            </div>
-            <div className="footer-column">
-              <Link to="/plans" className="hover:text-white transition">Plans</Link>
-              <Link to="/features" className="hover:text-white transition">Features</Link>
-              <Link to="/solutions" className="hover:text-white transition">Solutions</Link>
-              <Link to="/integrations" className="hover:text-white transition">Integrations</Link>
-              <Link to="/api" className="hover:text-white transition">API</Link>
-              <Link to="/developers" className="hover:text-white transition">Developers</Link>
-            </div>
-            <div className="footer-column">
-              <Link to="/services" className="hover:text-white transition">Resource</Link>
-              <Link to="/webinars" className="hover:text-white transition">Webinars</Link>
-              <Link to="/events" className="hover:text-white transition">Events</Link>
-              <Link to="/case-studies" className="hover:text-white transition">Case Studies</Link>
-              <Link to="/success-stories" className="hover:text-white transition">Success Stories</Link>
-              <Link to="/customer-stories" className="hover:text-white transition">Customer Stories</Link>
-            </div>
-            <div className="footer-column">
-              <Link to="/about-us" className="hover:text-white transition">About Us</Link>
-              <Link to="/company" className="hover:text-white transition">Company</Link>
-              <Link to="/careers" className="hover:text-white transition">Careers</Link>
-              <Link to="/team" className="hover:text-white transition">Team</Link>
-              <Link to="/partners" className="hover:text-white transition">Partners</Link>
-              <Link to="/investors" className="hover:text-white transition">Investors</Link>
-            </div>
-            <div className="footer-column">
-              <Link to="/contact-us" className="hover:text-white transition">Contact</Link>
-              <Link to="/support" className="hover:text-white transition">Support</Link>
-              <Link to="/help" className="hover:text-white transition">Help Center</Link>
-              <Link to="/community" className="hover:text-white transition">Community</Link>
-              <Link to="/feedback" className="hover:text-white transition">Feedback</Link>
-              <Link to="/contact-us" className="hover:text-white transition">Contact Us</Link>
-            </div>
-          </div>
-        </div>
-
-        <hr className="container" />
-
-        {/* Social Media Links Section */}
-        <div className="social-media-links text-center mt-4 mb-4">
-          {socialLinks.facebook && (
-            <a
-              href={socialLinks.facebook}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white me-3 fs-3"
-              aria-label="Facebook"
-            >
-              <FaFacebook />
-            </a>
-          )}
-          {socialLinks.twitter && (
-            <a
-              href={socialLinks.twitter}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white me-3 fs-3"
-              aria-label="Twitter"
-            >
-              <FaTwitter />
-            </a>
-          )}
-          {socialLinks.linkedin && (
-            <a
-              href={socialLinks.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white me-3 fs-3"
-              aria-label="LinkedIn"
-            >
-              <FaLinkedin />
-            </a>
-          )}
-          {socialLinks.youtube && (
-            <a
-              href={socialLinks.youtube}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white me-3 fs-3"
-              aria-label="YouTube"
-            >
-              <FaYoutube />
-            </a>
-          )}
-          {socialLinks.instagram && (
-            <a
-              href={socialLinks.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white fs-3"
-              aria-label="Instagram"
-            >
-              <FaInstagram />
-            </a>
-          )}
-        </div>
 
         <p className="text-center text-white-300 mt-4">
           &copy; {new Date().getFullYear()} DTC Club. All rights reserved.

@@ -16,7 +16,11 @@ const PurchaseForm = ({ plan, onClose }) => {
   const userId = localStorage.getItem('id');
 
   const validateCoupon = async () => {
-    if (!coupon) return;
+    if (!coupon) {
+      setDiscount(0);
+      setIsCouponValid(null);
+      return;
+    }
 
     setLoadingCoupon(true);
     try {
@@ -67,11 +71,15 @@ const PurchaseForm = ({ plan, onClose }) => {
           amount: calculateDiscountedPrice(),
           email,
           phone,
-          coupon,
+          coupon: coupon?.trim() || 'NO_COUPON', // Fix applied here
         }),
       });
+      
 
-      const data = await res.json();
+      const responseText = await res.text();
+      console.log('Raw response from create-order:', responseText);
+
+      const data = JSON.parse(responseText);
 
       const options = {
         key: data.key,

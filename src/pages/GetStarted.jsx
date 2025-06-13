@@ -28,7 +28,7 @@ const GetStarted = () => {
           if (response.credential) {
             console.log('Google sign-in successful, token:', response.credential);
             // axios.post('/api/auth/google', { token: response.credential })
-            //   .then(res => navigate('/dashboard'));
+            //   .t hen(res => navigate('/dashboard'));
           }
         }
       });

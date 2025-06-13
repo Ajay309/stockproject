@@ -36,7 +36,7 @@ const PlansCard = ({ plan, isHomePage = false }) => {
                                     {currencySymbol}{parseFloat(plan.discount_price) > 0 && parseFloat(plan.discount_price) < parseFloat(plan.price)
                                         ? plan.discount_price
                                         : plan.price}
-                                    <span className="price-period"> / {plan.validity_days} days</span>
+                                    <span className="price-period"></span>
                                 </div>
                             </div>
                         </div>

@@ -4,7 +4,9 @@
     font-weight: 700;
     margin-bottom: 30px;
     font-family: 'Ghost', sans-serif !important;
-    text-wrap: balance !important;
+    text-align: center;
+    max-width: 100%;
+    word-wrap: break-word;
 }
 .button-footer{
   display: flex;
@@ -49,27 +51,33 @@
 
 /* Responsive adjustments for links section */
 @media (max-width: 768px) {
-    .footer-links-container {
-        flex-direction: column;
-        gap: 40px; /* Increased gap between stacked columns */
-        padding: 20px 15px; /* Added vertical padding */
+    .footer-menu-responsive {
+        flex-direction: column; /* Stack columns vertically */
+        align-items: center; /* Center the columns horizontally */
+        justify-content: center; /* Override space-between and center them */
+        gap: 32px; /* Set desired gap for mobile */
+        padding: 0 16px; /* Set desired padding for mobile */
     }
 
-    .footer-links-column {
-        align-items: center;
-        min-width: 100%;
-        text-align: center;
-        margin-bottom: 0;
+    .footer-column {
+        min-width: unset !important; /* Ensure column can shrink to content width */
+        width: fit-content !important; /* Ensure column shrinks to content width for centering */
+        margin: 0 auto !important; /* Center the column itself */
+        align-items: center !important; /* Center content within each column */
+        text-align: center !important; /* Ensure text is centered */
     }
 
-    .footer-column-heading {
-      margin-bottom: 12px; /* Slightly adjusted margin below heading */
-      font-size: 18px; /* Keep font size consistent with larger breakpoint heading */
+    .footer-column h5 {
+        text-align: center !important; /* Center column headings */
     }
 
-    .footer-link {
-      margin-bottom: 8px;
-      font-size: 15px;
+    .footer-column h5::after {
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+    }
+
+    .play-store-link {
+        margin: 0 auto; /* Center the button on mobile */
     }
 
     .footer-section p {
@@ -100,40 +108,85 @@
 
 .footer-menu-responsive {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 32px;
   padding: 24px 0;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .footer-column {
-  min-width: 120px;
+  min-width: 160px;
   display: flex;
   flex-direction: column;
+  gap: 12px;
+}
+
+.footer-column h5 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 8px;
+  position: relative;
+  padding-bottom: 8px;
+}
+
+.footer-column h5::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 40px;
+  height: 2px;
+  /* background-color: #f6b40e; */
+}
+
+.footer-column a,
+.footer-column button,
+.footer-column p {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.footer-column a:hover,
+.footer-column button:hover,
+.footer-column p:hover {
+  color: #fff;
+  transform: translateX(5px);
+}
+
+.play-store-link {
+  display: flex;
+  align-items: center;
   gap: 10px;
 }
 
-@media (max-width: 768px) {
-  .footer-section .container {
-    padding: 0 8px;
+@media (max-width: 1024px) {
+  .footer-menu-responsive {
+    gap: 20px;
+    max-width: 100%;
+    flex-wrap: wrap;
   }
+  .footer-column {
+    min-width: 100px;
+  }
+}
+
+@media (max-width: 768px) {
   .footer-menu-responsive {
     flex-direction: column;
     align-items: center;
-    gap: 20px;
-    padding: 16px 0;
-    margin-bottom: 20px;
+    gap: 24px;
+    padding: 20px 0;
   }
   .footer-column {
     min-width: unset;
     align-items: center;
-    gap: 6px;
-  }
-  .footer-column h5 {
-    font-size: 16px;
-  }
-  .footer-column a {
-    font-size: 15px !important;
+    gap: 8px;
   }
 }
 
@@ -142,18 +195,11 @@
     padding: 0 4px;
   }
   .footer-menu-responsive {
-    gap: 10px;
-    padding: 6px 0;
-    margin-bottom: 14px;
+    gap: 16px;
+    padding: 10px 0;
   }
   .footer-column {
-    gap: 4px;
-  }
-  .footer-column h5 {
-    font-size: 15px;
-  }
-  .footer-column a {
-    font-size: 14px !important;
+    gap: 6px;
   }
 }
 
@@ -162,15 +208,31 @@
     color: #ffffff !important;
     font-family: "TWK Lausanne", "Helvetica Neue", "Helvetica", sans-serif !important;
     font-size: 16px !important;
-    font-weight: 500 !important;
-    transition: color 0.3s, transform 0.3s;
-}
+  }
 
-.footer-column a:hover {
-  color: #d9e3e4 !important;
-  transform: scale(1.06) translateX(4px);
-  text-shadow: 0 2px 8px rgba(178,235,242,0.12);
-}
+  .footer-column a,
+  .footer-column button,
+  .footer-column p {
+    font-size: 14px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .play-store-link {
+    max-width: 160px !important;
+    padding: 6px 10px !important;
+    font-size: 13px !important;
+    margin: 0 auto 12px auto !important; /* Center the button on mobile with a bottom margin */
+  }
+  .play-store-link svg {
+    font-size: 20px !important;
+  }
+  .play-store-link div {
+    font-size: 11px !important;
+  }
+  .play-store-link div:last-child {
+    font-size: 14px !important;
+    font-weight: bold !important;
+  }
 
 /* Floating button styles */
 .floating-btn {
@@ -214,7 +276,7 @@
   }
   
   .floating-btn.whatsapp {
-    bottom: 80px !important;
+    bottom: 110px !important;
     right: 20px !important;
   }
   
@@ -236,7 +298,7 @@
   }
   
   .floating-btn.whatsapp {
-    bottom: 70px !important;
+    bottom: 100px !important;
     right: 15px !important;
   }
   
@@ -275,19 +337,26 @@
     gap: 20px;
   }
 }
+@media (max-width: 480px) {
+  .tawk-min-container {
+    transform: scale(0.6) !important;
+    transform-origin: bottom right !important;
+    bottom: 90px !important; /* Move up so it doesn't overlap with other buttons */
+    right: 15px !important;
+  }
 
-.footer-column h5 {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 12px;
-  color: #fff;
-  letter-spacing: 0.5px;
-  transition: color 0.3s, transform 0.3s;
-  cursor: pointer;
-}
+  .tawk-button {
+    width: auto !important;
+    height: auto !important;
+  }
 
-.footer-column h5:hover {
- 
-  transform: scale(1.08) translateY(-2px);
-  text-shadow: 0 2px 8px rgba(0,188,212,0.15);
+  .tawk-min-chat-icon {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .tawk-custom-color,
+  .tawk-button-circle {
+    padding: 4px !important;
+  }
 }

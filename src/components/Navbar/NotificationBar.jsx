@@ -30,6 +30,15 @@ export default function NotificationBar() {
 
   console.log('NotificationBar - Context values:', { endTime, timerLoading, timerError });
 
+  // Add/remove body class when notification bar is shown/hidden
+  useEffect(() => {
+    if (notification && !timerLoading && !timerError) {
+      document.body.classList.add('has-notification-bar');
+    } else {
+      document.body.classList.remove('has-notification-bar');
+    }
+  }, [notification, timerLoading, timerError]);
+
   // Notification fetch
   useEffect(() => {
     axios.get('https://dtc.sinfode.com/api/v1/notification')

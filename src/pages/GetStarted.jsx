@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
-import './GetStarted.css'; // Import the CSS file
+import './GetStarted.css';
 
 const GetStarted = () => {
   const navigate = useNavigate();
@@ -11,10 +11,10 @@ const GetStarted = () => {
   const [otp, setOtp] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  const [step, setStep] = useState(1); // 1: Enter email, 2: Enter OTP, 3: Enter name, 4: Enter password
+  const [step, setStep] = useState(1);
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
-  const googleCallback = useRef(null);
+  const [googleReady, setGoogleReady] = useState(false);
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -23,15 +23,23 @@ const GetStarted = () => {
     script.defer = true;
     script.onload = () => {
       window.google.accounts.id.initialize({
-        client_id: '181209510379-er7p6372agi93lnj2s186ilhofpplk36.apps.googleusercontent.com',
+        client_id: '49001026194-7fj7o57v1ag5i6i24ncmpma8semjiikk.apps.googleusercontent.com',
         callback: (response) => {
           if (response.credential) {
             console.log('Google sign-in successful, token:', response.credential);
             // axios.post('/api/auth/google', { token: response.credential })
-            //   .t hen(res => navigate('/dashboard'));
+            //   .then(res => navigate('/dashboard'));
           }
         }
       });
+
+      // Render the Google Sign-In button
+      window.google.accounts.id.renderButton(
+        document.getElementById('google-signin-button'),
+        { theme: 'outline', size: 'large', width: 300 }
+      );
+
+      setGoogleReady(true);
     };
     document.body.appendChild(script);
     return () => {
@@ -39,56 +47,49 @@ const GetStarted = () => {
     };
   }, []);
 
-  const handleGoogleSignIn = () => {
-    if (window.google && window.google.accounts && window.google.accounts.id) {
-      window.google.accounts.id.prompt();
+  const handleSendOtp = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const res = await axios.post('https://dtc.sinfode.com/api/v1/send-otp', { email });
+      if (res.data.already_registered) {
+        setMessage('Email already registered. Redirecting to login...');
+        setTimeout(() => navigate('/login'), 2000);
+      } else {
+        setMessage(res.data.message);
+        setStep(2);
+      }
+    } catch (err) {
+      setMessage(err.response?.data?.message || 'Failed to send OTP');
     }
+    setLoading(false);
   };
 
-  const handleSendOtp = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  try {
-    const res = await axios.post('https://dtc.sinfode.com/api/v1/send-otp', { email });
-
-    if (res.data.already_registered) {
-      setMessage('Email already registered. Redirecting to login...');
-      setTimeout(() => navigate('/login'), 2000);
-    } else {
-      setMessage(res.data.message);
-      setStep(2);
-    }
-  } catch (err) {
-    setMessage(err.response?.data?.message || 'Failed to send OTP');
-  }
-  setLoading(false);
-};
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post('https://dtc.sinfode.com/api/v1/verify-otp', { email, otp });
-      setMessage(' OTP verified successfully!');
-      setStep(3); // Move to name input step
+      await axios.post('https://dtc.sinfode.com/api/v1/verify-otp', { email, otp });
+      setMessage('OTP verified successfully!');
+      setStep(3);
     } catch (err) {
       setMessage(err.response?.data?.message || 'OTP verification failed');
     }
     setLoading(false);
   };
 
-  const handleNameSubmit = async (e) => {
+  const handleNameSubmit = (e) => {
     e.preventDefault();
     if (name.trim().length < 2) {
       setMessage('Please enter a valid name');
       return;
     }
-    setStep(4); // Move to password step
+    setStep(4);
   };
 
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log('GetStarted - Name state before submission:', name);
     try {
       const res = await axios.post('https://dtc.sinfode.com/api/v1/verify-otp', {
         email,
@@ -96,32 +97,26 @@ const GetStarted = () => {
         password,
         otp
       });
-      
-      // Store auth token
+
       localStorage.setItem('auth_token', res.data.token);
-      
-      // Generate initials for profile image
+
       const nameParts = name.trim().split(/\s+/);
       let initials;
       if (nameParts.length > 1) {
-        // Take first letter of first name and first letter of last name
         initials = `${nameParts[0][0].toUpperCase()}${nameParts[nameParts.length - 1][0].toUpperCase()}`;
       } else {
-        // If only one part, use first two letters if available
         initials = nameParts[0].slice(0, 2).toUpperCase();
       }
-      
-      // Create user profile with profile image
+
       const userProfile = {
         email,
-        name: name || email.split('@')[0], // Use email prefix as fallback
+        name: name || email.split('@')[0],
         isLoggedIn: true,
         profileImage: res.data.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=f6b40e&color=fff&bold=true`
       };
-      
-      // Use AuthContext login function
+
       login(userProfile);
-      
+
       setMessage('Account created successfully!');
       setTimeout(() => navigate('/'), 1000);
     } catch (err) {
@@ -130,17 +125,13 @@ const GetStarted = () => {
     setLoading(false);
   };
 
-  const userProfile = JSON.parse(localStorage.getItem('userProfile'));
-
   return (
     <div className="get-started-container">
       <div className="get-started-heading">Welcome to DTC Club</div>
       <div className="get-started-subheading">To get started, please sign up</div>
 
-      <button className="google-btn" onClick={handleGoogleSignIn}>
-        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
-        Continue with Google
-      </button>
+      {/* ✅ Google Sign-In Button container */}
+      <div id="google-signin-button" style={{ marginBottom: '1rem' }}></div>
 
       <div className="divider">
         <div className="line"></div>
@@ -214,7 +205,7 @@ const GetStarted = () => {
             e.target.style.boxShadow = '0 2px 8px rgba(246, 180, 14, 0.3)';
           }}
         >
-          {loading ? 'Please wait...' : 
+          {loading ? 'Please wait...' :
            step === 1 ? 'Continue' :
            step === 2 ? 'Verify OTP' :
            step === 3 ? 'Next' :
@@ -237,27 +228,9 @@ const GetStarted = () => {
       </div>
 
       <div className="get-started-footer">
-        <span
-          className="link"
-          onMouseOver={(e) => e.target.style.color = '#e6a800'}
-          onMouseOut={(e) => e.target.style.color = '#f6b40e'}
-        >
-          Support
-        </span> •
-        <span
-          className="link"
-          onMouseOver={(e) => e.target.style.color = '#e6a800'}
-          onMouseOut={(e) => e.target.style.color = '#f6b40e'}
-        >
-          Privacy
-        </span> •
-        <span
-          className="link"
-          onMouseOver={(e) => e.target.style.color = '#e6a800'}
-          onMouseOut={(e) => e.target.style.color = '#f6b40e'}
-        >
-          Terms
-        </span>
+        <span className="link">Support</span> •
+        <span className="link">Privacy</span> •
+        <span className="link">Terms</span>
       </div>
     </div>
   );

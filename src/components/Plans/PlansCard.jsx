@@ -39,16 +39,14 @@ const PlansCard = ({ plan, isHomePage = false }) => {
                                     <span className="price-period"></span>
                                 </div>
                             </div>
-                        </div>
-
-                        <div className="divider"></div>
-
-                        <div className="pricing-card-body">
-                            <ul className="feature-list">
-                                <div dangerouslySetInnerHTML={{ __html: plan.features }} />
-                            </ul>
-                            <div className="button d-flex justify-content-center">
-                                <button className="btn btn-primary" onClick={handleGetStarted}>Get Started</button>
+                            <div className="divider"></div>
+                            <div className="pricing-card-body">
+                                <ul className="feature-list">
+                                    <div dangerouslySetInnerHTML={{ __html: plan.features }} />
+                                </ul>
+                                <div className="button d-flex justify-content-center">
+                                    <button className='btn btn-primary' onClick={handleGetStarted}>Get Started</button>
+                                </div>
                             </div>
                         </div>
                     </div>

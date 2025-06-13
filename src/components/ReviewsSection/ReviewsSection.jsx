@@ -62,11 +62,11 @@ const ReviewsSection = () => {
   };
 
   return (
-    <div className="container my-5">
+    <div id="review" className="container my-5">
       <h2 className="heading-3 mb-2 display-3 text-start text-black">What Our Customers Say</h2>
-      <button className="btn btn-primary rounded-pill mb-5">
+      {/* <button className="btn btn-primary rounded-pill mb-5">
         See All Case Study
-      </button>
+      </button> */}
       {loading ? (
         <p>Loading testimonials...</p>
       ) : error ? (
@@ -98,11 +98,11 @@ const ReviewsSection = () => {
                   <blockquote className="blockquote mb-4">
                     {testimonial.feedback}
                   </blockquote>
-                  <div className="button d-flex justify-content-end mt-5">
+                  {/* <div className="button d-flex justify-content-end mt-5">
                     <button className="btn btn-primary rounded-pill  mt-3">
                       Read Case Study
                     </button>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

@@ -3,25 +3,16 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Navbar.css'; // optional for custom styling
 import { useAuth } from '../../context/AuthContext';
 
-const navbarOffsetStyle = {
+const navbarStyle = {
   position: 'fixed',
-  top: '40px', // Estimated height of the notification bar
   left: 0,
   right: 0,
-  zIndex: 9998, // Just below the notification bar
+  zIndex: 9998,
   backgroundColor: 'white',
   paddingTop: '10px',
-  paddingBottom: '10px'
+  paddingBottom: '10px',
+  transition: 'top 0.3s ease'
 };
-
-// Responsive adjustment for navbar top if notification bar height changes
-const navbarResponsiveStyle = `
-  @media (max-width: 600px) {
-    .navbar {
-      top: 60px !important; /* Adjusted top for smaller screens based on estimated taller notification bar */
-    }
-  }
-`;
 
 export default function Navbar() {
   const location = useLocation();
@@ -29,7 +20,23 @@ export default function Navbar() {
   const [userProfile, setUserProfile] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [hasNotificationBar, setHasNotificationBar] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkNotificationBar = () => {
+      setHasNotificationBar(document.body.classList.contains('has-notification-bar'));
+    };
+
+    // Initial check
+    checkNotificationBar();
+
+    // Create a MutationObserver to watch for changes
+    const observer = new MutationObserver(checkNotificationBar);
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const profile = JSON.parse(localStorage.getItem('userProfile'));
@@ -65,8 +72,23 @@ export default function Navbar() {
 
   return (
     <>
-      <style>{navbarResponsiveStyle}</style>
-      <nav className="navbar navbar-expand-lg w-100 navbar-light bg-white shadow-sm px-3 px-lg-5" style={navbarOffsetStyle}>
+      <style>{`
+        .navbar {
+          top: 0;
+        }
+        .navbar.with-notification {
+          top: 40px;
+        }
+        @media (max-width: 600px) {
+          .navbar.with-notification {
+            top: 60px;
+          }
+        }
+      `}</style>
+      <nav 
+        className={`navbar navbar-expand-lg w-100 navbar-light bg-white shadow-sm px-3 px-lg-5 ${hasNotificationBar ? 'with-notification' : ''}`} 
+        style={navbarStyle}
+      >
         <Link className="navbar-brand fw-bold text-primary" to="/" onClick={handleNavItemClick}>
           <img src="assets/logos/PNG-Logo.png" className='img-fluid' style={{ width: '100px' }} alt="Logo" />
         </Link>

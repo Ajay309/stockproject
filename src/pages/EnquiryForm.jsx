@@ -85,7 +85,7 @@ export default function EnquiryForm() {
 
   if (submitted) {
     return (
-      <div style={{
+      <div  id="enquiry-form" style={{
         maxWidth: 1150,
         margin: '60px auto',
         padding: '40px 20px',
@@ -149,7 +149,7 @@ export default function EnquiryForm() {
   }
 
   return (
-    <div style={{
+    <div id="enquiry-form" style={{
       maxWidth: 1150,
       margin: '60px auto',
       borderRadius: '16px',

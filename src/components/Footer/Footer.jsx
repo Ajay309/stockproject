@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Footer.css';
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube, FaWhatsapp, FaTelegram } from 'react-icons/fa';
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube, FaWhatsapp, FaTelegram, FaGooglePlay } from 'react-icons/fa';
 
 const Footer = () => {
   const [socialLinks, setSocialLinks] = useState({
@@ -14,6 +14,86 @@ const Footer = () => {
   });
 
   const [phoneNumber, setPhoneNumber] = useState('');
+  const navigate = useNavigate();
+
+  // Function to handle navigation with scroll to top
+  const handleNavigation = (path) => {
+    navigate(path);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
+  // Function to handle FAQ section navigation
+  const handleFaqNavigation = () => {
+    navigate('/');
+    // Wait for navigation to complete before scrolling
+    setTimeout(() => {
+      const faqSection = document.querySelector('.faq-custom-style');
+      if (faqSection) {
+        faqSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
+
+  // Function to handle Process section navigation
+  const handleProcessNavigation = () => {
+    navigate('/');
+    // Wait for navigation to complete before scrolling
+    setTimeout(() => {
+      const processSection = document.getElementById('process');
+      if (processSection) {
+        const navbarHeight = document.querySelector('.navbar')?.offsetHeight || 0;
+        const processSectionTop = processSection.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({
+          top: processSectionTop - navbarHeight,
+          behavior: 'smooth'
+        });
+      }
+    }, 100);
+  };
+
+  // Function to handle Review section navigation
+  const handleReviewNavigation = () => {
+    navigate('/');
+    // Wait for navigation to complete before scrolling
+    setTimeout(() => {
+      const reviewSection = document.getElementById('review');
+      if (reviewSection) {
+        const navbarHeight = document.querySelector('.navbar')?.offsetHeight || 0;
+        const reviewSectionTop = reviewSection.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({
+          top: reviewSectionTop - navbarHeight,
+          behavior: 'smooth'
+        });
+      }
+    }, 100);
+  };
+
+  // Function to handle Enquiry Form navigation
+  const handleEnquiryNavigation = () => {
+    navigate('/');
+    // Wait for navigation to complete before scrolling
+    setTimeout(() => {
+      const enquiryForm = document.getElementById('enquiry-form');
+
+      if (enquiryForm) {
+        enquiryForm.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
+
+  // Function to handle assistant chat
+  const handleAssistantChat = () => {
+    // You can implement the logic to open the assistant chat here
+    // For example, if you have a state or context for the assistant chat
+    // you can set it to open here
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -57,7 +137,7 @@ const Footer = () => {
           The only platform that can support your company at any scale
         </h1>
         <div className="button-footer">
-          <Link to="/get-started" className="btn btn-light btn-lg fw-semibold rounded-pill px-5 py-3 mb-4">
+          <Link to="/get-started" className="btn btn-light btn-lg fw-semibold rounded-pill px-5 py-3 mb-4" onClick={() => handleNavigation('/get-started')}>
             Get started
           </Link>
         </div>
@@ -146,49 +226,70 @@ const Footer = () => {
         <div className="container mx-auto mt-16 pb-8">
           <div className="footer-menu-responsive">
             <div className="footer-column">
-              <h5>Legal</h5>
-              <Link to="/" className="hover:text-white transition">Privacy Policy</Link>
-              <Link to="/blogs" className="hover:text-white transition">Terms of Service</Link>
-              <Link to="/plans" className="hover:text-white transition">Security</Link>
-              <Link to="/privacy" className="hover:text-white transition">Disclaimer</Link>
-              <Link to="/terms" className="hover:text-white transition">Cookie Policy</Link>
-              <Link to="/security" className="hover:text-white transition">Licensing & Compliance</Link>
-            </div>
-            <div className="footer-column">
-              <h5>Platforms</h5>
-              <Link to="/plans" className="hover:text-white transition">Plans</Link>
-              <Link to="/features" className="hover:text-white transition">Features</Link>
-              <Link to="/solutions" className="hover:text-white transition">Integrations</Link>
-              <Link to="/integrations" className="hover:text-white transition">API Access</Link>
-              <Link to="/api" className="hover:text-white transition">Mobile App</Link>
-              <Link to="/developers" className="hover:text-white transition">Trading Dashboard</Link>
+              <h5>Company</h5>
+              <Link to="/about-us" className="hover:text-white transition" onClick={() => handleNavigation('/about-us')}>About Us</Link>
+              <Link to="/partners" className="hover:text-white transition" onClick={() => handleNavigation('/partners')}>Partners</Link>
+              <Link to="/privacy-policy" className="hover:text-white transition" onClick={() => handleNavigation('/privacy-policy')}>Privacy Policy</Link>
             </div>
             <div className="footer-column">
               <h5>Resources</h5>
-              <Link to="/services" className="hover:text-white transition">Blog</Link>
-              <Link to="/webinars" className="hover:text-white transition">Webinars</Link>
-              <Link to="/events" className="hover:text-white transition">Case Studies</Link>
-              <Link to="/case-studies" className="hover:text-white transition">Trading Guides</Link>
-              <Link to="/success-stories" className="hover:text-white transition">Market News</Link>
-              <Link to="/customer-stories" className="hover:text-white transition">Learning Center</Link>
-            </div>
-            <div className="footer-column">
-              <h5>Company</h5>
-              <Link to="/about-us" className="hover:text-white transition">About Us</Link>
-              <Link to="/company" className="hover:text-white transition">Team</Link>
-              <Link to="/careers" className="hover:text-white transition">Careers</Link>
-              <Link to="/team" className="hover:text-white transition">Partners</Link>
-              <Link to="/partners" className="hover:text-white transition">Press & News</Link>
-              <Link to="/investors" className="hover:text-white transition">Investors</Link>
+              <Link to="/blogs" className="hover:text-white transition" onClick={() => handleNavigation('/blogs')}>Blog</Link>
+              <Link to="/plans" className="hover:text-white transition" onClick={() => handleNavigation('/plans')}>Plans</Link>
+              <button 
+                className="hover:text-white transition border-0 bg-transparent text-white" 
+                onClick={handleProcessNavigation}
+                style={{ textAlign: 'left', padding: 0 }}
+              >
+                Trading Guides
+              </button>
             </div>
             <div className="footer-column">
               <h5>Support</h5>
-              <Link to="/contact-us" className="hover:text-white transition">FAQs</Link>
-              <Link to="/support" className="hover:text-white transition">Contact Us</Link>
-              <Link to="/help" className="hover:text-white transition">Live Chat</Link>
-              <Link to="/community" className="hover:text-white transition">Feedback</Link>
-              <Link to="/feedback" className="hover:text-white transition">Help Center</Link>
-              <Link to="/contact-us" className="hover:text-white transition">Community </Link>
+              <button 
+                className="hover:text-white transition border-0 bg-transparent text-white" 
+                onClick={handleFaqNavigation}
+                style={{ textAlign: 'left', padding: 0 }}
+              >
+                FAQs
+              </button>
+              <Link to="/contact-us" className="hover:text-white transition" onClick={() => handleNavigation('/contact-us')}>Contact Us</Link>
+              <button 
+                className="hover:text-white transition border-0 bg-transparent text-white" 
+                onClick={handleAssistantChat}
+                style={{ textAlign: 'left', padding: 0 }}
+              >
+                Live Chat
+              </button>
+              <Link 
+                to="/"
+                className="hover:text-white transition" 
+                onClick={handleEnquiryNavigation}
+                style={{ textAlign: 'left', padding: 0, display: 'block', textDecoration: 'none' }}
+              >
+                Help Center
+              </Link>
+              <button 
+                className="hover:text-white transition border-0 bg-transparent text-white" 
+                onClick={handleReviewNavigation}
+                style={{ textAlign: 'left', padding: 0 }}
+              >
+                Feedback
+              </button>
+            </div>
+            <div className="footer-column">
+              <h5>Download App</h5>
+              <a 
+                href="https://play.google.com/store" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="play-store-link"
+              >
+                <div className="play-store-text-container">
+                  <div className="play-store-get-it-on">GET IT ON</div>
+                  <div className="play-store-name">Google Play</div>
+                </div>
+                <FaGooglePlay style={{ fontSize: '24px' }} />
+              </a>
             </div>
           </div>
         </div>

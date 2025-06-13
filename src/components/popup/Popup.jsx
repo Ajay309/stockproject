@@ -5,33 +5,39 @@ import axios from 'axios';
 const Popup = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
+  const [hasContent, setHasContent] = useState(false);
 
   useEffect(() => {
+    let timerId;
     // Fetch image from API
     axios.get('https://dtc.sinfode.com/api/v1/popup')
       .then((res) => {
         const data = res.data?.data;
-        if (data && data.length > 0) {
+        if (data && data.length > 0 && data[0].image) {
           setImageUrl(`${data[0].image}`);
+          setHasContent(true); // Indicate that content is available
+        } else {
+          setHasContent(false); // No content available
         }
       })
       .catch((err) => {
         console.error('Error fetching popup image:', err);
+        setHasContent(false); // Treat error as no content
       });
 
-    // Show popup after 7 seconds
-    const timer = setTimeout(() => {
+    // Only set timer to show popup if content is fetched
+    timerId = setTimeout(() => {
       setIsVisible(true);
     }, 7000);
 
-    return () => clearTimeout(timer);
+    return () => clearTimeout(timerId);
   }, []);
 
   const handleClose = () => {
     setIsVisible(false);
   };
 
-  if (!isVisible) return null;
+  if (!isVisible || !hasContent) return null; // Hide if not visible or no content
 
   return (
     <div style={{

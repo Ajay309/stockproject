@@ -18,18 +18,18 @@ const cards = [
 //     link: 'See project intake'
 //   },
   {
-    title: ' Share Your TradingView Username',
+    title: 'Share Your TradingView Username',
     desc: 'After payment, you will be automatically redirected to our DTC Support Team. Simply share your TradingView username with our team to activate access.',
     link: 'See project launches'
   },
   {
     title: 'Access DTC Indicator on TradingView',
-    desc: 'Within 2–3 minutes, your TradingView account will get access to the DTC Indicator. Go to the “Invite-only scripts” section under Indicators on TradingView – you’ll find DTC Indicator listed there..',
+    desc: 'Within 2-3 minutes, your TradingView account will get access to the DTC Indicator. Go to the "Invite-only scripts" section under Indicators on TradingView - you will find DTC Indicator listed there.',
     link: 'See project launches'
   },
   {
     title: 'Get Educational Course & Support',
-    desc: 'Our team will send you the complete educational video course, PDF guides, and lifetime WhatsApp support on your registered email and WhatsApp number..',
+    desc: 'Our team will send you the complete educational video course, PDF guides, and lifetime WhatsApp support on your registered email and WhatsApp number.',
     link: 'See project launches'
   },
   
@@ -86,7 +86,7 @@ export default function Process() {
 //   };
 
   return (
-    <section className="py-5 bg-white">
+    <section id="process" className="py-5 bg-white">
     <div className="container">
       <div className=" mb-5">
         <div className="row">

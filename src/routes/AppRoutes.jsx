@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from '../pages/Home';
 import Dashboard from '../pages/Dashboard';
 import Login from '../pages/Login';
@@ -12,7 +12,8 @@ import BlogDetail from '../pages/BlogDetail';
 import PurchaseForm from '../pages/Purchase';
 import FeaturesSection from '../components/FeatureSection/FeatureSection';
 import ProfilePage from '../pages/ProfilePage';
-
+import Partners from '../pages/Partners';
+import PrivacyPolicy from '../pages/PrivacyPolicy';
 
 export default function AppRoutes() {
   return (
@@ -29,7 +30,10 @@ export default function AppRoutes() {
       <Route path="/purchase" element={<PurchaseForm />} />
       <Route path="/get-started" element={<GetStarted/>} />
       <Route path="/profile" element={<ProfilePage/>} />
-      
+      <Route path="/partners" element={<Partners />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/trading-guides" element={<Navigate to="/#process" replace />} />
+      <Route path="/feedback" element={<Navigate to="/#review" replace />} />
     </Routes>
   );
 }

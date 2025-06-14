@@ -14,6 +14,9 @@ import FeaturesSection from '../components/FeatureSection/FeatureSection';
 import ProfilePage from '../pages/ProfilePage';
 import Partners from '../pages/Partners';
 import PrivacyPolicy from '../pages/PrivacyPolicy';
+import ForgotPassword from '../pages/ForgotPassword';
+import ResetPassword from '../pages/ResetPassword';
+
 
 export default function AppRoutes() {
   return (
@@ -34,6 +37,9 @@ export default function AppRoutes() {
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/trading-guides" element={<Navigate to="/#process" replace />} />
       <Route path="/feedback" element={<Navigate to="/#review" replace />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password/:token" element={<ResetPassword />} />
+
     </Routes>
   );
 }

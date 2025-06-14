@@ -194,6 +194,22 @@ const Login = () => {
           Sign up
         </span>
       </div>
+
+      <div style={{ textAlign: 'right', marginBottom: '16px' }}>
+  <span
+    style={{
+      fontSize: '0.9rem',
+      color: '#f6b40e',
+      cursor: 'pointer',
+      textDecoration: 'underline'
+    }}
+    onClick={() => navigate('/forgot-password')}
+  >
+    Forgot Password?
+  </span>
+</div>
+
+      
     </div>
   );
 };

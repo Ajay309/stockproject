@@ -90,7 +90,7 @@ export default function Navbar() {
         style={navbarStyle}
       >
         <Link className="navbar-brand fw-bold text-primary" to="/" onClick={handleNavItemClick}>
-          <img src="assets/logos/PNG-Logo.png" className='img-fluid' style={{ width: '100px' }} alt="Logo" />
+          <img src="/assets/logos/PNG-Logo.png" className='img-fluid' style={{ width: '100px' }} alt="Logo" />
         </Link>
         <button
           className="navbar-toggler"

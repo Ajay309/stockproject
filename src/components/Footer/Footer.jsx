@@ -134,8 +134,8 @@ const Footer = () => {
     <footer className="footer-section bg-dark text-white py-3 position-relative">
       <div className="container">
         <h1 className="px-5 py-4 mb-4 heading-10 text-center">
-          The only platform that can support your company at any scale
-        </h1>
+       Welcome To The Place Where Traders Grow Together        
+</h1>
         <div className="button-footer">
           <Link to="/get-started" className="btn btn-light btn-lg fw-semibold rounded-pill px-5 py-3 mb-4" onClick={() => handleNavigation('/get-started')}>
             Get started

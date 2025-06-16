@@ -1,165 +1,238 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
-import './AboutUsSection.css'; // Import your CSS file for styling
-import { section } from 'framer-motion/client';
-import { FaLightbulb, FaUser, FaHeart, FaRocket, FaGlobe,FaHandshake } from 'react-icons/fa';
-
+import './AboutUsSection.css';
+// Import certification images
+import nyseLogo from '../../assets/logos/nyse.png';
+import nseLogo from '../../assets/logos/nse.webp';
+import bseLogo from '../../assets/logos/bse.jpg';
 
 const AboutUsSection = () => {
-  return (
-    <>
-    <section className="hero-section">
-      <div className="container">
-        <div className="row align-items-center">
-          <div className="col-lg-6 animate">
-            <h1 className="display-4 text-white fw-bold mb-4">About Our Company</h1>
-            <p className="lead mb-4">We're a passionate team dedicated to creating innovative solutions that make a difference in people's lives.</p>
-            <button className="btn btn-light btn-lg px-4 me-2">Our Services</button>
-            <Link to="/contact-us" className="btn btn-outline-light btn-lg px-4">Contact Us</Link>
-          </div>
-          <div className="col-lg-6 animate delay-1">
-            <svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg" className="img-fluid">
-              <path fill="#ffffff" fillOpacity="0.2" d="M38.5,-65.1C46.9,-55.3,49.4,-39.1,55.5,-24.7C61.5,-10.3,71.2,2.3,71.8,15.3C72.4,28.3,63.9,41.6,52.3,51.5C40.6,61.3,25.8,67.7,10.4,70.9C-5,74.1,-21,74.1,-34.9,68.1C-48.8,62.1,-60.5,50.1,-67.8,35.8C-75.1,21.5,-78,4.9,-75.8,-11.2C-73.6,-27.2,-66.3,-42.7,-54.7,-52.5C-43.1,-62.3,-27.2,-66.4,-12.2,-65.8C2.8,-65.2,30.1,-74.9,38.5,-65.1Z" transform="translate(250 200)" />
-              <circle cx="250" cy="200" r="120" fill="#ffffff" fillOpacity="0.1" />
-              <path fill="none" stroke="#ffffff" strokeWidth="2" d="M100,200 Q250,120 400,200" />
-              <path fill="none" stroke="#ffffff" strokeWidth="2" d="M100,220 Q250,300 400,220" />
-            </svg>
-          </div>
-        </div>
-      </div>
-      </section>
-  <section className="about-section py-5">
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-6 mb-4 mb-lg-0 animate">
-            <h2 className="section-title heading-22">Our Story</h2>
-            <p className="lead mb-4 heading-22">Founded in 2010, we started with a simple mission: to create solutions that matter.</p>
-            <p>Our journey began when our founders recognized a gap in the market for user-friendly, innovative products that could solve everyday problems. What started as a small team working out of a garage has now grown into a thriving company with a global presence.</p>
-            <p>Throughout our growth, we've remained committed to our core values of innovation, quality, and customer satisfaction. We believe in pushing boundaries and challenging the status quo to deliver exceptional experiences.</p>
-            <p>Today, we're proud to serve thousands of customers worldwide, helping them achieve their goals through our cutting-edge solutions and dedicated support.</p>
-          </div>
-          <div className="col-lg-6 animate delay-1">
-            <div className="position-relative">
-              <svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg" className="img-fluid">
-                <rect x="50" y="50" width="400" height="300" rx="20" fill="#f0f4ff" />
-                <circle cx="150" cy="120" r="50" fill="#3a86ff" fillOpacity="0.7" />
-                <rect x="220" y="90" width="200" height="20" rx="5" fill="#8338ec" fillOpacity="0.7" />
-                <rect x="220" y="130" width="150" height="20" rx="5" fill="#8338ec" fillOpacity="0.5" />
-                <path d="M80,200 L420,200 L420,300 L80,300 Z" fill="#ff006e" fillOpacity="0.1" />
-                <circle cx="120" cy="250" r="25" fill="#ff006e" fillOpacity="0.6" />
-                <rect x="160" y="235" width="230" height="15" rx="5" fill="#3a86ff" fillOpacity="0.5" />
-                <rect x="160" y="265" width="180" height="15" rx="5" fill="#3a86ff" fillOpacity="0.3" />
-              </svg>
-              <div className="position-absolute" style={{ top: '20px', right: '20px', background: '#ff006e', color: 'white', padding: '10px 20px', borderRadius: '30px', transform: 'rotate(10deg)' }}>
-                <span className="fw-bold">Est. 2010</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
- </section>
+  const [settings, setSettings] = useState(null);
+  const [certification, setCertification] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
-      <div className="container">
-        <div className="text-center mb-5 animate">
-          <h2 className="section-title d-inline-block">Our Core Values</h2>
-          <p className="lead heading-22">The principles that guide everything we do</p>
-        </div>
-        <div className="row">
-          <div className="col-md-4 mb-4 animate delay-1">
-            <div className="card value-card p-4">
-              <div className="value-icon">
-                <i className=""><FaLightbulb/></i>
-              </div>
-              <h3 className="h4 mb-3">Innovation</h3>
-              <p>We constantly push boundaries and explore new ideas to create solutions that are ahead of their time.</p>
-            </div>
-          </div>
-          <div className="col-md-4 mb-4 animate delay-2">
-            <div className="card value-card p-4">
-              <div className="value-icon">
-                <i className="fas fa-users"><FaUser/></i>
-              </div>
-              <h3 className="h4 mb-3">Collaboration</h3>
-              <p>We believe in the power of teamwork and partnership to achieve extraordinary results.</p>
-            </div>
-          </div>
-          <div className="col-md-4 mb-4 animate delay-3">
-            <div className="card value-card p-4">
-              <div className="value-icon">
-                <i className="fas fa-heart"><FaHeart/></i>
-              </div>
-              <h3 className="h4 mb-3">Integrity</h3>
-              <p>We conduct our business with honesty, transparency, and a strong ethical foundation.</p>
-            </div>
-          </div>
-          <div className="col-md-4 mb-4 animate delay-2">
-            <div className="card value-card p-4">
-              <div className="value-icon">
-                <i className="fas fa-rocket"><FaRocket/></i>
-              </div>
-              <h3 className="h4 mb-3">Excellence</h3>
-              <p>We strive for the highest standards in everything we do, from product development to customer service.</p>
-            </div>
-          </div>
-          <div className="col-md-4 mb-4 animate delay-3">
-            <div className="card value-card p-4">
-              <div className="value-icon">
-                <i className="fas fa-globe"><FaGlobe/></i>
-              </div>
-              <h3 className="h4 mb-3">Sustainability</h3>
-              <p>We're committed to practices that protect our environment and contribute to a better future.</p>
-            </div>
-          </div>
-          <div className="col-md-4 mb-4 animate delay-4">
-            <div className="card value-card p-4">
-              <div className="value-icon">
-                <i className="fas fa-handshake"><FaHandshake/></i>
-              </div>
-              <h3 className="h4 mb-3">Customer Focus</h3>
-              <p>We put our customers at the center of everything we do, ensuring their success is our success.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      {/* <div className="container">
-        <div className="text-center mb-5 animate">
-<h2 className="section-title d-inline-block">Meet Our Team</h2>
-<p className="lead">The talented individuals driving our success</p>
-</div>
-<div className="row w-100 h-100">
-<div className="col-md-3 mb-4 animate delay-1">
-<div className="card team-card">
-<img src="/assets/images/client1.jpg" alt="Team member" className="card-img-top" />
-<div className="card-body text-center">
-<h4 className="card-title">John Doe</h4>
-<p className="card-text">CEO & Founder</p>
-</div>
-</div>
-</div>
+  // Static certification data
+  const staticCertifications = [
+    { image: nyseLogo, alt: 'NYSE Certification' },
+    { image: nseLogo, alt: 'NSE Certification' },
+    { image: bseLogo, alt: 'BSE Certification' }
+  ];
 
-<div className="col-md-3 mb-4 animate delay-3">
-<div className="card team-card">
-<img src="/assets/images/client3.png" alt="Team member" className="card-img-top" />
-<div className="card-body text-center">
-<h4 className="card-title">Emily Johnson</h4>
-<p className="card-text">Head of Marketing</p>
-</div>
-</div>
-</div>
-<div className="col-md-3 mb-4 animate delay-4">
-<div className="card team-card">
-<img src="/assets/images/client4.png" alt="Team member" className="card-img-top" />
-<div className="card-body text-center">
-<h4 className="card-title">Michael Lee</h4>
-<p className="card-text">Lead Designer</p>
-</div>
-</div>
-</div>
-</div>
-</div> */}
-    </>
-    );
+  useEffect(() => {
+    const fetchSettingsAndCertification = async () => {
+      try {
+        const settingsRes = await fetch('https://dtc.sinfode.com/api/v1/settings');
+        const settingsData = await settingsRes.json();
+
+        if (settingsData.status === 'success') {
+          setSettings(settingsData.data);
+        } else {
+          setError('Failed to fetch settings');
+        }
+
+        // Set static certifications
+        setCertification(staticCertifications);
+      } catch (err) {
+        setError('Error fetching data: ' + err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSettingsAndCertification();
+  }, []);
+
+  // Auto slide effect
+  useEffect(() => {
+    if (certification && certification.length > 0) {
+      const interval = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % certification.length);
+      }, 3000); // Change slide every 3 seconds
+
+      return () => clearInterval(interval);
     }
+  }, [certification]);
+
+  if (loading) {
+    return <div className="about-us-container">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="about-us-container">Error: {error}</div>;
+  }
+
+  const { about_setting } = settings;
+
+  return (
+    <div className="about-us-container">
+      {/* Hero Section */}
+      <section className="hero-section">
+        <div className="hero-content">
+          <div className="hero-text">
+            <h1 className="hero-title">About Dream Trading Club</h1>
+            <div className="hero-buttons">
+              <button className="btn btn-primary">Our Services</button>
+              <Link to="/contact-us" className="btn btn-outline">Contact Us</Link>
+            </div>
+          </div>
+          <div className="hero-image">
+            <img src={about_setting.image} alt="About DTC" className="hero-illustration" />
+          </div>
+        </div>
+      </section>
+
+      {/* Navigation Bar */}
+      <nav className="about-nav">
+        <div className="nav-container">
+          <a href="#company" className="nav-link">Company Intro</a>
+          <a href="#offers" className="nav-link">What We Offer</a>
+          <a href="#community" className="nav-link">Our Community</a>
+          <a href="#mission" className="nav-link">Mission & Vision</a>
+          <a href="#certifications" className="nav-link">Our Certifications</a>
+          <a href="#why-dtc" className="nav-link">Why Choose DTC</a>
+        </div>
+      </nav>
+
+      {/* Company Intro Section */}
+      <section id="company" className="content-section alt-bg">
+        <div className="section-container">
+          <h2 className="section-title">Company Intro</h2>
+          <div className="section-layout">
+            <div className="section-text-content">
+              <p>{about_setting.description}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* What We Offer Section */}
+      <section id="offers" className="content-section">
+        <div className="section-container">
+          <div className="section-layout">
+            <div className="section-text-content">
+              <h2 className="section-title">What We Offer</h2>
+              <p className="section-description">{about_setting.our_offer}</p>
+            </div>
+            <div className="section-image">
+              <img src={about_setting.banner_image} alt="What We Offer" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Community Section */}
+      <section id="community" className="content-section alt">
+        <div className="section-container">
+          <h2 className="section-title">Our Community</h2>
+          <div className="section-layout">
+            <div className="section-text-content">
+              {/* <p>
+                We are proud to have a growing network of over {about_setting.employee} employees who come from diverse backgrounds and regions.
+              </p>
+              <p>
+                With {about_setting.experience} years of experience and {about_setting.happy_smile} happy clients, our platform supports your journey with industry-relevant training and real-world exposure.
+              </p> */}
+            </div>
+          </div>
+          
+          <div className="community-stats-grid">
+            <div className="stat-card">
+              <div className="stat-icon">👥</div>
+              <div className="stat-number">{about_setting.employee}</div>
+              <div className="stat-label">Employees</div>
+            </div>
+            
+            <div className="stat-card">
+              <div className="stat-icon">⭐</div>
+              <div className="stat-number">{about_setting.experience}</div>
+              <div className="stat-label">Years of Experience</div>
+            </div>
+            
+            <div className="stat-card">
+              <div className="stat-icon">😊</div>
+              <div className="stat-number">{about_setting.happy_smile}</div>
+              <div className="stat-label">Happy Clients</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Mission & Vision Section */}
+      <section id="mission" className="content-section">
+        <div className="section-container">
+          <h2 className="section-title">Mission, Vision & Goals</h2>
+          <div className="section-layout reverse">
+            <div className="section-text-content">
+              <div dangerouslySetInnerHTML={{ __html: about_setting.mission }} />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Certifications Section */}
+      <section id="certifications" className="content-section alt-bg">
+        <div className="section-container">
+          <h2 className="section-title">Our Certifications</h2>
+          <div className="certification-slider">
+            <div className="certification-slides">
+              {certification && certification.length > 0 ? (
+                certification.map((cert, index) => (
+                  <div 
+                    key={index} 
+                    className={`certification-slide ${currentSlide === index ? 'active' : ''}`}
+                  >
+                    <img src={cert.image} alt={cert.alt} />
+                  </div>
+                ))
+              ) : (
+                <div className="certification-slide active">
+                  <p>No certifications available</p>
+                </div>
+              )}
+            </div>
+            <button 
+              className="slider-arrow prev"
+              onClick={() => setCurrentSlide((prev) => (prev - 1 + certification.length) % certification.length)}
+            >
+              ←
+            </button>
+            <button 
+              className="slider-arrow next"
+              onClick={() => setCurrentSlide((prev) => (prev + 1) % certification.length)}
+            >
+              →
+            </button>
+          </div>
+          {certification && certification.length > 1 && (
+            <div className="slider-dots">
+              {certification.map((_, index) => (
+                <span 
+                  key={index}
+                  className={`dot ${currentSlide === index ? 'active' : ''}`}
+                  onClick={() => setCurrentSlide(index)}
+                ></span>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Why Choose DTC Section */}
+      <section id="why-dtc" className="content-section">
+        <div className="section-container">
+          <h2 className="section-title">Why Choose Dream Trading Club</h2>
+          <div className="section-layout">
+            <div className="section-text-content">
+              <p>{about_setting.learn_description}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
 export default AboutUsSection;
+  

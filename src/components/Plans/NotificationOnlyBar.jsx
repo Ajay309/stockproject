@@ -1,25 +1,17 @@
 // src/components/NotificationOnlyBar.jsx
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { getNotificationMessage } from '../../api';
 
 export default function NotificationOnlyBar() {
   const [notification, setNotification] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('https://dtc.sinfode.com/api/v1/notification')
-      .then(response => {
-        const data = response.data.data;
-        if (Array.isArray(data) && data.length > 0) {
-          setNotification(data[0].name);
-        } else if (typeof data === 'object' && data !== null) {
-          setNotification(data.name);
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching notification:', error);
-      });
+    (async () => {
+      const message = await getNotificationMessage();
+      setNotification(message);
+    })();
   }, []);
 
   if (!notification) return null;

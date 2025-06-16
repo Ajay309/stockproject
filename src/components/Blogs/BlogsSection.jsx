@@ -1,12 +1,9 @@
 // src/components/BlogsSection.js
 import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import api from '../../api';
+import { getBlogs } from '../../api'; // ✅ import the function
 import './BlogsSection.css';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
-
 
 const BlogsSection = () => {
   const [blogs, setBlogs] = useState([]);
@@ -14,23 +11,19 @@ const BlogsSection = () => {
   const blogsPerPage = 3;
   const pageCount = Math.ceil(blogs.length / blogsPerPage);
 
-const navigate = useNavigate();
-const handleReadMore = (blog) => {
-  navigate(`/blogs/${blog.id}`, { state: { blog } });
-};
+  const navigate = useNavigate();
 
-  
+  const handleReadMore = (blog) => {
+    navigate(`/blogs/${blog.id}`, { state: { blog } });
+  };
+
   useEffect(() => {
-    axios.get('https://dtc.sinfode.com/api/v1/blog')
-      .then(response => {
-        console.log(response.data.data);
-        setBlogs(response.data.data); // assuming API returns { data: [...] }
-      })
-      .catch(error => {
-        console.error('Error fetching FAQs:', error);
-      });
+    const fetchBlogs = async () => {
+      const data = await getBlogs();
+      setBlogs(data);
+    };
+    fetchBlogs();
   }, []);
-
 
   const currentBlogs = blogs.slice(
     currentPage * blogsPerPage,
@@ -43,7 +36,9 @@ const handleReadMore = (blog) => {
 
   return (
     <div className="container py-5">
-      <h2 className="display-4 heading-3 mb-4 text-start text-black" style={{marginTop: '70px'}}>Our Blogs</h2>
+      <h2 className="display-4 heading-3 mb-4 text-start text-black" style={{ marginTop: '70px' }}>
+        Our Blogs
+      </h2>
       <div className="row">
         {currentBlogs.map((blog, index) => (
           <div key={index} className="col-md-4 mb-4">
@@ -54,11 +49,11 @@ const handleReadMore = (blog) => {
                 <p className="card-text text-muted small">{blog.created_at}</p>
                 <p className="card-text">{blog.blog_key}</p>
                 <button
-  className="btn btn-primary rounded-pill"
-  onClick={() => handleReadMore(blog)}
->
-  Read More
-</button>
+                  className="btn btn-primary rounded-pill"
+                  onClick={() => handleReadMore(blog)}
+                >
+                  Read More
+                </button>
               </div>
             </div>
           </div>

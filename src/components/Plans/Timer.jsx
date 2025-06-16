@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import NotificationOnlyBar from './NotificationOnlyBar'; // Import the notification bar component
+import NotificationOnlyBar from './NotificationOnlyBar';
+import { getOfferEndTime } from '../../api';
 
 const Timer = () => {
   const [targetDate, setTargetDate] = useState(null);
@@ -8,23 +8,15 @@ const Timer = () => {
     days: 0,
     hours: 0,
     minutes: 0,
-    seconds: 0
+    seconds: 0,
   });
 
-  // Fetch the timer date from the API
+  // Fetch offer end date
   useEffect(() => {
-    axios.get('https://dtc.sinfode.com/api/v1/offertimer')
-      .then((res) => {
-        const offerData = res.data?.data?.[0];
-        if (offerData?.end_time) {
-          // Convert string to Date object
-          const formattedDate = new Date(offerData.end_time.replace(' ', 'T'));
-          setTargetDate(formattedDate);
-        }
-      })
-      .catch((err) => {
-        console.error('Failed to fetch offer timer:', err);
-      });
+    (async () => {
+      const endTime = await getOfferEndTime();
+      if (endTime) setTargetDate(endTime);
+    })();
   }, []);
 
   // Countdown logic
@@ -57,22 +49,14 @@ const Timer = () => {
       <h3 className="timer-heading">Limited Time Offer</h3>
       <NotificationOnlyBar message="Hurry up! Offer ends soon!" className="text-warning" />
       <div className="d-flex justify-content-center gap-4">
-        <div className="timer-box">
-          <div className="timer-value" style={{ color: '#fbba07' }}>{timeLeft.days}</div>
-          <div className="timer-label">Days</div>
-        </div>
-        <div className="timer-box">
-          <div className="timer-value" style={{ color: '#fbba07' }}>{timeLeft.hours}</div>
-          <div className="timer-label">Hours</div>
-        </div>
-        <div className="timer-box">
-          <div className="timer-value" style={{ color: '#fbba07' }}>{timeLeft.minutes}</div>
-          <div className="timer-label">Minutes</div>
-        </div>
-        <div className="timer-box">
-          <div className="timer-value" style={{ color: '#fbba07' }}>{timeLeft.seconds}</div>
-          <div className="timer-label">Seconds</div>
-        </div>
+        {['days', 'hours', 'minutes', 'seconds'].map((label) => (
+          <div className="timer-box" key={label}>
+            <div className="timer-value" style={{ color: '#fbba07' }}>
+              {timeLeft[label]}
+            </div>
+            <div className="timer-label">{label.charAt(0).toUpperCase() + label.slice(1)}</div>
+          </div>
+        ))}
       </div>
     </div>
   );

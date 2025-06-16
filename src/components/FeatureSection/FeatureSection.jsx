@@ -1,4 +1,6 @@
+// src/components/FeaturesSection.js
 import React, { useEffect, useState } from 'react';
+import { getPlatformLogos } from '../../api';
 import './FeatureSection.css';
 
 export default function FeaturesSection() {
@@ -6,15 +8,8 @@ export default function FeaturesSection() {
 
   useEffect(() => {
     const fetchLogos = async () => {
-      try {
-        const response = await fetch('https://dtc.sinfode.com/api/v1/platfrom');
-        const result = await response.json();
-        if (result.status === 'success') {
-          setLogos(result.data); // result.data is an array of logos
-        }
-      } catch (error) {
-        console.error('Failed to fetch logos:', error);
-      }
+      const result = await getPlatformLogos();
+      setLogos(result);
     };
 
     fetchLogos();

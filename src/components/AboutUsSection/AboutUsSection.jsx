@@ -1,28 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './AboutUsSection.css';
-// Import certification images
-import nyseLogo from '../../assets/logos/nyse.png';
-import nseLogo from '../../assets/logos/nse.webp';
-import bseLogo from '../../assets/logos/bse.jpg';
 
 const AboutUsSection = () => {
   const [settings, setSettings] = useState(null);
-  const [certification, setCertification] = useState(null);
+  const [certification, setCertification] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Static certification data
-  const staticCertifications = [
-    { image: nyseLogo, alt: 'NYSE Certification' },
-    { image: nseLogo, alt: 'NSE Certification' },
-    { image: bseLogo, alt: 'BSE Certification' }
-  ];
-
   useEffect(() => {
     const fetchSettingsAndCertification = async () => {
       try {
+        // Fetch site settings
         const settingsRes = await fetch('https://dtc.sinfode.com/api/v1/settings');
         const settingsData = await settingsRes.json();
 
@@ -32,8 +22,20 @@ const AboutUsSection = () => {
           setError('Failed to fetch settings');
         }
 
-        // Set static certifications
-        setCertification(staticCertifications);
+        // Fetch certifications
+        const certRes = await fetch('https://dtc.sinfode.com/api/v1/certifiaction');
+        const certData = await certRes.json();
+
+        if (certData.status === 'success') {
+          const formattedCerts = certData.data.map((item) => ({
+            image: item.image,
+            alt: `Certification ${item.id}`,
+          }));
+          setCertification(formattedCerts);
+        } else {
+          setError('Failed to fetch certifications');
+        }
+
       } catch (err) {
         setError('Error fetching data: ' + err.message);
       } finally {
@@ -46,10 +48,10 @@ const AboutUsSection = () => {
 
   // Auto slide effect
   useEffect(() => {
-    if (certification && certification.length > 0) {
+    if (certification.length > 0) {
       const interval = setInterval(() => {
         setCurrentSlide((prev) => (prev + 1) % certification.length);
-      }, 3000); // Change slide every 3 seconds
+      }, 3000);
 
       return () => clearInterval(interval);
     }
@@ -72,10 +74,7 @@ const AboutUsSection = () => {
         <div className="hero-content">
           <div className="hero-text">
             <h1 className="hero-title">About Dream Trading Club</h1>
-            <div className="hero-buttons">
-              <button className="btn btn-primary">Our Services</button>
-              <Link to="/contact-us" className="btn btn-outline">Contact Us</Link>
-            </div>
+            
           </div>
           <div className="hero-image">
             <img src={about_setting.image} alt="About DTC" className="hero-illustration" />
@@ -127,29 +126,19 @@ const AboutUsSection = () => {
         <div className="section-container">
           <h2 className="section-title">Our Community</h2>
           <div className="section-layout">
-            <div className="section-text-content">
-              {/* <p>
-                We are proud to have a growing network of over {about_setting.employee} employees who come from diverse backgrounds and regions.
-              </p>
-              <p>
-                With {about_setting.experience} years of experience and {about_setting.happy_smile} happy clients, our platform supports your journey with industry-relevant training and real-world exposure.
-              </p> */}
-            </div>
+            <div className="section-text-content"></div>
           </div>
-          
           <div className="community-stats-grid">
             <div className="stat-card">
               <div className="stat-icon">👥</div>
               <div className="stat-number">{about_setting.employee}</div>
               <div className="stat-label">Employees</div>
             </div>
-            
             <div className="stat-card">
               <div className="stat-icon">⭐</div>
               <div className="stat-number">{about_setting.experience}</div>
               <div className="stat-label">Years of Experience</div>
             </div>
-            
             <div className="stat-card">
               <div className="stat-icon">😊</div>
               <div className="stat-number">{about_setting.happy_smile}</div>
@@ -177,10 +166,10 @@ const AboutUsSection = () => {
           <h2 className="section-title">Our Certifications</h2>
           <div className="certification-slider">
             <div className="certification-slides">
-              {certification && certification.length > 0 ? (
+              {certification.length > 0 ? (
                 certification.map((cert, index) => (
-                  <div 
-                    key={index} 
+                  <div
+                    key={index}
                     className={`certification-slide ${currentSlide === index ? 'active' : ''}`}
                   >
                     <img src={cert.image} alt={cert.alt} />
@@ -192,23 +181,12 @@ const AboutUsSection = () => {
                 </div>
               )}
             </div>
-            <button 
-              className="slider-arrow prev"
-              onClick={() => setCurrentSlide((prev) => (prev - 1 + certification.length) % certification.length)}
-            >
-              ←
-            </button>
-            <button 
-              className="slider-arrow next"
-              onClick={() => setCurrentSlide((prev) => (prev + 1) % certification.length)}
-            >
-              →
-            </button>
+           
           </div>
-          {certification && certification.length > 1 && (
+          {certification.length > 1 && (
             <div className="slider-dots">
               {certification.map((_, index) => (
-                <span 
+                <span
                   key={index}
                   className={`dot ${currentSlide === index ? 'active' : ''}`}
                   onClick={() => setCurrentSlide(index)}
@@ -235,4 +213,3 @@ const AboutUsSection = () => {
 };
 
 export default AboutUsSection;
-  

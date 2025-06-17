@@ -51,7 +51,7 @@ const CommunitySection = () => {
 
   const stats = [
     {
-      label: 'Employees',
+      label: 'Students',
       icon: '/assets/logos/employee2.png',
       value: aboutSetting.employee,
     },

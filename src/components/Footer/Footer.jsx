@@ -223,16 +223,18 @@ const Footer = () => {
           </div>
         </div>
 
-<div className="d-flex justify-content-left gap-4 mb-4">
-          <Link to="/privacy-policy" onClick={() => handleNavigation('/privacy-policy')} className="text-white text-decoration-none">Privacy Policy</Link>
-          <Link to="/contact-us" onClick={() => handleNavigation('/contact-us')} className="text-white text-decoration-none">Contact Us</Link>
-        </div> 
+
         
         <div className="floating-btn whatsapp" onClick={handleWhatsAppClick} style={{ cursor: 'pointer' }}>
           <FaWhatsapp />
         </div>
 
         <hr className="container" />
+<div className="d-flex justify-content-left gap-4 mb-4">
+          <Link to="/privacy-policy" onClick={() => handleNavigation('/privacy-policy')} className="text-white text-decoration-none">Privacy Policy</Link>
+          <Link to="/contact-us" onClick={() => handleNavigation('/contact-us')} className="text-white text-decoration-none">Contact Us</Link>
+        </div> 
+                <Counter />
 
         <p className="text-center text-white-300 mt-4">
           &copy; {new Date().getFullYear()} DTC Club. All rights reserved.

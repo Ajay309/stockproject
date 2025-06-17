@@ -63,6 +63,34 @@ const Footer = () => {
     }, 100);
   };
 
+  const handleCommunityNavigation = () => {
+    navigate('/about-us');
+    setTimeout(() => {
+      const communitySection = document.getElementById('community');
+      if (communitySection) {
+        const offset = communitySection.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({
+          top: offset - (document.querySelector('.navbar')?.offsetHeight || 0),
+          behavior: 'smooth'
+        });
+      }
+    }, 100);
+  };
+
+  const handleWhyChooseUsNavigation = () => {
+    navigate('/about-us');
+    setTimeout(() => {
+      const whyChooseUsSection = document.getElementById('why-dtc');
+      if (whyChooseUsSection) {
+        const offset = whyChooseUsSection.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({
+          top: offset - (document.querySelector('.navbar')?.offsetHeight || 0),
+          behavior: 'smooth'
+        });
+      }
+    }, 100);
+  };
+
   const handleEnquiryNavigation = () => {
     navigate('/');
     setTimeout(() => {
@@ -85,16 +113,22 @@ const Footer = () => {
 
   useEffect(() => {
     const fetchSettingsData = async () => {
-      const settings = await getSettings();
-      setSocialLinks({
-        facebook: settings.facebook || '',
-        twitter: settings.twitter || '',
-        instagram: settings.instagram || '',
-        linkedin: settings.linkedin || '',
-        youtube: settings.youtube || '',
-        telegram: settings.telegram || ''
-      });
-      setPhoneNumber(settings.phone_number || '');
+      try {
+        const settings = await getSettings();
+        if (settings) {
+          setSocialLinks({
+            facebook: settings.facebook || '',
+            twitter: settings.twitter || '',
+            instagram: settings.instagram || '',
+            linkedin: settings.linkedin || '',
+            youtube: settings.youtube || '',
+            telegram: settings.telegram || ''
+          });
+          setPhoneNumber(settings.phone_number || '');
+        }
+      } catch (error) {
+        console.error('Error fetching settings:', error);
+      }
     };
 
     fetchSettingsData();
@@ -133,28 +167,34 @@ const Footer = () => {
         <div className="container mx-auto mt-16 pb-8">
           <div className="footer-menu-responsive">
             <div className="footer-column">
-              <h5>Company</h5>
-              <Link to="/about-us" onClick={() => handleNavigation('/about-us')}>About Us</Link>
-              <Link to="/partners" onClick={() => handleNavigation('/partners')}>Partners</Link>
-              <Link to="/privacy-policy" onClick={() => handleNavigation('/privacy-policy')}>Privacy Policy</Link>
+              <h5 className="mb-3">Company</h5>
+              <div className="d-flex flex-column gap-2">
+                <Link to="/about-us" onClick={() => handleNavigation('/about-us')} className="text-white text-decoration-none">About Us</Link>
+                <Link to="/partners" onClick={() => handleNavigation('/partners')} className="text-white text-decoration-none">Partners</Link>
+                <Link to="/partners" onClick={() => handleNavigation('/partners')} className="text-white text-decoration-none">Community</Link>
+                <Link to="/partners" onClick={() => handleNavigation('/partners')} className="text-white text-decoration-none">Why Choose Us</Link>
+              </div>
             </div>
             <div className="footer-column">
-              <h5>Resources</h5>
-              <Link to="/blogs" onClick={() => handleNavigation('/blogs')}>Blog</Link>
-              <Link to="/plans" onClick={() => handleNavigation('/plans')}>Plans</Link>
-              <button onClick={handleProcessNavigation} className="bg-transparent border-0 text-white text-start">Trading Guides</button>
+              <h5 className="mb-3">Resources</h5>
+              <div className="d-flex flex-column gap-2">
+                <Link to="/blogs" onClick={() => handleNavigation('/blogs')} className="text-white text-decoration-none">Blog</Link>
+                <Link to="/plans" onClick={() => handleNavigation('/plans')} className="text-white text-decoration-none">Plans</Link>
+                <button onClick={handleAssistantChat} className="bg-transparent border-0 text-white text-start p-0 text-decoration-none">Live Chat</button>
+                <button onClick={handleProcessNavigation} className="bg-transparent border-0 text-white text-start p-0 text-decoration-none">Trading Guides</button>
+              </div>
             </div>
             <div className="footer-column">
-              <h5>Support</h5>
-              <button onClick={handleFaqNavigation} className="bg-transparent border-0 text-white text-start">FAQs</button>
-              <Link to="/contact-us" onClick={() => handleNavigation('/contact-us')}>Contact Us</Link>
-              <button onClick={handleAssistantChat} className="bg-transparent border-0 text-white text-start">Live Chat</button>
-              <button onClick={handleEnquiryNavigation} className="bg-transparent border-0 text-white text-start">Help Center</button>
-              <button onClick={handleReviewNavigation} className="bg-transparent border-0 text-white text-start">Feedback</button>
+              <h5 className="mb-3">Support</h5>
+              <div className="d-flex flex-column gap-2">
+                <button onClick={handleFaqNavigation} className="bg-transparent border-0 text-white text-start text-decoration-none">FAQs</button>
+                <button onClick={handleEnquiryNavigation} className="bg-transparent border-0 text-white text-start text-decoration-none">Help Center</button>
+                <button onClick={handleReviewNavigation} className="bg-transparent border-0 text-white text-start text-decoration-none">Feedback</button>
+              </div>
             </div>
             <div className="footer-column">
-              <h5>Download App</h5>
-              <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer" className="play-store-link">
+              <h5 className="mb-3">Download App</h5>
+              <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer" className="play-store-link text-decoration-none">
                 <div className="play-store-text-container">
                   <div className="play-store-get-it-on">GET IT ON</div>
                   <div className="play-store-name">Google Play</div>
@@ -165,13 +205,11 @@ const Footer = () => {
           </div>
         </div>
 
-
-        
-        <div className="floating-btn whatsapp" onClick={handleWhatsAppClick} style={{ cursor: 'pointer' }}>
-          <FaWhatsapp />
-        </div>
-
         <hr className="container" />
+        <div className="d-flex justify-content-left gap-4 mb-4">
+          <Link to="/privacy-policy" onClick={() => handleNavigation('/privacy-policy')} className="text-white text-decoration-none">Privacy Policy</Link>
+          <Link to="/contact-us" onClick={() => handleNavigation('/contact-us')} className="text-white text-decoration-none">Contact Us</Link>
+        </div>
 
         <p className="text-center text-white-300 mt-4">
           &copy; {new Date().getFullYear()} DTC Club. All rights reserved.

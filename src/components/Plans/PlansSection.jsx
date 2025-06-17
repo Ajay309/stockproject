@@ -85,9 +85,9 @@ const PlansSection = () => {
       {/* Plans Display */}
       {selectedPackage && (
         <div>
-          {!isHomePage && (
+          {/* {!isHomePage && (
             <h2 className="text-2xl text-center mt-3 font-semibold mb-4">{selectedPackage.name} Plans</h2>
-          )}
+          )} */}
           <div className="row">
             {Array.isArray(plans) && plans.map((plan) => (
   <div key={plan.id} className="col-md-4 mb-4">
@@ -103,4 +103,3 @@ const PlansSection = () => {
 };
 
 export default PlansSection;
-

@@ -20,7 +20,7 @@ const PlansCard = ({ plan, isHomePage = false }) => {
 
                         <div className="pricing-card-header">
                             <h3 className="plan-name fs-1">{plan.name}</h3>
-                            <div className="price text-center">
+                            <div className=" text-center">
                                 {/* Show discount only if it's lower than price */}
                                 {parseFloat(plan.discount_price) > 0 &&
                                     parseFloat(plan.discount_price) > parseFloat(plan.price) && (

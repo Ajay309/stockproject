@@ -262,17 +262,17 @@ export default function EnquiryForm() {
           borderRadius: '8px',
           flexWrap: 'wrap'
         }}>
-          <input
+          {/* <input
             type="checkbox"
             name="agree"
             checked={form.agree}
             onChange={handleChange}
             required
             style={{ marginRight: 12, width: 20, height: 20 }}
-          />
-          <span style={{ fontSize: '0.97em', color: '#333' }}>
+          /> */}
+          {/* <span style={{ fontSize: '0.97em', color: '#333' }}>
             I agree to the <a href="/terms" target="_blank" rel="noopener noreferrer" style={{ color: '#f6b40e', textDecoration: 'underline' }}>terms</a> and <a href="/privacy" target="_blank" rel="noopener noreferrer" style={{ color: '#f6b40e', textDecoration: 'underline' }}>privacy policy</a>.
-          </span>
+          </span> */}
         </div>
 
         <button

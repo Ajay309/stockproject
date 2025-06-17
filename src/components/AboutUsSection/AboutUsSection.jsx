@@ -112,7 +112,7 @@ const AboutUsSection = () => {
           <div className="section-layout">
             <div className="section-text-content">
               <h2 className="section-title">What We Offer</h2>
-              <p className="section-description">{about_setting.our_offer}</p>
+                <div dangerouslySetInnerHTML={{ __html: about_setting.our_offer }} />
             </div>
             <div className="section-image">
               <img src={about_setting.banner_image} alt="What We Offer" />
@@ -172,7 +172,7 @@ const AboutUsSection = () => {
                     key={index}
                     className={`certification-slide ${currentSlide === index ? 'active' : ''}`}
                   >
-                    <img src={cert.image} alt={cert.alt} />
+                    <img src={cert.image} alt={cert.alt} className=' certification-image' />
                   </div>
                 ))
               ) : (
@@ -203,7 +203,7 @@ const AboutUsSection = () => {
           <h2 className="section-title">Why Choose Dream Trading Club</h2>
           <div className="section-layout">
             <div className="section-text-content">
-              <p>{about_setting.learn_description}</p>
+            <div dangerouslySetInnerHTML={{ __html: about_setting.learn_description }} />
             </div>
           </div>
         </div>

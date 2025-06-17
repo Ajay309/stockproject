@@ -9,8 +9,8 @@
 
 /* Hero Section */
 .hero-section {
-  background: #fff;
-  color: #574A24;
+  background: #574A24;
+  color: #ffffff;
   padding: 8rem 0;
   position: relative;
   overflow: hidden;
@@ -46,7 +46,7 @@
   font-weight: 700;
   margin-bottom: 1.5rem;
   line-height: 1.2;
-  color: #574A24; /* Ensure title uses the darkest color for prominence */
+  color: #ffffff; /* Ensure title uses the darkest color for prominence */
   letter-spacing: -0.03em; /* Slightly tighter letter spacing for titles */
 }
 
@@ -108,7 +108,6 @@
   max-width: 100%;
   height: auto;
   border-radius: 8px; /* More rounded corners for images */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Enhanced shadow for illustration */
 }
 
 /* Navigation */
@@ -183,7 +182,7 @@
   font-weight: 700;
   margin-bottom: 2.5rem; /* More space below title */
   text-align: left;
-  color: #574A24;
+  color: #000000;
 }
 
 .section-description {

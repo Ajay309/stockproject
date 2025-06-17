@@ -9,6 +9,24 @@ import {
 } from 'react-icons/fa';
 import { getSettings } from '../../api';
 
+// ✅ Counter Component (Local Visitor Count)
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const storedCount = localStorage.getItem("pageVisits");
+    const initialCount = storedCount ? Number(storedCount) : 0;
+    setCount(initialCount + 1);
+    localStorage.setItem("pageVisits", initialCount + 1);
+  }, []);
+
+  return (
+    <p className="text-center text-white mt-3">
+      Total Visits: <strong>{count}</strong>
+    </p>
+  );
+}
+
 const Footer = () => {
   const [socialLinks, setSocialLinks] = useState({
     facebook: '',
@@ -165,13 +183,15 @@ const Footer = () => {
           </div>
         </div>
 
-
-        
+        {/* WhatsApp Floating Button */}
         <div className="floating-btn whatsapp" onClick={handleWhatsAppClick} style={{ cursor: 'pointer' }}>
           <FaWhatsapp />
         </div>
 
         <hr className="container" />
+
+        {/* ✅ Local Visitor Counter */}
+        <Counter />
 
         <p className="text-center text-white-300 mt-4">
           &copy; {new Date().getFullYear()} DTC Club. All rights reserved.

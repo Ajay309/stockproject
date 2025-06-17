@@ -112,10 +112,9 @@ const AboutUsSection = () => {
           <div className="section-layout">
             <div className="section-text-content">
               <h2 className="section-title">What We Offer</h2>
-                            <div dangerouslySetInnerHTML={{ __html: about_setting.our_offer }} />
+                <div dangerouslySetInnerHTML={{ __html: about_setting.our_offer }} />
             </div>
             <div className="section-image">
-              
               <img src={about_setting.banner_image} alt="What We Offer" />
             </div>
           </div>

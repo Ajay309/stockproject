@@ -189,8 +189,8 @@ const Footer = () => {
               <div className="d-flex flex-column gap-2">
                 <Link to="/about-us" onClick={() => handleNavigation('/about-us')} className="text-white text-decoration-none">About Us</Link>
                 <Link to="/partners" onClick={() => handleNavigation('/partners')} className="text-white text-decoration-none">Partners</Link>
-                <Link to="/partners" onClick={() => handleNavigation('/partners')} className="text-white text-decoration-none">Community</Link>
-                <Link to="/partners" onClick={() => handleNavigation('/partners')} className="text-white text-decoration-none">Why Choose Us</Link>
+                <Link to="/about-us" onClick={() => handleNavigation('/about-us')} className="text-white text-decoration-none">Community</Link>
+                <Link to="/about-us" onClick={() => handleNavigation('/about-us')} className="text-white text-decoration-none">Why Choose Us</Link>
               </div>
             </div>
             <div className="footer-column">

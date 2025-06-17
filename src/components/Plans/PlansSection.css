@@ -647,6 +647,12 @@ body {
   color: #222;
   border-color: #fbba07;
 }
+
+.get-started-btn:hover {
+  background-color: black;
+  color: white;
+}
+
 @media (max-width: 600px) {
   .plan-tabs-btn {
     font-size: 1rem;

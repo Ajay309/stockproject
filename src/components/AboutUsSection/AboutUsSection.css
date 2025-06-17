@@ -266,13 +266,11 @@
   height: 380px; /* Increased height for images */
   object-fit: cover;
   border-radius: 8px; /* Consistent border-radius with hero illustration */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Consistent shadow with hero illustration */
   transition: all 0.3s ease;
 }
 
 .section-image img:hover {
   transform: translateY(-5px); /* More pronounced lift effect on hover */
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
 }
 
 /* Mission/Why Choose Cards */

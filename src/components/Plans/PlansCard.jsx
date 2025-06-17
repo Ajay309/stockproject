@@ -25,8 +25,8 @@ const PlansCard = ({ plan, isHomePage = false }) => {
                                 {parseFloat(plan.discount_price) > 0 &&
                                     parseFloat(plan.discount_price) > parseFloat(plan.price) && (
                                         <div
-                                            className="text-muted text-decoration-line-through"
-                                            style={{ fontSize: '42px' }}
+                                            className="text-danger text-decoration-line-through"
+                                            style={{ fontSize: '20px' }}
                                         >
                                             {currencySymbol}{plan.price}
                                         </div>

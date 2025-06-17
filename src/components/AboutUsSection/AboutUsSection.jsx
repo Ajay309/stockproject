@@ -188,7 +188,7 @@ const AboutUsSection = () => {
           <h2 className="section-title">Why Choose Dream Trading Club</h2>
           <div className="section-layout">
             <div className="section-text-content">
-              <p>{about_setting.learn_description}</p>
+                <div dangerouslySetInnerHTML={{ __html: about_setting.learn_description }} />
             </div>
           </div>
         </div>

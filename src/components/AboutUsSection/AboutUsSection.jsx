@@ -130,25 +130,19 @@ const AboutUsSection = () => {
           </div>
           <div className="community-stats-grid">
             <div className="stat-card">
-              <div className="stat-icon">
-                <img src="src/assets/logos/employee2.png" alt="Employees" className="stat-logo" />
-              </div>
+              <div className="stat-icon">👥</div>
               <div className="stat-number">{about_setting.employee}</div>
-              {/* <div className="stat-label">Employees</div> */}
+              <div className="stat-label">Employees</div>
             </div>
             <div className="stat-card">
-              <div className="stat-icon">
-                <img src="src/assets/logos/quality.png" alt="Expertise" className="stat-logo" />
-              </div>
+              <div className="stat-icon">⭐</div>
               <div className="stat-number">{about_setting.experience}</div>
-              {/* <div className="stat-label">Years of Experience</div> */}
+              <div className="stat-label">Years of Experience</div>
             </div>
             <div className="stat-card">
-              <div className="stat-icon">
-                <img src="src/assets/logos/client2.png" alt="Happy Clients" className="stat-logo" />
-              </div>
+              <div className="stat-icon">😊</div>
               <div className="stat-number">{about_setting.happy_smile}</div>
-              {/* <div className="stat-label">Happy Clients</div> */}
+              <div className="stat-label">Happy Clients</div>
             </div>
           </div>
         </div>
@@ -178,16 +172,28 @@ const AboutUsSection = () => {
                     key={index}
                     className={`certification-slide ${currentSlide === index ? 'active' : ''}`}
                   >
-                    <img src={cert.image} alt={cert.alt} />
+                    <img src={cert.image} alt={cert.alt} className=' certification-image' />
                   </div>
                 ))
               ) : (
                 <div className="certification-slide active">
                   <p>No certifications available</p>
                 </div>
+              )}
+            </div>
+           
+          </div>
+          {certification.length > 1 && (
+            <div className="slider-dots">
+              {certification.map((_, index) => (
+                <span
+                  key={index}
+                  className={`dot ${currentSlide === index ? 'active' : ''}`}
+                  onClick={() => setCurrentSlide(index)}
+                ></span>
               ))}
             </div>
-          </div>
+          )}
         </div>
       </section>
 

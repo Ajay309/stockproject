@@ -223,7 +223,10 @@ const Footer = () => {
           </div>
         </div>
 
-
+<div className="d-flex justify-content-left gap-4 mb-4">
+          <Link to="/privacy-policy" onClick={() => handleNavigation('/privacy-policy')} className="text-white text-decoration-none">Privacy Policy</Link>
+          <Link to="/contact-us" onClick={() => handleNavigation('/contact-us')} className="text-white text-decoration-none">Contact Us</Link>
+        </div> 
         
         <div className="floating-btn whatsapp" onClick={handleWhatsAppClick} style={{ cursor: 'pointer' }}>
           <FaWhatsapp />

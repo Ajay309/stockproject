@@ -132,21 +132,21 @@ const AboutUsSection = () => {
           <div className="community-stats-grid">
             <div className="stat-card">
               <div className="stat-icon">
-                <img src="public/assets/logos/employee2.png" alt="Employees" className="stat-logo" />
+                <img src="assets/logos/employee2.png" alt="Employees" className="stat-logo" />
               </div>
               <div className="stat-number">{about_setting.employee}</div>
               {/* <div className="stat-label">Employees</div> */}
             </div>
             <div className="stat-card">
               <div className="stat-icon">
-                <img src="public/assets/logos/quality.png" alt="Expertise" className="stat-logo" />
+                <img src="assets/logos/quality.png" alt="Expertise" className="stat-logo" />
               </div>
               <div className="stat-number">{about_setting.experience}</div>
               {/* <div className="stat-label">Years of Experience</div> */}
             </div>
             <div className="stat-card">
               <div className="stat-icon">
-                <img src="public/assets/logos/client2.png" alt="Happy Clients" className="stat-logo" />
+                <img src="assets/logos/client2.png" alt="Happy Clients" className="stat-logo" />
               </div>
               <div className="stat-number">{about_setting.happy_smile}</div>
               {/* <div className="stat-label">Happy Clients</div> */}

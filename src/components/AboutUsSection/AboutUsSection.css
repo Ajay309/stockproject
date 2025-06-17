@@ -161,7 +161,7 @@
 
 /* Content Sections */
 .content-section {
-  padding: 6rem 2rem;
+  padding: 2rem 1.5rem;
 }
 
 .alt-bg {
@@ -455,12 +455,26 @@
 }
 
 .stat-icon {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+}
+
+.stat-logo {
+  max-width: 100%;
+  max-height: 60px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover .stat-logo {
+  transform: scale(1.1);
 }
 
 .stat-number {
-  font-size: 2.8rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: #574A24;
   margin-bottom: 0.5rem;
@@ -484,7 +498,7 @@
   }
   
   .stat-number {
-    font-size: 2.2rem;
+    font-size: 1.2rem;
   }
 }
 
@@ -600,5 +614,45 @@
   }
 }
 
+/* Logo Slider Styles */
+.logo-slider {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 20px 0;
+}
+
+.slider-track {
+    display: flex;
+    animation: scroll 30s linear infinite;
+    width: calc(250px * 14); /* Adjust based on number of slides */
+}
+
+.slider-track:hover {
+    animation-play-state: paused;
+}
+
+.slide {
+    width: 250px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slide img {
+    max-width: 60%;
+    height: auto;
+    object-fit: contain;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-250px * 7)); /* Half of total width */
+    }
+}
 
   

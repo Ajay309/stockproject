@@ -11,20 +11,21 @@ const FaqSection = () => {
       const data = await getFaqs();
       setFaqs(data);
     };
-
     fetchFaqs();
   }, []);
 
   return (
     <div className="container py-5 faq-custom-style">
-      <div className="row align-items-start">
-        <div className="col-md-5">
-          <h2 className="faq-heading">Frequently Asked Questions</h2>
+      <div className="row">
+        <div className="col-12">
+          <h2 className="faq-heading text-center mb-5">Frequently Asked Questions</h2>
         </div>
-        <div className="col-md-7">
-          <div className="accordion" id="faqAccordion">
-            {faqs.map((faq, index) => (
-              <div className="accordion-item" key={index}>
+      </div>
+      <div className="row row-cols-1 row-cols-md-2 g-2">
+        {faqs.map((faq, index) => (
+          <div className="col" key={index}>
+            <div className="accordion" id={`faqAccordion-${index}`}>
+              <div className="accordion-item">
                 <h2 className="accordion-header" id={`heading${index}`}>
                   <button
                     className="accordion-button collapsed"
@@ -40,7 +41,7 @@ const FaqSection = () => {
                 <div
                   id={`collapse${index}`}
                   className="accordion-collapse collapse"
-                  data-bs-parent="#faqAccordion"
+                  data-bs-parent={`#faqAccordion-${index}`}
                 >
                   <div
                     className="accordion-body"
@@ -48,9 +49,9 @@ const FaqSection = () => {
                   ></div>
                 </div>
               </div>
-            ))}
+            </div>
           </div>
-        </div>
+        ))}
       </div>
     </div>
   );

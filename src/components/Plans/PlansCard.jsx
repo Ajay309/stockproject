@@ -8,47 +8,46 @@ const PlansCard = ({ plan, isHomePage = false }) => {
         navigate('/purchase', { state: { plan } }); // pass plan to purchase page
     };
 
-    // Get currency symbol based on backend value
     const currencySymbol = plan.currency === 'USD' ? '$' : '₹';
 
     return (
-        <div className="container-fluid pricing-container z-0 py-5">
-            <div className="row g-4">
-                <div className="col-lg-12">
-                    <div className={`pricing-card ${!isHomePage && plan.featured ? 'featured' : ''} ${plan.name.toLowerCase()}`}>
-                        {!isHomePage && plan.featured && <div className="popular-badge">POPULAR</div>}
+        <div className=" container-fluid pricing-container mt-5  h-100">
+            <div className={`pricing-card h-100 d-flex flex-column justify-content-between ${!isHomePage && plan.featured ? 'featured' : ''} ${plan.name.toLowerCase()}`}>
+                {!isHomePage && plan.featured && <div className="popular-badge">POPULAR</div>}
 
-                        <div className="pricing-card-header">
-                            <h3 className="plan-name fs-1">{plan.name}</h3>
-                            <div className=" text-center">
-                                {/* Show discount only if it's lower than price */}
-                                {parseFloat(plan.discount_price) > 0 &&
-                                    parseFloat(plan.discount_price) < parseFloat(plan.price) && (
-                                        <div
-                                            className="text-danger text-decoration-line-through"
-                                            style={{ fontSize: '20px' }}
-                                        >
-                                            {currencySymbol}{plan.price}
-                                        </div>
-                                    )}
+                <div className="pricing-card-header text-center">
+                    <h3 className="plan-name fs-1">{plan.name}</h3>
 
-                                <div style={{ fontSize: '32px', fontWeight: 'bold' }}>
-                                    {currencySymbol}{parseFloat(plan.discount_price) > 0 && parseFloat(plan.discount_price) < parseFloat(plan.price)
-                                        ? plan.discount_price
-                                        : plan.price}
-                                    <span className="price-period"></span>
-                                </div>
+                    {/* Show discount only if it's lower than price */}
+                    {parseFloat(plan.discount_price) > 0 &&
+                        parseFloat(plan.discount_price) < parseFloat(plan.price) && (
+                            <div className="text-danger text-decoration-line-through fs-5">
+                                {currencySymbol}{plan.price}
                             </div>
-                            <div className="divider"></div>
-                            <div className="pricing-card-body">
-                                <ul className="feature-list">
-                                    <div dangerouslySetInnerHTML={{ __html: plan.features }} />
-                                </ul>
-                                <div className="button d-flex justify-content-center">
-                                    <button className='btn btn-primary' onClick={handleGetStarted}>Get Started</button>
-                                </div>
-                            </div>
-                        </div>
+                        )}
+
+                    <div className="fw-bold" style={{ fontSize: '32px' }}>
+                        {currencySymbol}
+                        {parseFloat(plan.discount_price) > 0 && parseFloat(plan.discount_price) < parseFloat(plan.price)
+                            ? plan.discount_price
+                            : plan.price}
+                        <span className="price-period"></span>
+                    </div>
+                </div>
+
+                <div className="divider my-3"></div>
+
+                <div className="pricing-card-body d-flex flex-column flex-grow-1">
+                    <div className="flex-grow-1">
+                        <ul className="feature-list px-3">
+                            <div dangerouslySetInnerHTML={{ __html: plan.features }} />
+                        </ul>
+                    </div>
+
+                    <div className="button d-flex justify-content-center mt-3">
+                        <button className='btn btn-primary w-100 mx-3' onClick={handleGetStarted}>
+                            Get Started
+                        </button>
                     </div>
                 </div>
             </div>

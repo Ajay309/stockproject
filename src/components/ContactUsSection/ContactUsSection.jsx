@@ -151,7 +151,7 @@ const ContactUsSection = () => {
                 <i className="bi bi-telephone"></i>
               </div>
               <h5>Call Us</h5>
-              <p className="text-muted">{settings?.phone_number}<br />+49 17623312943</p>
+              <p className="text-muted">{settings?.phone_number}</p>
             </div>
           </div>
         </div>

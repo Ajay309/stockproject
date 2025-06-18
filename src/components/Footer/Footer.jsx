@@ -212,7 +212,7 @@ const Footer = () => {
             </div>
             <div className="footer-column">
               <h5 className="mb-3">Download App</h5>
-              <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer" className="play-store-link text-decoration-none">
+              <a href="https://play.google.com/store/apps/details?id=co.paige.lzhsf" target="_blank" rel="noopener noreferrer" className="play-store-link text-decoration-none">
                 <div className="play-store-text-container">
                   <div className="play-store-get-it-on">GET IT ON</div>
                   <div className="play-store-name">Google Play</div>

@@ -73,7 +73,18 @@ const AboutUsSection = () => {
       <section className="hero-section">
         <div className="hero-content">
           <div className="hero-text">
-            <h1 className="hero-title">About Dream Trading Club</h1>
+          <h1 className="hero-title">
+  {/* <span className="indent">About</span><br /> */}
+  Dream Trading Club<br />
+  {/* <span className="indent">Club</span> */}
+</h1>
+
+            <div className="hero-description">
+              <h4><span className="indent-4" >Together, we're not just building profits -</span></h4>
+              <h4><span className="indent-3" > We're building a future of responsible, informed and</span></h4>
+              <h4><span className="indent-1">empowered traders</span></h4>
+              <h4><span className="indent-2">-- Saini brothers</span></h4>
+            </div>
             
           </div>
           <div className="hero-image">
@@ -150,6 +161,13 @@ const AboutUsSection = () => {
               <div className="stat-number">{about_setting.happy_smile}</div>
               {/* <div className="stat-label">Happy Clients</div> */}
             </div>
+            <div className="stat-card">
+              <div className="stat-icon">
+                <img src="\assets\logos\earth.png" alt="Students" className="stat-logo" />
+              </div>
+              <div className="stat-number">{about_setting.students}</div>
+              {/* <div className="stat-label">Years of Experience</div> */}
+            </div>
           </div>
         </div>
       </section>
@@ -167,20 +185,67 @@ const AboutUsSection = () => {
       </section>
 
       {/* Certifications Section */}
-      <section id="certifications" className="content-section alt-bg">
-        <div className="section-container">
-          <h2 className="section-title">Our Certifications</h2>
-          <div className="logo-slider">
-            <div className="slider-track">
-              {[...certification, ...certification].map((cert, index) => (
-                <div className="slide" key={index}>
-                  <img src={cert.image} alt={cert.alt} />
-                </div>
-              ))}
-            </div>
-          </div>
+{/* Certifications Section */}
+<section id="certifications" className="content-section alt-bg">
+  <div className="section-container">
+    <h2 className="section-title">Our Certifications</h2>
+
+    {certification.length > 0 && (
+      <div className="certification-slider">
+        {/* Arrows */}
+        <button
+          className="slider-arrow prev"
+          onClick={() =>
+            setCurrentSlide((prev) =>
+              (prev - 1 + certification.length) % certification.length
+            )
+          }
+        >
+          &#8592;
+        </button>
+
+        {/* Slides */}
+        <div className="certification-slides">
+          {certification
+            .slice(currentSlide, currentSlide + 3)
+            .concat(
+              certification.length - currentSlide < 3
+                ? certification.slice(0, 3 - (certification.length - currentSlide))
+                : []
+            )
+            .map((cert, index) => (
+              <div className="certification-slide" key={index}>
+                <img src={cert.image} alt={cert.alt} />
+              </div>
+            ))}
         </div>
-      </section>
+
+        {/* Right Arrow */}
+        <button
+          className="slider-arrow next"
+          onClick={() => setCurrentSlide((prev) => (prev + 1) % certification.length)}
+        >
+          &#8594;
+        </button>
+      </div>
+    )}
+
+    {/* Dots */}
+    {certification.length > 0 && (
+      <div className="slider-dots">
+        {certification.map((_, idx) => (
+          <div
+            key={idx}
+            className={`dot ${idx === currentSlide ? 'active' : ''}`}
+            onClick={() => setCurrentSlide(idx)}
+          ></div>
+        ))}
+      </div>
+    )}
+  </div>
+</section>
+
+
 
       {/* Why Choose DTC Section */}
       <section id="why-dtc" className="content-section">

@@ -21,11 +21,12 @@ body {
         
         
         .pricing-header {
-            padding: 5rem 0px 3rem 0px;
+            padding: 10rem 0px 3rem 0px;
             position: relative;
             overflow: hidden;
             width: 100%;
             box-sizing: border-box;
+            min-height: 300px;
         }
         
         .pricing-header::before {
@@ -537,7 +538,7 @@ body {
 }
 
 .with-navbar-padding {
-  padding-top: 90px !important;
+  padding-top: 0 !important;
 }
 
 @media (max-width: 600px) {

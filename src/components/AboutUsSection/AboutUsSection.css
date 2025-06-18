@@ -4,27 +4,16 @@
   color: #574A24; /* Darker text for better contrast */
   line-height: 1.6;
   overflow-x: hidden; /* Prevent horizontal scroll */
-  padding-top: 2rem; /* Add some top padding to the container */
+  padding: 0;
 }
 
 /* Hero Section */
+/* Deleted .hero-section::after and .hero-section::before and related keyframes */
 .hero-section {
-  background: #574A24;
-  color: #ffffff;
-  padding: 8rem 0;
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 70%);
-  pointer-events: none;
+  background: linear-gradient(90deg, #f7f2e8 0%, #eae0c8 100%);
+  padding: 0.5rem 0; /* You can tweak this for spacing above/below */
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 .hero-content {
@@ -32,69 +21,120 @@
   margin: 0 auto;
   display: flex;
   align-items: center;
-  gap: 4rem;
+  gap: 6rem;
   position: relative;
   z-index: 1;
+  padding: 0 2rem;
 }
 
 .hero-text {
+  text-align: left;
+  max-width: 800px;
+  margin: 0 auto;
   flex: 1;
+  animation: fadeInUp 1s ease-out;
+}
+
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hero-title {
-  font-size: 3.8rem; /* Slightly larger for impact */
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  line-height: 1.2;
-  color: #ffffff; /* Ensure title uses the darkest color for prominence */
-  letter-spacing: -0.03em; /* Slightly tighter letter spacing for titles */
+  font-size: 3.5rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
+  line-height: 1.1;
+  color: #2b2b2b;
+  letter-spacing: -0.02em;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+
 .hero-description {
-  font-size: 1.15rem; /* Slightly larger for readability */
-  line-height: 1.7;
-  margin-bottom: 2.5rem; /* More space below description */
-  color: #80775C;
+  font-size: 1.2rem;
+  line-height: 1.0;
+  margin: 0.1rem 0;
+  color: #2b2b2b;
+  max-width: 600px;
+  font-style: italic;
 }
+.indent-1 {
+  display: inline-block;
+  padding-left: 130px; /* Adjust as needed */
+  font-size: 1.2rem;
+  font-style: italic;
+}
+
+.indent-2 {
+  display: inline-block;
+  padding-left: 130px; /* Adjust as needed */
+  font-style: italic;
+  font-size: 1.2rem;
+}
+.indent-3 {
+  display: inline-block;
+  padding-left: 50px; 
+  line-height: 1.2;
+  font-size: 1.2rem;
+  white-space: nowrap;
+  font-style: italic;
+}
+.indent-4 {
+  display: inline-block;
+  padding-left: 80px; /* Adjust as needed */
+  font-style: italic;
+  font-size: 1.2rem;
+}
+
 
 .hero-buttons {
   display: flex;
-  gap: 1.5rem; /* Increased gap between buttons */
+  gap: 1.5rem;
 }
 
 .btn {
-  padding: 0.9rem 2.2rem; /* Slightly more padding */
-  border-radius: 6px; /* Slightly more rounded corners */
-  font-weight: 600; /* Bolder text for buttons */
-  transition: all 0.3s ease; /* Smooth transition for all properties */
+  padding: 1rem 2.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   text-decoration: none;
   text-align: center;
-  font-size: 1.05rem; /* Slightly larger font size */
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
 }
 
 .btn-primary {
-  background: #574A24;
-  color: #FAE8B4;
+  background: #FAE8B4;
+  color: #574A24;
   border: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .btn-primary:hover {
-  background: #80775C;
-  transform: translateY(-3px); /* More pronounced lift effect */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
+  background: #ffffff;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .btn-outline {
-  border: 1px solid #80775C;
-  color: #80775C;
+  border: 2px solid #FAE8B4;
+  color: #FAE8B4;
   background: transparent;
 }
 
 .btn-outline:hover {
-  background: #CBBD93;
-  color: #574A24;
-  transform: translateY(-3px); /* More pronounced lift effect */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Stronger shadow on hover */
+  background: rgba(250, 232, 180, 0.1);
+  color: #ffffff;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
 .hero-image {
@@ -105,14 +145,15 @@
 }
 
 .hero-illustration {
-  max-width: 100%;
+  max-width: 360px; /* You can reduce this to 300px or 250px */
+  width: 100%;
   height: auto;
-  border-radius: 8px; /* More rounded corners for images */
+  border-radius: 8px;
 }
 
 /* Navigation */
 .about-nav {
-  background: #dfe2dc;
+  background: #CBBD93;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
   position: sticky;
   top: 0;
@@ -122,7 +163,7 @@
 .nav-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem 2rem;
+  padding: 0.5rem 1rem;
   display: flex;
   justify-content: flex-start;
   gap: 2.5rem; /* Slightly increased gap */
@@ -130,7 +171,7 @@
 }
 
 .nav-link {
-  color: #b5b2b233;
+  color: #574A24;
   text-decoration: none;
   font-weight: 500; /* Slightly bolder font for nav links */
   padding: 0.7rem 0; /* More padding for a larger hit area */
@@ -171,6 +212,9 @@
     background: #FAE8B4;
   }
 
+.what-we-offer-bg {
+  background: #f5f6fa;
+}
 
 .section-container {
   max-width: 1200px;
@@ -357,53 +401,138 @@
 }
 
 @media (max-width: 768px) {
-  .section-title {
-    font-size: 2rem;
+  .about-us-container {
+    padding: 0 0.5rem;
   }
-
+  .hero-section {
+    padding: 0.5rem 0.2rem;
+  }
+  .hero-content {
+    flex-direction: column;
+    gap: 2rem;
+    padding: 0 0.5rem;
+    align-items: flex-start;
+  }
+  .hero-title {
+    font-size: 2.2rem;
+    text-align: left;
+    margin-bottom: 1rem;
+  }
+  .hero-description {
+    font-size: 1rem;
+    max-width: 100%;
+    padding-left: 0;
+  }
+  .hero-image {
+    width: 100%;
+    justify-content: flex-start;
+    margin-top: 1rem;
+  }
+  .hero-illustration {
+    max-width: 220px;
+    width: 100%;
+    margin: 0 auto;
+    display: block;
+  }
+  .about-nav {
+    position: static;
+    top: unset;
+    z-index: 10;
+  }
   .nav-container {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
     gap: 1rem;
-    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 0.2rem;
+    white-space: nowrap;
+    scrollbar-width: none; /* Firefox */
   }
-
+  .nav-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
+  .nav-link {
+    white-space: nowrap;
+    flex: 0 0 auto;
+    font-size: 1rem;
+    padding: 0.4rem 0.8rem;
+    width: auto;
+  }
   .content-section {
-    padding: 4rem 1.5rem;
+    padding: 2rem 0.5rem;
   }
-
+  .section-layout {
+    flex-direction: column;
+    gap: 1.2rem;
+    text-align: left;
+  }
+  .section-title {
+    font-size: 1.5rem;
+    text-align: left;
+    margin-bottom: 1.2rem;
+  }
+  .section-image {
+    margin-top: 1rem;
+    width: 100%;
+  }
   .section-image img {
-    height: 250px; /* Adjusted for smaller tablets/large phones */
+    height: 160px;
+    width: 100%;
+    object-fit: cover;
   }
-
-  .mission-card {
-    padding: 2rem; /* Adjusted for smaller tablets/large phones */
+  .community-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0;
+  }
+  .stat-card {
+    padding: 1rem;
+  }
+  .certification-slider {
+    padding: 0 0.2rem;
+    max-width: 100%;
+  }
+  .certification-slides {
+    height: 120px;
+  }
+  .certification-slide img {
+    max-width: 80%;
+    max-height: 80%;
+  }
+  .slider-arrow {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+  .slider-dots {
+    gap: 6px;
+    margin-top: 10px;
   }
 }
 
 @media (max-width: 480px) {
   .hero-title {
-    font-size: 2.2rem; /* Adjusted for mobile */
+    font-size: 1.3rem;
   }
-
   .hero-description {
-    font-size: 0.95rem; /* Adjusted for mobile */
+    font-size: 0.85rem;
   }
-
-  .btn {
-    padding: 0.5rem 1.2rem; /* Adjusted for mobile */
-    font-size: 0.85rem; /* Adjusted for mobile */
-  }
-
   .nav-link {
-    padding: 0.3rem 0; /* Adjusted for mobile */
-    font-size: 0.9rem; /* Adjusted for mobile */
+    font-size: 0.85rem;
+    padding: 0.2rem 0;
   }
-
+  .section-title {
+    font-size: 1.1rem;
+  }
   .section-image img {
-    height: 200px; /* Adjusted for mobile */
+    height: 100px;
   }
-
-  .mission-card {
-    padding: 1.5rem; /* Adjusted for mobile */
+  .stat-card {
+    padding: 0.7rem;
+  }
+  .certification-slides {
+    height: 80px;
   }
 }
 
@@ -505,42 +634,35 @@
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0 20px;
 }
 
 .certification-slides {
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  height: 300px;
+  height: 200px;
   overflow: hidden;
 }
 
 .certification-slide {
-  position: absolute;
-  width: 100%;
+  position: static;
+  width: 33.33%;
   height: 100%;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
+  opacity: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.certification-slide.active {
-  opacity: 1;
+  transition: none;
 }
 
 .certification-slide img {
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 60%;
+  max-height: 60%;
   object-fit: contain;
   filter: grayscale(100%);
   transition: all 0.3s ease;
-}
-
-.certification-slide img:hover {
-  filter: grayscale(0%);
-  transform: scale(1.05);
 }
 
 .slider-arrow {
@@ -652,5 +774,3 @@
         transform: translateX(calc(-250px * 7)); /* Half of total width */
     }
 }
-
-  

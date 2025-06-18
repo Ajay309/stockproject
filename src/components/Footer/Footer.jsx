@@ -9,20 +9,33 @@ import {
 } from 'react-icons/fa';
 import { getSettings } from '../../api';
 
-// ✅ Counter Component (Local Visitor Count)
+// ✅ Counter Component (Starts from 150000 and animates)
 function Counter() {
-  const [count, setCount] = useState(0);
+  const startValue = 150000;
+  const [count, setCount] = useState(startValue);
 
   useEffect(() => {
-    const storedCount = localStorage.getItem("pageVisits");
-    const initialCount = storedCount ? Number(storedCount) : 0;
-    setCount(initialCount + 1);
-    localStorage.setItem("pageVisits", initialCount + 1);
+    let current = startValue;
+    const end = startValue + 1;
+    const duration = 1500; // animation duration
+    const incrementTime = 30;
+    const steps = Math.ceil((end - current) / (duration / incrementTime));
+
+    const timer = setInterval(() => {
+      current += steps;
+      if (current >= end) {
+        current = end;
+        clearInterval(timer);
+      }
+      setCount(current);
+    }, incrementTime);
+
+    return () => clearInterval(timer);
   }, []);
 
   return (
     <p className="text-center text-white mt-3">
-      Total Visits: <strong>{count}</strong>
+      Total Visits: <strong>{count.toLocaleString()}</strong>
     </p>
   );
 }
@@ -48,8 +61,7 @@ const Footer = () => {
   const handleFaqNavigation = () => {
     navigate('/');
     setTimeout(() => {
-      const faqSection = document.querySelector('.faq-custom-style');
-      faqSection?.scrollIntoView({ behavior: 'smooth' });
+      document.querySelector('.faq-custom-style')?.scrollIntoView({ behavior: 'smooth' });
     }, 100);
   };
 
@@ -84,28 +96,14 @@ const Footer = () => {
   const handleCommunityNavigation = () => {
     navigate('/about-us');
     setTimeout(() => {
-      const communitySection = document.getElementById('community');
-      if (communitySection) {
-        const offset = communitySection.getBoundingClientRect().top + window.pageYOffset;
-        window.scrollTo({
-          top: offset - (document.querySelector('.navbar')?.offsetHeight || 0),
-          behavior: 'smooth'
-        });
-      }
+      document.getElementById('community')?.scrollIntoView({ behavior: 'smooth' });
     }, 100);
   };
 
   const handleWhyChooseUsNavigation = () => {
     navigate('/about-us');
     setTimeout(() => {
-      const whyChooseUsSection = document.getElementById('why-dtc');
-      if (whyChooseUsSection) {
-        const offset = whyChooseUsSection.getBoundingClientRect().top + window.pageYOffset;
-        window.scrollTo({
-          top: offset - (document.querySelector('.navbar')?.offsetHeight || 0),
-          behavior: 'smooth'
-        });
-      }
+      document.getElementById('why-dtc')?.scrollIntoView({ behavior: 'smooth' });
     }, 100);
   };
 
@@ -189,10 +187,11 @@ const Footer = () => {
               <div className="d-flex flex-column gap-2">
                 <Link to="/about-us" onClick={() => handleNavigation('/about-us')} className="text-white text-decoration-none">About Us</Link>
                 <Link to="/partners" onClick={() => handleNavigation('/partners')} className="text-white text-decoration-none">Partners</Link>
-                <Link to="/about-us" onClick={() => handleNavigation('/about-us')} className="text-white text-decoration-none">Community</Link>
-                <Link to="/about-us" onClick={() => handleNavigation('/about-us')} className="text-white text-decoration-none">Why Choose Us</Link>
+                <Link to="/about-us" onClick={() => handleCommunityNavigation()} className="text-white text-decoration-none">Community</Link>
+                <Link to="/about-us" onClick={() => handleWhyChooseUsNavigation()} className="text-white text-decoration-none">Why Choose Us</Link>
               </div>
             </div>
+
             <div className="footer-column">
               <h5 className="mb-3">Resources</h5>
               <div className="d-flex flex-column gap-2">
@@ -202,6 +201,7 @@ const Footer = () => {
                 <button onClick={handleProcessNavigation} className="bg-transparent border-0 text-white text-start p-0 text-decoration-none">Trading Guides</button>
               </div>
             </div>
+
             <div className="footer-column">
               <h5 className="mb-3">Support</h5>
               <div className="d-flex flex-column gap-2">
@@ -210,6 +210,7 @@ const Footer = () => {
                 <button onClick={handleReviewNavigation} className="bg-transparent border-0 text-white text-start text-decoration-none">Feedback</button>
               </div>
             </div>
+
             <div className="footer-column">
               <h5 className="mb-3">Download App</h5>
               <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer" className="play-store-link text-decoration-none">
@@ -223,18 +224,19 @@ const Footer = () => {
           </div>
         </div>
 
-
-        
         <div className="floating-btn whatsapp" onClick={handleWhatsAppClick} style={{ cursor: 'pointer' }}>
           <FaWhatsapp />
         </div>
 
         <hr className="container" />
-<div className="d-flex justify-content-left gap-4 mb-4">
+
+        <div className="d-flex justify-content-left gap-4 mb-4">
           <Link to="/privacy-policy" onClick={() => handleNavigation('/privacy-policy')} className="text-white text-decoration-none">Privacy Policy</Link>
           <Link to="/contact-us" onClick={() => handleNavigation('/contact-us')} className="text-white text-decoration-none">Contact Us</Link>
-        </div> 
-                <Counter />
+        </div>
+
+        {/* ✅ Animated Visitor Counter */}
+        <Counter />
 
         <p className="text-center text-white-300 mt-4">
           &copy; {new Date().getFullYear()} DTC Club. All rights reserved.

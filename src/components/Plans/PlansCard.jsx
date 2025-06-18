@@ -23,7 +23,7 @@ const PlansCard = ({ plan, isHomePage = false }) => {
                             <div className=" text-center">
                                 {/* Show discount only if it's lower than price */}
                                 {parseFloat(plan.discount_price) > 0 &&
-                                    parseFloat(plan.discount_price) > parseFloat(plan.price) && (
+                                    parseFloat(plan.discount_price) < parseFloat(plan.price) && (
                                         <div
                                             className="text-danger text-decoration-line-through"
                                             style={{ fontSize: '20px' }}
@@ -33,7 +33,7 @@ const PlansCard = ({ plan, isHomePage = false }) => {
                                     )}
 
                                 <div style={{ fontSize: '32px', fontWeight: 'bold' }}>
-                                    {currencySymbol}{parseFloat(plan.discount_price) > 0 && parseFloat(plan.discount_price) > parseFloat(plan.price)
+                                    {currencySymbol}{parseFloat(plan.discount_price) > 0 && parseFloat(plan.discount_price) < parseFloat(plan.price)
                                         ? plan.discount_price
                                         : plan.price}
                                     <span className="price-period"></span>

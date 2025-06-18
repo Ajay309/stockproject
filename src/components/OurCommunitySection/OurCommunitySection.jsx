@@ -65,6 +65,11 @@ const CommunitySection = () => {
       icon: '/assets/logos/client2.png',
       value: aboutSetting.happy_smile,
     },
+    {
+      label: 'Countries Students',
+      icon: '/assets/logos/earth.png',
+      value: `${aboutSetting.students} +`,
+    },
   ];
 
   return (

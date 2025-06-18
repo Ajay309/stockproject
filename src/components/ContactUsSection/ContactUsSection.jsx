@@ -1,4 +1,3 @@
-// src/components/ContactUsSection.js
 import React, { useState, useEffect } from 'react';
 import { getSettings, submitContactForm } from '../../api';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -16,14 +15,17 @@ const ContactUsSection = () => {
   const [error, setError] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [mapCoords, setMapCoords] = useState({ latitude: '', longitude: '' });
+  const [settings, setSettings] = useState(null); // Store common_setting data
 
   useEffect(() => {
     const fetchSettings = async () => {
-      const settings = await getSettings();
-      if (settings) {
+      const settingData = await getSettings();
+      if (settingData) {
+        const cleanCoord = (value) => value?.split('-')[0]?.trim().replace(',', '.');
+        setSettings(settingData);
         setMapCoords({
-          latitude: settings.map_latitude,
-          longitude: settings.map_longitude
+          latitude: cleanCoord(settingData.map_latitude),
+          longitude: cleanCoord(settingData.map_longitude)
         });
       }
     };
@@ -129,7 +131,7 @@ const ContactUsSection = () => {
                 <i className="bi bi-geo-alt"></i>
               </div>
               <h5>Our Location</h5>
-              <p className="text-muted">Dream Trading club <br />Sikar Rajasthan India - 302021</p>
+              <p className="text-muted">{settings?.address || 'Dream Trading Club, Rajasthan, India'}</p>
             </div>
           </div>
           <div className="col-md-4 mb-4">
@@ -138,7 +140,9 @@ const ContactUsSection = () => {
                 <i className="bi bi-envelope"></i>
               </div>
               <h5>Email Us</h5>
-              <p className="text-muted">dtcclub1@gmail.com<br />Support@Dtcclub.com</p>
+              <p className="text-muted">
+                {settings?.email}
+              </p>
             </div>
           </div>
           <div className="col-md-4">
@@ -147,7 +151,7 @@ const ContactUsSection = () => {
                 <i className="bi bi-telephone"></i>
               </div>
               <h5>Call Us</h5>
-              <p className="text-muted">+917976326147<br />+49 17623312943</p>
+              <p className="text-muted">{settings?.phone_number}<br />+49 17623312943</p>
             </div>
           </div>
         </div>

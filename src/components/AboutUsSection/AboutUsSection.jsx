@@ -26,6 +26,7 @@ const AboutUsSection = () => {
         const certRes = await fetch('https://dtc.sinfode.com/api/v1/certifiaction');
         const certData = await certRes.json();
 
+        
         if (certData.status === 'success') {
           const formattedCerts = certData.data.map((item) => ({
             image: item.image,

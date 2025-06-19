@@ -86,7 +86,7 @@ export default function Process() {
 //   };
 
   return (
-    <section id="process" className="py-5 bg-white">
+    <section id="process" className="py-5 bg-white ">
     <div className="container">
       <div className=" mb-5">
         <div className="row">
@@ -99,7 +99,7 @@ export default function Process() {
           {cards.map((card, index) => (
             <div key={index} className="step-card mb-4 p-4 g-4 rounded  ">
             {/* <div key={index} className="p-3"> */}
-              <div className="vertical-card p-4 h-100 rounded bg-white ">
+              <div className="vertical-card p-4 h-100 rounded bg-white  ">
               <div className="step-number mb-2 text-dark">Step {index + 1}</div>
 
                 <h5 className="fw-bold heading-6 mb-2">{card.title}</h5>

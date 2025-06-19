@@ -26,7 +26,7 @@ const PurchaseForm = ({ plan, onClose }) => {
 
     setLoadingCoupon(true);
     try {
-      const res = await fetch('http://127.0.0.1:8000/api/v1/coupon');
+      const res = await fetch('http://dtc.sinfode.com/api/v1/coupon');
       const result = await res.json();
 
       const found = result.data.find(

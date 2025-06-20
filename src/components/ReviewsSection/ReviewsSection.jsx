@@ -6,6 +6,8 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './ReviewsSection.css';
 import { color } from 'framer-motion';
+import { getTestimonials } from '../../api'; // adjust path as needed
+
 
 const ReviewsSection = () => {
   const [testimonials, setTestimonials] = useState([]);
@@ -15,27 +17,19 @@ const ReviewsSection = () => {
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
-        const response = await fetch('https://dtc.sinfode.com/api/v1/testimonial');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const result = await response.json();
-        if (result.status === 'success' && Array.isArray(result.data)) {
-          setTestimonials(result.data);
-        } else {
-          console.error("API response format unexpected:", result);
-          setTestimonials([]);
-        }
+        const data = await getTestimonials();
+        setTestimonials(data);
       } catch (error) {
-        console.error("Error fetching testimonials:", error);
+        console.error('Error fetching testimonials:', error);
         setError(error);
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchTestimonials();
   }, []);
+  
 
   const sliderSettings = {
     dots: true,

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { getSettings } from '../../api'; // adjust the path if necessary
+
 
 const CountUp = ({ target }) => {
   const [count, setCount] = useState(0);
@@ -32,19 +34,20 @@ const CommunitySection = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('https://dtc.sinfode.com/api/v1/settings')
-      .then(res => res.json())
-      .then(data => {
-        if (data.status === 'success') {
-          setAboutSetting(data.data.about_setting);
-        }
-        setLoading(false);
-      })
-      .catch(err => {
+    const fetchSettings = async () => {
+      try {
+        const data = await getSettings();
+        setAboutSetting(data.about_setting); // we only need about_setting
+      } catch (err) {
         console.error('Error fetching settings:', err);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+  
+    fetchSettings();
   }, []);
+  
 
   if (loading) return <div>Loading Community Info...</div>;
   if (!aboutSetting) return <div>No data available</div>;

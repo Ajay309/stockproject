@@ -1,19 +1,5 @@
 import React, { useState } from 'react';
 
-const ENQUIRY_TYPES = [
-  'Stock Information',
-  'Investment Advice',
-  'Account Support',
-  'Technical Issues',
-  'General Question'
-];
-
-const CONTACT_METHODS = [
-  'Email',
-  'Phone',
-  'WhatsApp'
-];
-
 const iconStyle = {
   marginRight: 8,
   color: '#f6b40e',
@@ -26,24 +12,19 @@ export default function EnquiryForm() {
     name: '',
     email: '',
     phone_number: '',
-    message: '',
-    agree: false
+    message: ''
   });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setForm((prev) => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.agree) {
-      alert('You must agree to the terms and privacy policy.');
-      return;
-    }
 
     setLoading(true);
     setError(null);
@@ -54,12 +35,7 @@ export default function EnquiryForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          phone_number: form.phone_number,
-          message: form.message
-        }),
+        body: JSON.stringify(form),
       });
 
       const data = await response.json();
@@ -73,8 +49,7 @@ export default function EnquiryForm() {
         name: '',
         email: '',
         phone_number: '',
-        message: '',
-        agree: false
+        message: ''
       });
     } catch (err) {
       setError(err.message || 'Failed to submit form. Please try again.');
@@ -85,7 +60,7 @@ export default function EnquiryForm() {
 
   if (submitted) {
     return (
-      <div  id="enquiry-form" style={{
+      <div id="enquiry-form" style={{
         maxWidth: 1150,
         margin: '60px auto',
         padding: '40px 20px',
@@ -94,10 +69,10 @@ export default function EnquiryForm() {
         background: 'linear-gradient(135deg, #f8fafc 60%, #e3f0ff 100%)',
         textAlign: 'center'
       }}>
-        <div style={{ 
-          padding: '40px 20px 20px 20px', 
-          textAlign: 'center', 
-          background: '#f6b40e', 
+        <div style={{
+          padding: '40px 20px 20px 20px',
+          textAlign: 'center',
+          background: '#f6b40e',
           color: '#fff',
           marginBottom: '20px'
         }}>
@@ -105,9 +80,9 @@ export default function EnquiryForm() {
           <div style={{ fontSize: 16, opacity: 0.95, maxWidth: '600px', margin: '0 auto' }}>Your enquiry has been received. We will get back to you soon.</div>
         </div>
         <div style={{ padding: '20px' }}>
-          <div style={{ 
-            width: '80px', 
-            height: '80px', 
+          <div style={{
+            width: '80px',
+            height: '80px',
             margin: '0 auto 20px',
             background: '#f6b40e',
             borderRadius: '50%',
@@ -118,7 +93,7 @@ export default function EnquiryForm() {
             <i className="bi bi-check-lg" style={{ fontSize: '40px', color: '#fff' }}></i>
           </div>
           <p style={{ color: '#666', fontSize: '16px', marginBottom: '20px' }}>We appreciate your interest in our services.</p>
-          <button 
+          <button
             onClick={() => setSubmitted(false)}
             style={{
               padding: '12px 30px',
@@ -157,10 +132,10 @@ export default function EnquiryForm() {
       background: 'linear-gradient(135deg, #f8fafc 60%, #e3f0ff 100%)',
       overflow: 'hidden',
     }}>
-      <div style={{ 
-        padding: '40px 20px 20px 20px', 
-        textAlign: 'center', 
-        background: 'linear-gradient(90deg, #f6b40e 0%, #ffc107 100%)', 
+      <div style={{
+        padding: '40px 20px 20px 20px',
+        textAlign: 'center',
+        background: 'linear-gradient(90deg, #f6b40e 0%, #ffc107 100%)',
         color: '#rgb(255, 255, 255, 0.9)',
         marginBottom: '20px'
       }}>
@@ -169,10 +144,10 @@ export default function EnquiryForm() {
       </div>
       <form onSubmit={handleSubmit} style={{ padding: '0 20px 40px 20px' }}>
         {error && (
-          <div style={{ 
-            padding: '12px', 
-            marginBottom: '20px', 
-            backgroundColor: '#fee2e2', 
+          <div style={{
+            padding: '12px',
+            marginBottom: '20px',
+            backgroundColor: '#fee2e2',
             border: '1px solid #ef4444',
             borderRadius: '6px',
             color: '#dc2626'
@@ -180,9 +155,9 @@ export default function EnquiryForm() {
             {error}
           </div>
         )}
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', 
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
           gap: '20px',
           marginBottom: '20px'
         }}>
@@ -253,28 +228,6 @@ export default function EnquiryForm() {
           />
         </div>
 
-        <div style={{ 
-          marginBottom: '25px', 
-          display: 'flex', 
-          alignItems: 'center',
-          backgroundColor: '#f8f9fa',
-          padding: '15px',
-          borderRadius: '8px',
-          flexWrap: 'wrap'
-        }}>
-          {/* <input
-            type="checkbox"
-            name="agree"
-            checked={form.agree}
-            onChange={handleChange}
-            required
-            style={{ marginRight: 12, width: 20, height: 20 }}
-          /> */}
-          {/* <span style={{ fontSize: '0.97em', color: '#333' }}>
-            I agree to the <a href="/terms" target="_blank" rel="noopener noreferrer" style={{ color: '#f6b40e', textDecoration: 'underline' }}>terms</a> and <a href="/privacy" target="_blank" rel="noopener noreferrer" style={{ color: '#f6b40e', textDecoration: 'underline' }}>privacy policy</a>.
-          </span> */}
-        </div>
-
         <button
           type="submit"
           disabled={loading}
@@ -312,4 +265,4 @@ export default function EnquiryForm() {
       </form>
     </div>
   );
-} 
+}

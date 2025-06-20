@@ -16,16 +16,30 @@ const AboutUsSection = () => {
   useEffect(() => {
     const fetchSettingsAndCertification = async () => {
       try {
-        const settingsData = await getSettings();
-        setSettings(settingsData);
-  
-        const certData = await getCertifications();
-        const formattedCerts = certData.map((item) => ({
-          image: item.image,
-          alt: `Certification ${item.id}`,
-        }));
-        setCertification(formattedCerts);
-  
+        // Fetch site settings
+        const settingsRes = await fetch('https://dtc.sinfode.com/api/v1/settings');
+        const settingsData = await settingsRes.json();
+
+        if (settingsData.status === 'success') {
+          setSettings(settingsData.data);
+        } else {
+          setError('Failed to fetch settings');
+        }
+
+        // Fetch certifications
+        const certRes = await fetch('https://dtc.sinfode.com/api/v1/certifiaction');
+        const certData = await certRes.json();
+
+        if (certData.status === 'success') {
+          const formattedCerts = certData.data.map((item) => ({
+            image: item.image,
+            alt: `Certification ${item.id}`,
+          }));
+          setCertification(formattedCerts);
+        } else {
+          setError('Failed to fetch certifications');
+        }
+
       } catch (err) {
         setError('Error fetching data: ' + err.message);
       } finally {

@@ -27,7 +27,7 @@ export default function AppRoutes() {
       <Route path="/contact-us" element={<ContactUs />} />
       <Route path="/about-us" element={<AboutUS />} />
       <Route path="/blogs" element={<Blogs />} />
-      <Route path="/blogs/:blogId" element={<BlogDetail/>} />
+       <Route path="/blogs/:id" element={<BlogDetail />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/login" element={<Login />} />
       <Route path="/purchase" element={<PurchaseForm />} />

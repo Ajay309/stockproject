@@ -10,6 +10,7 @@ const PurchaseForm = ({ plan, onClose }) => {
   const [phone, setPhone] = useState('');
   const [coupon, setCoupon] = useState('');
   const [discount, setDiscount] = useState(0);
+  const [fixedAmount, setFixedAmount] = useState(0);
   const [isCouponValid, setIsCouponValid] = useState(null);
   const [loadingCoupon, setLoadingCoupon] = useState(false);
 
@@ -19,13 +20,14 @@ const PurchaseForm = ({ plan, onClose }) => {
   const validateCoupon = async () => {
     if (!coupon) {
       setDiscount(0);
+      setFixedAmount(0);
       setIsCouponValid(null);
       return;
     }
 
     setLoadingCoupon(true);
     try {
-      const res = await fetch('https://dtc.sinfode.com/api/v1/coupon');
+      const res = await fetch('http://dtc.sinfode.com/api/v1/coupon');
       const result = await res.json();
 
       const found = result.data.find(
@@ -37,23 +39,30 @@ const PurchaseForm = ({ plan, onClose }) => {
       );
 
       if (found) {
-        setDiscount(found.discount);
         setIsCouponValid(true);
+        setDiscount(found.discount || 0);
+        setFixedAmount(parseFloat(found.fixed_amount) || 0);
       } else {
-        setDiscount(0);
         setIsCouponValid(false);
+        setDiscount(0);
+        setFixedAmount(0);
       }
     } catch (err) {
       console.error('Coupon validation error:', err);
-      setDiscount(0);
       setIsCouponValid(false);
+      setDiscount(0);
+      setFixedAmount(0);
     } finally {
       setLoadingCoupon(false);
     }
   };
 
   const calculateDiscountedPrice = () => {
-    return plan.price - (plan.price * discount) / 100;
+    if (fixedAmount > 0) {
+      return Math.max(0, plan.price - fixedAmount);
+    } else {
+      return Math.max(0, plan.price - (plan.price * discount) / 100);
+    }
   };
 
   const handlePayment = async () => {
@@ -72,10 +81,9 @@ const PurchaseForm = ({ plan, onClose }) => {
           amount: calculateDiscountedPrice(),
           email,
           phone,
-          coupon: coupon?.trim() || 'NO_COUPON', // Fix applied here
+          coupon: coupon?.trim() || 'NO_COUPON',
         }),
       });
-      
 
       const responseText = await res.text();
       console.log('Raw response from create-order:', responseText);
@@ -215,7 +223,7 @@ const PurchaseForm = ({ plan, onClose }) => {
                 </div>
                 {isCouponValid === true && (
                   <small className="text-success">
-                    ✅ Coupon applied! {discount}% off
+                    ✅ Coupon applied! {fixedAmount > 0 ? `₹${fixedAmount} off` : `${discount}% off`}
                   </small>
                 )}
                 {isCouponValid === false && (
@@ -226,7 +234,10 @@ const PurchaseForm = ({ plan, onClose }) => {
               </div>
 
               <div className="mb-3">
-                <strong>Total Payable: ₹{calculateDiscountedPrice()}</strong>
+                <strong>
+                  Total Payable:{' '}
+                  ₹{calculateDiscountedPrice()}
+                </strong>
               </div>
 
               <div className="d-flex gap-2">

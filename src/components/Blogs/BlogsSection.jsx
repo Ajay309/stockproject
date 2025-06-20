@@ -14,7 +14,7 @@ const BlogsSection = () => {
   const navigate = useNavigate();
 
   const handleReadMore = (blog) => {
-    navigate(`/blogs/${blog.id}`, { state: { blog } });
+navigate(`/blogs/${blog.blog_key}`);
   };
 
   useEffect(() => {

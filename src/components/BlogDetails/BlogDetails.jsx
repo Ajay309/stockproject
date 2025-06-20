@@ -1,18 +1,40 @@
 // src/components/BlogDetails.js
-import React from 'react';
-import { useLocation } from 'react-router-dom';
-import './BlogDetails.css'; // Import your CSS file for styling
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import './BlogDetails.css';
 
-const BlogDetails = () => {
-  const { state } = useLocation();
-  const blog = state?.blog;
+const BlogDetail = () => {
+  const { id } = useParams(); // this is blog_key
+  const [blog, setBlog] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  if (!blog) {
-    return (
-      <div className="container py-5 text-center">
-        <h3 className="text-danger">No blog data found.</h3>
-      </div>
-    );
+  useEffect(() => {
+    const fetchBlog = async () => {
+      try {
+        const response = await fetch(`https://dtc.sinfode.com/api/v1/blog-detail/${id}`);
+        const result = await response.json();
+        if (result.status === 'success') {
+          setBlog(result.data);
+        } else {
+          setError('Blog not found.');
+        }
+      } catch (err) {
+        setError('Failed to fetch blog.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBlog();
+  }, [id]);
+
+  if (loading) {
+    return <div className="container py-5 text-center">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="container py-5 text-center text-danger">{error}</div>;
   }
 
   return (
@@ -39,4 +61,4 @@ const BlogDetails = () => {
   );
 };
 
-export default BlogDetails;
+export default BlogDetail;

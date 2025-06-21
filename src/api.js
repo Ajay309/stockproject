@@ -47,11 +47,12 @@ export const getBlogs = async () => {
 };
 
 // Settings
+// src/api.js
 export const getSettings = async () => {
   try {
     const response = await api.get('/settings');
     if (response.data.status === 'success') {
-      return response.data.data;
+      return response.data.data; // contains both about_setting and common_setting
     } else {
       throw new Error('Failed to fetch settings');
     }
@@ -60,6 +61,7 @@ export const getSettings = async () => {
     throw new Error('Error fetching settings: ' + error.message);
   }
 };
+
 
 // Contact Form
 export const submitContactForm = async (formData) => {

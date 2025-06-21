@@ -17,21 +17,27 @@ const ContactUsSection = () => {
   const [mapCoords, setMapCoords] = useState({ latitude: '', longitude: '' });
   const [settings, setSettings] = useState(null); // Store common_setting data
 
-  useEffect(() => {
-    const fetchSettings = async () => {
+ useEffect(() => {
+  const fetchSettings = async () => {
+    try {
       const settingData = await getSettings();
-      if (settingData) {
-        const cleanCoord = (value) => value?.split('-')[0]?.trim().replace(',', '.');
-        setSettings(settingData);
-        setMapCoords({
-          latitude: cleanCoord(settingData.map_latitude),
-          longitude: cleanCoord(settingData.map_longitude)
-        });
-      }
-    };
+      const common = settingData.common_setting;
 
-    fetchSettings();
-  }, []);
+      const cleanCoord = (value) => value?.split('-')[0]?.trim().replace(',', '.');
+
+      setSettings(common);
+      setMapCoords({
+        latitude: cleanCoord(common.map_latitude),
+        longitude: cleanCoord(common.map_longitude)
+      });
+    } catch (error) {
+      console.error("Error loading settings:", error);
+    }
+  };
+
+  fetchSettings();
+}, []);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;

@@ -655,9 +655,66 @@ body {
 }
 
 @media (max-width: 600px) {
+  .plan-tabs-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
   .plan-tabs-btn {
+    flex: 1 1 calc(48% - 0.75rem);
+    max-width: calc(50% - 1rem);
+    font-size: 0.95rem;
+    padding: 0.75rem 1rem;
+    border-radius: 999px;
+    text-align: center;
+    width: 48%;
+  }
+
+  /* Special style for the third button */
+  .plan-tabs-btn:last-child {
+    flex: 1 1 100%;
+    max-width: 90%;
+    margin-top: 0.5rem;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .row {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    gap: 12px;
+  }
+  .col-md-4 {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-bottom: 12px;
+  }
+  .pricing-card, .plan-card {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto 12px auto !important;
+    box-sizing: border-box;
+  }
+  .pricing-card-header {
+    padding: 1rem 0.5rem 0.5rem;
+  }
+  .plan-name {
+    font-size: 1.2rem;
+  }
+  .feature-list {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  .button .btn {
     font-size: 1rem;
-    padding: 0.6rem 1.2rem;
-    margin: 0 0.2rem 0.5rem 0.2rem;
+    padding: 0.7rem 0.5rem;
   }
 }

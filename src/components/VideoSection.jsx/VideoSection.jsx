@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+
 import './VideoSection.css';
+import { getVideos } from '../../api'; // ✅ Adjust path as needed
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
@@ -13,16 +14,18 @@ const VideoSection = () => {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
-    axios.get('https://dtc.sinfode.com/api/v1/video')
-      .then((res) => {
-        if (res.data.status === "success") {
-          setVideos(res.data.data);
-        }
-      })
-      .catch((error) => {
+    const fetchVideos = async () => {
+      try {
+        const data = await getVideos();
+        setVideos(data);
+      } catch (error) {
         console.error('Error fetching video data:', error);
-      });
+      }
+    };
+  
+    fetchVideos();
   }, []);
+  
 
   const extractYoutubeID = (url) => {
     const match = url.match(/(?:youtu\.be\/|v=)([^&]+)/);

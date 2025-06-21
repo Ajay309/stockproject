@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './AboutUsSection.css';
 
+import { getSettings, getCertifications } from '../../api'; 
+
+
+
 const AboutUsSection = () => {
   const [settings, setSettings] = useState(null);
   const [certification, setCertification] = useState([]);
@@ -26,7 +30,6 @@ const AboutUsSection = () => {
         const certRes = await fetch('https://dtc.sinfode.com/api/v1/certifiaction');
         const certData = await certRes.json();
 
-        
         if (certData.status === 'success') {
           const formattedCerts = certData.data.map((item) => ({
             image: item.image,
@@ -43,9 +46,11 @@ const AboutUsSection = () => {
         setLoading(false);
       }
     };
-
+  
     fetchSettingsAndCertification();
   }, []);
+  
+  
 
   // Auto slide effect
   useEffect(() => {

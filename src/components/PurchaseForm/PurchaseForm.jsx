@@ -4,12 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import './PurchaseForm.css';
 
 const PurchaseForm = ({ plan, onClose }) => {
-  const { user, userEmail } = useAuth();
+  const { user } = useAuth();
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [coupon, setCoupon] = useState('');
-  const [discount, setDiscount] = useState(0);
-  const [fixedAmount, setFixedAmount] = useState(0);
+  const [couponData, setCouponData] = useState(null);
   const [isCouponValid, setIsCouponValid] = useState(null);
   const [loadingCoupon, setLoadingCoupon] = useState(false);
 
@@ -17,51 +16,53 @@ const PurchaseForm = ({ plan, onClose }) => {
   const userId = localStorage.getItem('id');
 
   const validateCoupon = async () => {
-    if (!coupon) {
-      setDiscount(0);
-      setFixedAmount(0);
+    if (!coupon.trim()) {
+      setCouponData(null);
       setIsCouponValid(null);
       return;
     }
 
     setLoadingCoupon(true);
     try {
-      const res = await fetch('http://dtc.sinfode.com/api/v1/coupon');
+      const res = await fetch('https://dtc.sinfode.com/api/v1/coupon');
       const result = await res.json();
 
       const found = result.data.find(
         (c) =>
-          c.code === coupon &&
+          c.code.toLowerCase() === coupon.trim().toLowerCase() &&
           c.is_active === 1 &&
           new Date(c.expire_at) > new Date() &&
           (c.plan_id === plan.id || c.package_id === plan.package_id)
       );
 
       if (found) {
+        setCouponData(found);
         setIsCouponValid(true);
-        setDiscount(found.discount || 0);
-        setFixedAmount(parseFloat(found.fixed_amount) || 0);
       } else {
+        setCouponData(null);
         setIsCouponValid(false);
-        setDiscount(0);
-        setFixedAmount(0);
       }
     } catch (err) {
       console.error('Coupon validation error:', err);
       setIsCouponValid(false);
-      setDiscount(0);
-      setFixedAmount(0);
+      setCouponData(null);
     } finally {
       setLoadingCoupon(false);
     }
   };
 
   const calculateDiscountedPrice = () => {
-    if (fixedAmount > 0) {
-      return Math.max(0, plan.price - fixedAmount);
-    } else {
-      return Math.max(0, plan.price - (plan.price * discount) / 100);
+    if (!couponData) return plan.price;
+
+    if (couponData.discount_type === 'fixed') {
+      return Math.max(0, plan.price - parseFloat(couponData.fixed_amount || 0));
     }
+
+    if (couponData.discount_type === 'percentage') {
+      return Math.max(0, plan.price - (plan.price * parseFloat(couponData.discount || 0)) / 100);
+    }
+
+    return plan.price;
   };
 
   const handlePayment = async () => {
@@ -70,6 +71,8 @@ const PurchaseForm = ({ plan, onClose }) => {
       return;
     }
 
+    const discountedAmount = calculateDiscountedPrice();
+
     try {
       const res = await fetch('https://dtc.sinfode.com/api/v1/create-order', {
         method: 'POST',
@@ -77,16 +80,14 @@ const PurchaseForm = ({ plan, onClose }) => {
         body: JSON.stringify({
           user: userId,
           plan: plan.name,
-          amount: calculateDiscountedPrice(),
+          amount: discountedAmount,
           email,
           phone,
-          coupon: coupon?.trim() || 'NO_COUPON',
+          coupon: couponData?.code || 'NO_COUPON',
         }),
       });
 
       const responseText = await res.text();
-      console.log('Raw response from create-order:', responseText);
-
       const data = JSON.parse(responseText);
 
       const options = {
@@ -104,7 +105,7 @@ const PurchaseForm = ({ plan, onClose }) => {
               body: JSON.stringify({
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature
+                razorpay_signature: response.razorpay_signature,
               }),
             });
 
@@ -121,24 +122,23 @@ const PurchaseForm = ({ plan, onClose }) => {
                   email,
                   phone,
                   plan: plan.name,
-                  amount: calculateDiscountedPrice(),
-                  coupon,
+                  amount: discountedAmount,
+                  coupon: couponData?.code || '',
                 }),
               });
 
               alert('✅ Payment Verified and Successful!');
-
               navigate('/profile', {
                 state: {
                   userId: userId,
                   payment: {
                     plan: plan.name,
-                    amount: calculateDiscountedPrice(),
+                    amount: discountedAmount,
                     email,
                     phone,
-                    coupon,
-                  }
-                }
+                    coupon: couponData?.code || '',
+                  },
+                },
               });
             } else {
               alert('❌ Invalid payment signature.');
@@ -222,7 +222,10 @@ const PurchaseForm = ({ plan, onClose }) => {
                 </div>
                 {isCouponValid === true && (
                   <small className="text-success">
-                    ✅ Coupon applied! {fixedAmount > 0 ? `₹${fixedAmount} off` : `${discount}% off`}
+                    ✅ Coupon applied!{' '}
+                    {couponData?.discount_type === 'fixed'
+                      ? `₹${couponData.fixed_amount} off`
+                      : `${couponData.discount}% off`}
                   </small>
                 )}
                 {isCouponValid === false && (
@@ -233,17 +236,11 @@ const PurchaseForm = ({ plan, onClose }) => {
               </div>
 
               <div className="mb-3">
-                <strong>
-                  Total Payable:{' '}
-                  ₹{calculateDiscountedPrice()}
-                </strong>
+                <strong>Total Payable: ₹{calculateDiscountedPrice()}</strong>
               </div>
 
               <div className="d-flex gap-2">
-                <button
-                  className="login bg-warning border-0"
-                  onClick={handlePayment}
-                >
+                <button className="login bg-warning border-0" onClick={handlePayment}>
                   Proceed to Pay ₹{calculateDiscountedPrice()}
                 </button>
                 <button className="login bg-warning border-0" onClick={onClose}>

@@ -22,6 +22,7 @@ const ProfilePage = () => {
 
       try {
         const response = await axios.get(`https://dtc.sinfode.com/api/v1/user-payments/${userProfile.id}`);
+        console.log('💳 Payment API Response:', response.data);
         if (Array.isArray(response.data) && response.data.length > 0) {
           setPaymentData(response.data[0]);
           setErrorMsg('');
@@ -66,18 +67,18 @@ const ProfilePage = () => {
    };
   // ✅ Open WhatsApp Message
   const openWhatsApp = () => {
-    if (!contactPhone) {
+    if (!phoneNumber) {
       alert('Admin contact number not available.');
       return;
     }
-
+  
     const message = encodeURIComponent(
       `Hello ${userProfile?.name}, thank you for your payment for the plan: ${paymentData?.plan_name}.`
     );
-
-    window.open(`https://wa.me/${contactPhone}?text=${message}`, '_blank');
+  
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
-
+  
   if (loading) return <div style={styles.loading}>Loading profile...</div>;
 
   return (

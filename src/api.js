@@ -209,7 +209,7 @@ export const verifyPayment = async (verificationData) => {
 // Mark Payment as Success
 export const markPaymentSuccess = async (paymentData) => {
   try {
-    const res = await fetch('https://dtc.sinfode.com/api/v1/payment-success', {
+    const res = await fetch('https://dtc.sinfode.com/api/v1/verify-payment', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(paymentData),

@@ -456,10 +456,11 @@ body {
 }
 
 .timer-heading {
-    font-size: 2.5rem;
+    font-size: 3rem !important;
     color: #000;
     font-weight: bold;
     margin-bottom: 1.5rem;
+    font-family: "Ghost", "Helvetica Neue", "Helvetica", sans-serif;
 }
 
 .timer-box {

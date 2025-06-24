@@ -53,7 +53,7 @@ const BlogDetail = () => {
           style={{ maxHeight: '400px', objectFit: 'cover', width: '100%' }}
         />
 
-        <div className="blog-description">
+        <div className="blog-description fw-bold ">
           <div dangerouslySetInnerHTML={{ __html: blog.description }} />
         </div>
       </div>

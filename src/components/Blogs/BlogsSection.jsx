@@ -4,6 +4,7 @@ import ReactPaginate from 'react-paginate';
 import { getBlogs } from '../../api'; // ✅ import the function
 import './BlogsSection.css';
 import { useNavigate } from 'react-router-dom';
+import Animated from '../Animated.jsx';
 
 const BlogsSection = () => {
   const [blogs, setBlogs] = useState([]);
@@ -14,7 +15,7 @@ const BlogsSection = () => {
   const navigate = useNavigate();
 
   const handleReadMore = (blog) => {
-navigate(`/blogs/${blog.blog_key}`);
+    navigate(`/blogs/${blog.blog_key}`);
   };
 
   useEffect(() => {
@@ -36,26 +37,30 @@ navigate(`/blogs/${blog.blog_key}`);
 
   return (
     <div className="container py-5">
-      <h2 className="display-4 heading-3 mb-4 text-start text-black" style={{ marginTop: '70px' }}>
-        Our Blogs
-      </h2>
+      <Animated animation="fade-down" delay={100}>
+        <h2 className="display-4 heading-3 mb-4 text-start text-black" style={{ marginTop: '70px' }}>
+          Our Blogs
+        </h2>
+      </Animated>
       <div className="row">
         {currentBlogs.map((blog, index) => (
           <div key={index} className="col-md-4 mb-4">
-            <div className="card blog-card">
-              <img src={blog.image} className="card-img-top" alt={blog.image} />
-              <div className="card-body">
-                <h5 className="card-title">{blog.name}</h5>
-                <p className="card-text text-muted small">{blog.created_at}</p>
-                <p className="card-text">{blog.blog_key}</p>
-                <button
-                  className="btn btn-primary rounded-pill"
-                  onClick={() => handleReadMore(blog)}
-                >
-                  Read More
-                </button>
+            <Animated animation="fade-up" delay={200 + index * 100}>
+              <div className="card blog-card">
+                <img src={blog.image} className="card-img-top" alt={blog.image} />
+                <div className="card-body">
+                  <h5 className="card-title">{blog.name}</h5>
+                  <p className="card-text text-muted small">{blog.created_at}</p>
+                  <p className="card-text">{blog.blog_key}</p>
+                  <button
+                    className="btn btn-primary rounded-pill"
+                    onClick={() => handleReadMore(blog)}
+                  >
+                    Read More
+                  </button>
+                </div>
               </div>
-            </div>
+            </Animated>
           </div>
         ))}
       </div>

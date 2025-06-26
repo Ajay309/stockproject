@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getSliderImages } from '../../api';
 import './Home.css'; // or HeaderSection.css if renamed
+import Animated from '../Animated';
 
 export default function HeaderSection() {
   const [sliderImages, setSliderImages] = useState([]);
@@ -36,17 +37,23 @@ export default function HeaderSection() {
     <section className="container-fluid bg-black py-5">
       <div className="row py-5 justify-content-center align-items-center">
         <div className="col-lg-8 text-center text-lg-start">
-          <h1 className="display-4 pt-5 text-center text-white mb-3">
-            MAKE YOUR <span className="text-warning">TRADING</span> BETTER
-          </h1>
-          <p className="lead text-white mb-4 text-center">
-            Track your stocks, analyze trends, and make smart decisions with real-time insights.
-            Empower your trading with our easy-to-use platform.
-          </p>
-          <div className="d-flex justify-content-center gap-3">
-            <Link to="/plans" className="btn btn-outline-warning btn-lg px-4 rounded-pill">View Plans</Link>
-            <Link to="/get-started" className="btn btn-warning btn-lg px-4 rounded-pill">Get Started</Link>
-          </div>
+          <Animated animation="fade-up" delay={100}>
+            <h1 className="display-4 pt-5 text-center text-white mb-3">
+              MAKE YOUR <span className="text-warning">TRADING</span> BETTER
+            </h1>
+          </Animated>
+          <Animated animation="fade-up" delay={300}>
+            <p className="lead text-white mb-4 text-center">
+              Track your stocks, analyze trends, and make smart decisions with real-time insights.
+              Empower your trading with our easy-to-use platform.
+            </p>
+          </Animated>
+          <Animated animation="fade-up" delay={500}>
+            <div className="d-flex justify-content-center gap-3">
+              <Link to="/plans" className="btn btn-outline-warning btn-lg px-4 rounded-pill">View Plans</Link>
+              <Link to="/get-started" className="btn btn-warning btn-lg px-4 rounded-pill">Get Started</Link>
+            </div>
+          </Animated>
         </div>
 
         <div className="py-4 rounded-3 mt-3 w-100">

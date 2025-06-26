@@ -29,8 +29,11 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 3rem;
-  text-align: left;
+  font-size: 2.5rem;
+  color: #000;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 1rem;
 }
 
 .accordion-button {
@@ -103,7 +106,7 @@
   }
   
   .faq-heading {
-    font-size: 3.5rem; /* or adjust to your desired size */
+    font-size: 3rem !important; /* or adjust to your desired size */
     font-weight: 700;
     color: #212529;
     font-family: "Ghost", "Helvetica Neue", "Helvetica", sans-serif;

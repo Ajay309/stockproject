@@ -37,7 +37,12 @@
 /* Left Section - Company Info */
 /* Remove or adjust company-info styles if they are still affecting the layout */
 /* .company-info { ... } */
-
+.heading-3{
+  font-size: 3rem !important;
+  font-weight: bold !important;
+  color: #000;
+  font-family: "Ghost", "Helvetica Neue", "Helvetica", sans-serif;
+}
 .heading-14{
   color: #ffffff !important;
   font-family: twklausanne !important;
@@ -203,6 +208,7 @@
 
   .heading-3 {
     font-size: 1.75rem !important;
+    font-weight: bold;
   }
 
   .left-section {

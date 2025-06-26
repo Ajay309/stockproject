@@ -5,6 +5,7 @@ import PlansCard from './PlansCard'; // Assume you have this component
 import './PlansSection.css'; // Import your CSS file
 import { useLocation } from 'react-router-dom';
 import Timer from './Timer';
+import Animated from '../Animated';
 
 const PlansSection = () => {
   const [packages, setPackages] = useState([]);

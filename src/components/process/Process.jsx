@@ -1,9 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { ArrowRight, ArrowLeft } from 'lucide-react'; // Optional icon lib
 import './Process.css'; // Optional for custom styles
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
+import Animated from '../Animated';
 
 const cards = [
   
@@ -91,22 +92,25 @@ export default function Process() {
       <div className=" mb-5">
         <div className="row">
         <div className="col-lg-12">
-        <h2 className="heading-3">
-          How to Use DTC indicator setup</h2>
+        <Animated animation="fade-up" delay={100}>
+        <h2 className="heading-3 process-heading">How to Use DTC indicator setup</h2>
+        </Animated>
         </div>
       </div>
       <Slider {...sliderSettings} nextArrow={<NextArrow />} prevArrow={<PrevArrow />}>
           {cards.map((card, index) => (
-            <div key={index} className="step-card mb-4 p-4 g-4 rounded  ">
-            {/* <div key={index} className="p-3"> */}
-              <div className="vertical-card p-4 h-100 rounded bg-white  ">
-              <div className="step-number mb-2 text-dark">Step {index + 1}</div>
+            <Animated key={index} animation="fade-up" delay={100 + index * 100}>
+              <div className="step-card mb-4 p-4 g-4 rounded  ">
+              {/* <div key={index} className="p-3"> */}
+                <div className="vertical-card p-4 h-100 rounded bg-white  ">
+                <div className="step-number mb-2 text-dark">Step {index + 1}</div>
 
-                <h5 className="fw-bold heading-6 mb-2">{card.title}</h5>
-                <p className="text-muted heading-7 mb-2">{card.desc}</p>
-                <div className="text-primary fw-medium">{card.link}</div>
+                  <h5 className="fw-bold heading-6 mb-2">{card.title}</h5>
+                  <p className="text-muted heading-7 mb-2">{card.desc}</p>
+                  <div className="text-primary fw-medium">{card.link}</div>
+                </div>
               </div>
-            </div>
+            </Animated>
           ))}
         </Slider>
       </div>

@@ -45,13 +45,13 @@ const BlogDetail = () => {
         <p className="text-secondary mb-4">
           Published on <strong>{new Date(blog.created_at).toLocaleDateString()}</strong>
         </p>
-
-        <img
-          src={blog.image}
-          alt={blog.name}
-          className="img-fluid rounded-3 shadow-sm mb-4"
-          style={{ maxHeight: '400px', objectFit: 'cover', width: '100%' }}
-        />
+        <div style={{ width: '100%', height: '400px', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
+  <img
+    src={blog.image}
+    alt={blog.name}
+    style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
+  />
+</div>
 
         <div className="blog-description fw-bold ">
           <div dangerouslySetInnerHTML={{ __html: blog.description }} />

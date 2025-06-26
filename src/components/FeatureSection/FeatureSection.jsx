@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { getPlatformLogos } from '../../api';
 import './FeatureSection.css';
+import Animated from '../Animated';
 
 export default function FeaturesSection() {
   const [logos, setLogos] = useState([]);
@@ -20,8 +21,8 @@ export default function FeaturesSection() {
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
-            <h5 className="heading-3 mb-5">
-              Trusted Leading Trading Platforms
+            <h5 className="heading-3 mb-5 text-start">
+            <Animated animation="fade-up" delay={100}>Trusted Leading Trading Platforms</Animated>
             </h5>
           </div>
           <div className="logo-slider">

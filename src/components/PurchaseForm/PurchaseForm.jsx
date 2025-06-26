@@ -113,7 +113,7 @@ const PurchaseForm = ({ plan, onClose }) => {
             const verifyData = await verifyRes.json();
 
             if (verifyData.success) {
-              await fetch('https://dtc.sinfode.com/api/v1/payment-success', {
+              await fetch('https://dtc.sinfode.com/api/v1/verify-payment', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

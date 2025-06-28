@@ -109,11 +109,13 @@ const GetStarted = () => {
       }
 
       const userProfile = {
-        email,
-        name: name || email.split('@')[0],
-        isLoggedIn: true,
-        profileImage: res.data.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=f6b40e&color=fff&bold=true`
-      };
+  id: res.data.id,
+  email,
+  name: name || email.split('@')[0],
+  isLoggedIn: true,
+  profileImage: res.data.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=f6b40e&color=fff&bold=true`
+};
+
 
       login(userProfile);
 

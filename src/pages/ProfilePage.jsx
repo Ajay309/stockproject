@@ -10,7 +10,22 @@ const ProfilePage = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
 
   // ✅ Fetch Admin Contact Phone from Settings API
- 
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const response = await fetch('https://dtc.sinfode.com/api/v1/settings');
+        const result = await response.json();
+        if (result.status === 'success' && result.data?.common_setting) {
+          const settings = result.data.common_setting;
+          setPhoneNumber(settings.phone_number || '');
+        }
+      } catch (error) {
+        console.error('Failed to fetch settings:', error);
+      }
+    };
+
+    fetchSettings();
+  }, []);
 
   // ✅ Fetch User Payment Data
   useEffect(() => {
@@ -22,15 +37,26 @@ const ProfilePage = () => {
 
       try {
         const response = await axios.get(`https://dtc.sinfode.com/api/v1/user-payments/${userProfile.id}`);
+<<<<<<< HEAD
+        console.log('Payment API response:', response.data);
+
+        // Handle different response shapes
+        const paymentArray = response.data?.data || response.data;
+
+        if (Array.isArray(paymentArray) && paymentArray.length > 0) {
+          setPaymentData(paymentArray[0]);
+=======
         console.log('💳 Payment API Response:', response.data);
         if (Array.isArray(response.data) && response.data.length > 0) {
           setPaymentData(response.data[0]);
+>>>>>>> 7fbc3ffa10af910ae5fbcc54021fd328e3e4019d
           setErrorMsg('');
         } else {
           setPaymentData(null);
           setErrorMsg('No payment history found.');
         }
-      } catch (error) { 
+      } catch (error) {
+        console.error('Failed to fetch payment data:', error);
         setErrorMsg('Failed to fetch payment data.');
       } finally {
         setLoading(false);
@@ -39,6 +65,21 @@ const ProfilePage = () => {
 
     fetchPayments();
   }, [userProfile]);
+<<<<<<< HEAD
+
+  // ✅ Open WhatsApp
+  const handleWhatsAppClick = () => {
+    if (!phoneNumber) {
+      alert('Admin WhatsApp number not available.');
+      return;
+    }
+
+    const formattedNumber = phoneNumber.replace(/\D/g, '');
+    const message = encodeURIComponent(
+      `Hello ${userProfile?.name}, thank you for your payment for the plan: ${paymentData?.plan_name}.`
+    );
+    window.open(`https://wa.me/${formattedNumber}?text=${message}`, '_blank');
+=======
  useEffect(() => {
      const fetchSettings = async () => {
        try {
@@ -77,6 +118,7 @@ const ProfilePage = () => {
     );
   
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+>>>>>>> 7fbc3ffa10af910ae5fbcc54021fd328e3e4019d
   };
   
   if (loading) return <div style={styles.loading}>Loading profile...</div>;
@@ -106,10 +148,13 @@ const ProfilePage = () => {
               </span>
             </p>
 
-
-              <button onClick={handleWhatsAppClick} style={styles.whatsappButton} aria-label="Send WhatsApp Message">
-                📱 Send WhatsApp Message
-              </button>
+            <button
+              onClick={handleWhatsAppClick}
+              style={styles.whatsappButton}
+              aria-label="Send WhatsApp Message"
+            >
+              📱 Send WhatsApp Message
+            </button>
           </>
         ) : (
           <p style={styles.info}>No payment data available.</p>
@@ -191,7 +236,7 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     fontSize: '1.5rem',
-    color: '#fff',
+    color: '#000',
     fontWeight: '600',
   },
 };

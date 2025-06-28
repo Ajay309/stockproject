@@ -53,7 +53,7 @@ const BlogDetail = () => {
   />
 </div>
 
-        <div className="blog-description">
+        <div className="blog-description fw-bold ">
           <div dangerouslySetInnerHTML={{ __html: blog.description }} />
         </div>
       </div>

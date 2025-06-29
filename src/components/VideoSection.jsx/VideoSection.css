@@ -52,3 +52,9 @@
   text-align: center;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
+@media (max-width: 480px) {
+  .section-title {
+    font-size: 1.5rem !important;
+    font-family: "Ghost", "Helvetica Neue", "Helvetica", sans-serif;
+  }
+}

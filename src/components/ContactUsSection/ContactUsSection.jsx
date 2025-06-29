@@ -174,7 +174,8 @@ const ContactUsSection = () => {
             </Animated>
           </div>
         </div>
-        <div className="row align-items-stretch">
+      <div className="row align-stretch-row">
+
           <div className="col-lg-6 mb-5 h-100">
             <Animated animation="fade-up" delay={600}>
               <h2>Send Us A Message</h2>
@@ -260,14 +261,15 @@ const ContactUsSection = () => {
             <div className="map-container rounded overflow-hidden shadow h-100">
               {mapCoords.latitude && mapCoords.longitude ? (
                 <iframe
-                  src={`https://www.google.com/maps?q=${mapCoords.latitude},${mapCoords.longitude}&z=15&output=embed`}
-                  width="100%"
-                  height="300"
-                  style={{ border: 0 }}
-                  allowFullScreen=""
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                ></iframe>
+                src={`https://www.google.com/maps?q=${mapCoords.latitude},${mapCoords.longitude}&z=15&output=embed`}
+                width="100%"
+                height="100%"
+                style={{ border: 0, minHeight: '350px' }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+              
               ) : (
                 <p>Loading map...</p>
               )}

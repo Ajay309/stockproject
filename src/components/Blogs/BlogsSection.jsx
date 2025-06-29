@@ -44,7 +44,7 @@ const BlogsSection = () => {
       </Animated>
       <div className="row">
         {currentBlogs.map((blog, index) => (
-          <div key={index} className="col-md-4 mb-4">
+          <div key={index} className="col-md-4 mb-4 d-flex">
             <Animated animation="fade-up" delay={200 + index * 100}>
               <div className="card blog-card">
                 <img src={blog.image} className="card-img-top" alt={blog.image} />

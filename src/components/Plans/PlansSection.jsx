@@ -59,7 +59,7 @@ const PlansSection = () => {
   return (
     <div className={`${isHomePage ? "container py-4 plans-section-homepage" : "py-4"}`}>
       {!isHomePage && (
-        <header className="pricing-header text-center py-4">
+        <header className="pricing-header text-center py-5">
           <h1 className="display-4">Elevate Your Experience</h1>
           <p>Choose the perfect plan tailored to your needs and unlock premium features designed to help you succeed.</p>
         </header>

@@ -73,10 +73,13 @@
 }
 
 .testimonial-content .blockquote {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
+  letter-spacing: 0px;      /* Avoid extra gaps between letters */
+  word-spacing: 0px;        /* Avoid extra word gaps */
+  text-align: justify;      /* Makes the text aligned on both left & right */
   font-weight: 300;
   color: #1c1e21;
-  line-height: 1.6;
+  line-height: 1.4;
   margin-bottom: 30px;
   text-align: left;
   /* font-style: italic; */

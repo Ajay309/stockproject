@@ -64,10 +64,11 @@
         }
         
         .contact-form {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            height: 100%;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         
         .form-control {
@@ -122,10 +123,11 @@
         }
         
         .map-container {
-            height: 300px;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            height: 100%;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         
         @media (max-width: 768px) {
@@ -137,3 +139,14 @@
                 margin-top: 30px;
             }
         }
+        .same-height {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .align-stretch-row {
+            display: flex;
+            align-items: stretch;
+        }
+        

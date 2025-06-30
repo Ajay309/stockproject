@@ -87,13 +87,13 @@ export default function Process() {
 //   };
 
   return (
-    <section id="process" className="py-5 bg-white ">
-    <div className="container">
+    <section id="process" className="py-5" style={{ background: '#fff', width: '100vw', position: 'relative', left: '50%', right: '50%', marginLeft: '-50vw', marginRight: '-50vw' }}>
+    <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
       <div className=" mb-5">
         <div className="row">
         <div className="col-lg-12">
         <Animated animation="fade-up" delay={100}>
-        <h2 className="heading-3 process-heading">How to Use DTC indicator setup</h2>
+        <h2 className="heading-3 process-heading">How to Use DTC Indicator Setup</h2>
         </Animated>
         </div>
       </div>

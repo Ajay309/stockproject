@@ -206,6 +206,12 @@ p {
         height: 32px;
         font-size: 1rem;
     }
+    .next-arrow {
+        right: 8px !important;
+    }
+    .prev-arrow {
+        left: 8px !important;
+    }
 }
 
 /* Custom Arrow Styling */
@@ -280,6 +286,13 @@ p {
     width: 24px;
     height: 24px;
     font-size: 0.9rem;
+    z-index: 10;
+  }
+  .next-arrow {
+    right: 8px !important;
+  }
+  .prev-arrow {
+    left: 8px !important;
   }
 }
 @media (max-width: 400px) {

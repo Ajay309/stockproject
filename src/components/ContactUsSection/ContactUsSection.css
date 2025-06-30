@@ -131,6 +131,13 @@
         }
         
         @media (max-width: 768px) {
+            .contact-form {
+                width: 95vw !important;
+                max-width: 85vw !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+                min-width: 0 !important;
+              }
             .contact-info-item {
                 margin-bottom: 20px;
             }

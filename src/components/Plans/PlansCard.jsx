@@ -31,7 +31,7 @@ const PlansCard = ({ plan, isHomePage = false }) => {
                     )}
 
                     {/* Show Discount Price if valid, otherwise show regular price */}
-                    <div className="fw-bold" style={{ fontSize: '50px' }}>
+                    <div className="fw-bold" style={{ fontSize: '35px' }}>
                         {currencySymbol}
                         {parseFloat(plan.discount_price) > 0 && parseFloat(plan.discount_price) < parseFloat(plan.price) 
                             ? plan.discount_price 

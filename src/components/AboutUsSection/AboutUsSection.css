@@ -3,17 +3,21 @@
   font-family: 'Inter', -apple-system, BlinkMacMacFont, 'Segoe UI', Roboto, sans-serif;
   color: #574A24; /* Darker text for better contrast */
   line-height: 1.6;
-  overflow-x: hidden; /* Prevent horizontal scroll */
   padding: 0;
+  box-sizing: border-box;
 }
 
 /* Hero Section */
 /* Deleted .hero-section::after and .hero-section::before and related keyframes */
 .hero-section {
   background: linear-gradient(90deg, #f7f2e8 0%, #eae0c8 100%);
-  padding: 0.5rem 0; /* You can tweak this for spacing above/below */
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  padding: 0.5rem 0;
   margin-bottom: 0 !important;
   padding-bottom: 0 !important;
+  box-sizing: border-box;
 }
 
 .hero-content {
@@ -25,6 +29,7 @@
   position: relative;
   z-index: 1;
   padding: 5rem;
+  box-sizing: border-box;
 }
 
 .hero-text {
@@ -158,6 +163,10 @@
   position: sticky;
   top: 0;
   z-index: 100;
+  box-sizing: border-box;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
 }
 
 .nav-container {
@@ -168,6 +177,7 @@
   justify-content: flex-start;
   gap: 2.5rem; /* Slightly increased gap */
   flex-wrap: wrap;
+  box-sizing: border-box;
 }
 
 .nav-link {
@@ -203,22 +213,40 @@
 /* Content Sections */
 .content-section {
   padding: 2rem 1.5rem;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .alt-bg {
   background: #fff;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  padding: 2rem 0;
 }
+
 .alt {
-    background: #FAE8B4;
-  }
+  background: #FAE8B4;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  padding: 2rem 0;
+}
 
 .what-we-offer-bg {
   background: #f5f6fa;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  padding: 2rem 0;
 }
 
 .section-container {
   max-width: 1200px;
   margin: 0 auto;
+  box-sizing: border-box;
+  padding-left: 1rem;
+  padding-right: 0rem;
 }
 
 .section-title {
@@ -252,6 +280,7 @@
   gap: 2rem;
   align-items: center;
   justify-content: space-between;
+  box-sizing: border-box;
 }
 
 .section-layout.reverse {
@@ -261,6 +290,7 @@
 .section-text-content {
   flex: 1;
   min-width: 300px;
+  box-sizing: border-box;
 }
 
 .section-text-content .lead-text {
@@ -272,8 +302,9 @@
 }
 
 .section-text-content p {
+  font-size: 1.1rem;
+  text-align: left;
   margin-bottom: 1.2rem; /* Adjusted spacing */
-  font-size: 1rem;
   color: #80775C;
 }
 
@@ -303,6 +334,7 @@
   flex: 1;
   text-align: center;
   min-width: 300px;
+  box-sizing: border-box;
 }
 
 .section-image img {
@@ -323,6 +355,7 @@
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2.5rem; /* Slightly increased gap for cards */
   margin-top: 4.5rem; /* More space above the grid */
+  box-sizing: border-box;
 }
 
 .mission-card {
@@ -333,6 +366,7 @@
   text-align: center;
   transition: all 0.3s ease;
   border: 1px solid #80775C;
+  box-sizing: border-box;
 }
 
 .mission-card:hover {
@@ -400,12 +434,14 @@
   }
 }
 
+
 @media (max-width: 768px) {
   .about-us-container {
     padding: 0 0.5rem;
   }
   .hero-section {
     padding: 0.5rem 0.2rem;
+    padding-top: 70px; /* Prevents hero title from being hidden under navbar */
   }
   .hero-content {
     flex-direction: column;
@@ -462,6 +498,27 @@
   }
   .content-section {
     padding: 2rem 0.5rem;
+    width: 100%;
+  }
+  .alt-bg,
+  .alt,
+  .what-we-offer-bg {
+     width: 100vw; /* keep full width */
+    overflow-x: hidden;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    box-sizing: border-box;
+  }
+  .section-container {
+     width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
   }
   .section-layout {
     flex-direction: column;
@@ -469,9 +526,21 @@
     text-align: left;
   }
   .section-title {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+  .section-container {
+    padding-left: 1.2rem;
+    padding-right: 1.2rem;
+  }
+  .section-text-content p {
+    font-size: 1.1rem;
+    line-height: 1.6;
     text-align: left;
     margin-bottom: 1.2rem;
+    color: #80775C;
   }
   .section-image {
     margin-top: 1rem;
@@ -483,12 +552,15 @@
     object-fit: cover;
   }
   .community-stats-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
     padding: 0;
+    margin: 0;
   }
-  .stat-card {
-    padding: 1rem;
+  .stat-card,
+  .mission-card {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
   }
   .certification-slider {
     padding: 0 0.2rem;
@@ -599,6 +671,7 @@
   gap: 2rem;
   margin-top: 3rem;
   padding: 0 1rem;
+  box-sizing: border-box;
 }
 
 .stat-card {
@@ -609,6 +682,7 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: 1px solid #FAE8B4;
+  box-sizing: border-box;
 }
 
 .stat-card:hover {
@@ -670,6 +744,7 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 0 20px;
+  box-sizing: border-box;
 }
 
 .certification-slides {
@@ -679,6 +754,7 @@
   width: 100%;
   height: 200px;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .certification-slide {
@@ -775,12 +851,14 @@
     overflow: hidden;
     position: relative;
     padding: 20px 0;
+    box-sizing: border-box;
 }
 
 .slider-track {
     display: flex;
     animation: scroll 30s linear infinite;
     width: calc(250px * 14); /* Adjust based on number of slides */
+    box-sizing: border-box;
 }
 
 .slider-track:hover {
@@ -793,6 +871,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    box-sizing: border-box;
 }
 
 .slide img {
@@ -808,4 +887,24 @@
     100% {
         transform: translateX(calc(-250px * 7)); /* Half of total width */
     }
+}
+/* ✅ Prevent horizontal overflow that causes vertical scrollbar bug */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ✅ Fix common flex/grid overflow bugs */
+* {
+  box-sizing: border-box;
+}
+
+/* ✅ Prevent oversized images/videos/sliders from breaking layout */
+img, video, iframe {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  box-sizing: border-box;
 }

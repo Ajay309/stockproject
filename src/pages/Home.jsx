@@ -24,13 +24,13 @@ export default function Home() {
       </div>
       
 
-      <div className="container-fluid">
+      <div>
         <Process />
       </div>
       <div className="container-fluid">
         <ReviewsSection />
       </div>
-      <div className="container-fluid">
+      <div>
         <CommunitySection/>
       </div>
       <div className="container-fluid">

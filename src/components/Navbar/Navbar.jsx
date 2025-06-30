@@ -218,7 +218,7 @@ export default function Navbar() {
                       <i className="bi bi-person me-2"></i>
                       Profile
                     </Link>
-                    <Link 
+                    {/* <Link 
                       to="/change-password" 
                       className="btn btn-link w-100 text-start p-2"
                       style={{ textDecoration: 'none', color: '#333' }}
@@ -226,7 +226,7 @@ export default function Navbar() {
                     >
                       <i className="bi bi-lock me-2"></i>
                       Change Password
-                    </Link>
+                    </Link> */}
                     <div className="border-top my-1"></div>
                     <button 
                       className="btn btn-link text-danger w-100 text-start p-2"
@@ -308,13 +308,13 @@ export default function Navbar() {
                    >
                       Profile
                    </Link>
-                   <Link 
+                   {/* <Link 
                       to="/change-password" 
                       className="mobile-change-password-link" 
                       onClick={handleNavItemClick}
                    >
                       Change Password
-                   </Link>
+                   </Link> */}
                    <button 
                       onClick={() => { handleLogout(); handleNavItemClick(); }}
                       className="mobile-logout-link" 

@@ -50,10 +50,10 @@ const CommunitySection = () => {
   ];
 
   return (
-    <section id="community" style={{ padding: '60px 0', background: '#f9f9f9' }}>
+    <section id="community" style={{ padding: '60px 0', background: '#fff', width: '100vw', position: 'relative', left: '50%', right: '50%', marginLeft: '-50vw', marginRight: '-50vw' }}>
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
         <Animated animation="fade-up" delay={100}>
-          <h2 className="community-title" style={{ fontSize: '3rem', fontWeight: 'bold' }}>Our Community</h2>
+          <h2 className="community-title" style={{ fontsize: '8rem', fontWeight: 'bold',fontFamily: 'Ghost, Helvetica Neue, Helvetica, sans-serif' }}>Our Community</h2>
         </Animated>
       </div>
       <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '30px' }}>

@@ -10,6 +10,8 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  min-height: 500px;
+  max-height: 500px;
   overflow: hidden;
   border-radius: 15px;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
@@ -27,7 +29,7 @@
 .blog-card .card-body {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  flex: 1 1 auto;
   padding: 20px;
 }
 
@@ -123,4 +125,11 @@
   .blog-card img {
     height: 180px;
   }
+}
+
+/* Make the column div fill the height */
+.col-md-4.mb-4.d-flex {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }

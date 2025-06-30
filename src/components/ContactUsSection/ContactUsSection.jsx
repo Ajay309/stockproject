@@ -221,7 +221,7 @@ const ContactUsSection = () => {
                   <div className="col-12">
                     <textarea
                       name="message"
-                      className="form-control mb-3"
+                      className="form-control mb-1"
                       placeholder="Your Message"
                       rows="4"
                       value={formData.message}

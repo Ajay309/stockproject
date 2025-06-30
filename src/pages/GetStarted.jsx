@@ -27,13 +27,10 @@ const GetStarted = () => {
         callback: (response) => {
           if (response.credential) {
             console.log('Google sign-in successful, token:', response.credential);
-            // axios.post('/api/auth/google', { token: response.credential })
-            //   .then(res => navigate('/dashboard'));
           }
         }
       });
 
-      // Render the Google Sign-In button
       window.google.accounts.id.renderButton(
         document.getElementById('google-signin-button'),
         { theme: 'outline', size: 'large', width: 300 }
@@ -98,7 +95,13 @@ const GetStarted = () => {
         otp
       });
 
-      localStorage.setItem('auth_token', res.data.token);
+      console.log('Signup response:', res.data);
+
+      const token = res.data.token;
+      const user = res.data.user || {}; // fallback to empty object
+
+      localStorage.setItem('auth_token', token);
+      localStorage.setItem('user_id', user.id); // ✅ store user_id
 
       const nameParts = name.trim().split(/\s+/);
       let initials;
@@ -109,13 +112,12 @@ const GetStarted = () => {
       }
 
       const userProfile = {
-  id: res.data.id,
-  email,
-  name: name || email.split('@')[0],
-  isLoggedIn: true,
-  profileImage: res.data.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=f6b40e&color=fff&bold=true`
-};
-
+        id: user.id,
+        email,
+        name: name || email.split('@')[0],
+        isLoggedIn: true,
+        profileImage: res.data.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=f6b40e&color=fff&bold=true`
+      };
 
       login(userProfile);
 
@@ -132,7 +134,6 @@ const GetStarted = () => {
       <div className="get-started-heading">Welcome to DTC Club</div>
       <div className="get-started-subheading">To get started, please sign up</div>
 
-      {/* ✅ Google Sign-In Button container */}
       <div id="google-signin-button" style={{ marginBottom: '1rem' }}></div>
 
       <div className="divider">

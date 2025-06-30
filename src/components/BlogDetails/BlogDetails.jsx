@@ -1,7 +1,7 @@
 // src/components/BlogDetails.js
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import './BlogDetails.css';
+// import './BlogDetails.css';
 
 const BlogDetail = () => {
   const { id } = useParams(); // this is blog_key
@@ -40,7 +40,7 @@ const BlogDetail = () => {
   return (
     <div className="container py-5">
       <div className="bg-white rounded-3 shadow p-4 p-md-5">
-        <h1 className="mb-3 fw-bold text-dark">{blog.name}</h1>
+        <h1 className="mb-3  text-dark">{blog.name}</h1>
 
         <p className="text-secondary mb-4">
           Published on <strong>{new Date(blog.created_at).toLocaleDateString()}</strong>
@@ -53,7 +53,7 @@ const BlogDetail = () => {
   />
 </div>
 
-        <div className="blog-description fw-bold ">
+        <div className="">
           <div dangerouslySetInnerHTML={{ __html: blog.description }} />
         </div>
       </div>

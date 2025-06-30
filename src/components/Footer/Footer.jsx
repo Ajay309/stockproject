@@ -9,28 +9,21 @@ import {
 } from 'react-icons/fa';
 import { getSettings } from '../../api';
 
-// ✅ Counter Component (Starts from 150000 and animates)
+// ✅ Counter component with localStorage
 function Counter() {
-  const startValue = 150000;
-  const [count, setCount] = useState(startValue);
+  const initialCount = parseInt(localStorage.getItem('visitCount')) || 150000;
+  const [count, setCount] = useState(initialCount);
 
   useEffect(() => {
-    let current = startValue;
-    const end = startValue + 1;
-    const duration = 1500; // animation duration
-    const incrementTime = 30;
-    const steps = Math.ceil((end - current) / (duration / incrementTime));
+    const interval = setInterval(() => {
+      setCount(prevCount => {
+        const newCount = prevCount + 1;
+        localStorage.setItem('visitCount', newCount);
+        return newCount;
+      });
+    }, 5000); // Increment every 5 seconds
 
-    const timer = setInterval(() => {
-      current += steps;
-      if (current >= end) {
-        current = end;
-        clearInterval(timer);
-      }
-      setCount(current);
-    }, incrementTime);
-
-    return () => clearInterval(timer);
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -131,16 +124,17 @@ const Footer = () => {
     const fetchSettingsData = async () => {
       try {
         const settings = await getSettings();
-        if (settings) {
+        if (settings && settings.common_setting) {
+          const common = settings.common_setting;
           setSocialLinks({
-            facebook: settings.facebook || '',
-            twitter: settings.twitter || '',
-            instagram: settings.instagram || '',
-            linkedin: settings.linkedin || '',
-            youtube: settings.youtube || '',
-            telegram: settings.telegram || ''
+            facebook: common.facebook || '',
+            twitter: common.twitter || '',
+            instagram: common.instagram || '',
+            linkedin: common.linkedin || '',
+            youtube: common.youtube || '',
+            telegram: common.telegram || ''
           });
-          setPhoneNumber(settings.phone_number || '');
+          setPhoneNumber(common.phone_number || '');
         }
       } catch (error) {
         console.error('Error fetching settings:', error);
@@ -187,8 +181,8 @@ const Footer = () => {
               <div className="d-flex flex-column gap-2">
                 <Link to="/about-us" onClick={() => handleNavigation('/about-us')} className="text-white text-decoration-none">About Us</Link>
                 <Link to="/partners" onClick={() => handleNavigation('/partners')} className="text-white text-decoration-none">Partners</Link>
-                <Link to="/about-us" onClick={() => handleCommunityNavigation()} className="text-white text-decoration-none">Community</Link>
-                <Link to="/about-us" onClick={() => handleWhyChooseUsNavigation()} className="text-white text-decoration-none">Why Choose Us</Link>
+                <Link to="/about-us" onClick={handleCommunityNavigation} className="text-white text-decoration-none">Community</Link>
+                <Link to="/about-us" onClick={handleWhyChooseUsNavigation} className="text-white text-decoration-none">Why Choose Us</Link>
               </div>
             </div>
 
@@ -224,6 +218,7 @@ const Footer = () => {
           </div>
         </div>
 
+        {/* Floating WhatsApp Button */}
         <div className="floating-btn whatsapp" onClick={handleWhatsAppClick} style={{ cursor: 'pointer' }}>
           <FaWhatsapp />
         </div>
@@ -235,7 +230,7 @@ const Footer = () => {
           <Link to="/contact-us" onClick={() => handleNavigation('/contact-us')} className="text-white text-decoration-none">Contact Us</Link>
         </div>
 
-        {/* ✅ Animated Visitor Counter */}
+        {/* ✅ Visitor Counter */}
         <Counter />
 
         <p className="text-center text-white-300 mt-4">

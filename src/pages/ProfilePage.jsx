@@ -37,7 +37,6 @@ const ProfilePage = () => {
 
       try {
         const response = await axios.get(`https://dtc.sinfode.com/api/v1/user-payments/${userProfile.id}`);
-<<<<<<< HEAD
         console.log('Payment API response:', response.data);
 
         // Handle different response shapes
@@ -45,11 +44,6 @@ const ProfilePage = () => {
 
         if (Array.isArray(paymentArray) && paymentArray.length > 0) {
           setPaymentData(paymentArray[0]);
-=======
-        console.log('💳 Payment API Response:', response.data);
-        if (Array.isArray(response.data) && response.data.length > 0) {
-          setPaymentData(response.data[0]);
->>>>>>> 7fbc3ffa10af910ae5fbcc54021fd328e3e4019d
           setErrorMsg('');
         } else {
           setPaymentData(null);
@@ -65,7 +59,6 @@ const ProfilePage = () => {
 
     fetchPayments();
   }, [userProfile]);
-<<<<<<< HEAD
 
   // ✅ Open WhatsApp
   const handleWhatsAppClick = () => {
@@ -74,51 +67,11 @@ const ProfilePage = () => {
       return;
     }
 
-    const formattedNumber = phoneNumber.replace(/\D/g, '');
+    const  formattedNumber= phoneNumber.replace(/\D/g, '');
     const message = encodeURIComponent(
       `Hello ${userProfile?.name}, thank you for your payment for the plan: ${paymentData?.plan_name}.`
     );
     window.open(`https://wa.me/${formattedNumber}?text=${message}`, '_blank');
-=======
- useEffect(() => {
-     const fetchSettings = async () => {
-       try {
-         const response = await fetch('https://dtc.sinfode.com/api/v1/settings');
-         const result = await response.json();
-         if (result.status === 'success' && result.data?.common_setting) {
-           const settings = result.data.common_setting;
-           setPhoneNumber(settings.phone_number || '');
-         }
-       } catch (error) {
-         console.error('Failed to fetch settings:', error);
-       }
-     };
- 
-     fetchSettings();
-   }, []);
- 
-   const handleWhatsAppClick = () => {
-     if (!phoneNumber) {
-       alert('WhatsApp number not available');
-       return;
-     }
-     // Format phone number for WhatsApp URL (remove spaces, +, etc. if needed)
-     const formattedNumber = phoneNumber.replace(/\D/g, '');
-     window.open(`https://wa.me/${formattedNumber}`, '_blank');
-   };
-  // ✅ Open WhatsApp Message
-  const openWhatsApp = () => {
-    if (!phoneNumber) {
-      alert('Admin contact number not available.');
-      return;
-    }
-  
-    const message = encodeURIComponent(
-      `Hello ${userProfile?.name}, thank you for your payment for the plan: ${paymentData?.plan_name}.`
-    );
-  
-    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
->>>>>>> 7fbc3ffa10af910ae5fbcc54021fd328e3e4019d
   };
   
   if (loading) return <div style={styles.loading}>Loading profile...</div>;
@@ -142,7 +95,7 @@ const ProfilePage = () => {
             <p><strong>Plan Name:</strong> <span style={styles.highlight}>{paymentData.plan_name || 'N/A'}</span></p>
             <p><strong>Plan End Date:</strong> <span style={styles.highlight}>{paymentData.end_date ? new Date(paymentData.end_date).toLocaleDateString() : 'N/A'}</span></p>
             <p>
-              <strong>Status:</strong>{' '}
+              <strong>Status:</strong>{''}
               <span style={{ color: paymentData.status === 'success' ? '#28a745' : '#dc3545', fontWeight: '700' }}>
                 {paymentData.status}
               </span>

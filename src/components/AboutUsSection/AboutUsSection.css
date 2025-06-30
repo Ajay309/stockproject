@@ -13,10 +13,11 @@
   background: linear-gradient(90deg, #f7f2e8 0%, #eae0c8 100%);
   width: 100vw;
   margin-left: calc(-50vw + 50%);
-  padding: 0.015rem 0;
+  padding: 5rem 0 4rem 0;
   margin-bottom: 0 !important;
   padding-bottom: 0 !important;
   box-sizing: border-box;
+  min-height: 190px;
 }
 
 .hero-content {
@@ -25,7 +26,7 @@
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 6rem;
+  gap: 0.1rem;
   position: relative;
   z-index: 1;
   padding: 0.1rem 0.4rem;
@@ -34,7 +35,7 @@
 
 .hero-text {
   text-align: left;
-  max-width: 800px;
+  max-width: 600px;
   margin: 0 auto;
   flex: 1;
   animation: fadeInUp 1s ease-out;
@@ -150,10 +151,12 @@
 }
 
 .hero-illustration {
-  max-width: 300px;
+  max-width: 480px;
   width: 100%;
   height: auto;
   border-radius: 8px;
+  max-height: 550px ;
+  margin-bottom: -10px;
 }
 
 /* Navigation */

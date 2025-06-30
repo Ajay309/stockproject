@@ -13,8 +13,7 @@
   background: linear-gradient(90deg, #f7f2e8 0%, #eae0c8 100%);
   width: 100vw;
   margin-left: calc(-50vw + 50%);
-  margin-right: calc(-50vw + 50%);
-  padding: 0.5rem 0;
+  padding: 0.015rem 0;
   margin-bottom: 0 !important;
   padding-bottom: 0 !important;
   box-sizing: border-box;
@@ -23,12 +22,13 @@
 .hero-content {
   max-width: 1200px;
   margin: 0 auto;
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 6rem;
   position: relative;
   z-index: 1;
-  padding: 5rem;
+  padding: 0.1rem 0.4rem;
   box-sizing: border-box;
 }
 
@@ -150,7 +150,7 @@
 }
 
 .hero-illustration {
-  max-width: 360px; /* You can reduce this to 300px or 250px */
+  max-width: 300px;
   width: 100%;
   height: auto;
   border-radius: 8px;
@@ -166,10 +166,10 @@
   box-sizing: border-box;
   width: 100vw;
   margin-left: calc(-50vw + 50%);
-  margin-right: calc(-50vw + 50%);
 }
 
 .nav-container {
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0.5rem 1rem;
@@ -465,7 +465,7 @@
     margin-top: 1rem;
   }
   .hero-illustration {
-    max-width: 220px;
+    max-width: 180px;
     width: 100%;
     margin: 0 auto;
     display: block;
@@ -640,6 +640,12 @@
   }
   .hero-content {
     gap: 0.2rem; /* Even smaller gap for very small screens */
+  }
+  .hero-illustration {
+    max-width: 120px;
+    width: 100%;
+    margin: 0 auto;
+    display: block;
   }
 }
 
@@ -894,6 +900,7 @@ html, body {
   padding: 0;
   width: 100%;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 /* ✅ Fix common flex/grid overflow bugs */

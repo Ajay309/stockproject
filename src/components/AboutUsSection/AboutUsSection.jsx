@@ -77,7 +77,7 @@ const AboutUsSection = () => {
   return (
     <div className="about-us-container">
       {/* Hero Section */}
-      <Animated animation="fade-up" delay={100}>
+      <Animated animation="fade-down" delay={100}>
         <section className="hero-section">
           <div className="hero-content">
             <div className="hero-text">
@@ -111,7 +111,7 @@ const AboutUsSection = () => {
       </nav>
 
       {/* Company Intro Section */}
-      <Animated animation="fade-up" delay={100}>
+      <Animated animation="fade-up" delay={200}>
         <section id="company" className="content-section alt-bg">
           <div className="section-container">
             <h2 className="section-title">Company Intro</h2>
@@ -125,7 +125,7 @@ const AboutUsSection = () => {
       </Animated>
 
       {/* What We Offer Section */}
-      <Animated animation="fade-up" delay={100}>
+      <Animated animation="fade-up" delay={300}>
         <section id="offers" className="content-section">
           <div className="section-container">
             <div className="section-layout">
@@ -142,7 +142,7 @@ const AboutUsSection = () => {
       </Animated>
 
       {/* Community Section */}
-      <Animated animation="fade-up" delay={100}>
+      <Animated animation="fade-up" delay={400}>
         <section id="community" className="content-section alt">
           <div className="section-container">
             <h2 className="section-title">Our Community</h2>
@@ -180,7 +180,7 @@ const AboutUsSection = () => {
       </Animated>
 
       {/* Mission & Vision Section */}
-      <Animated animation="fade-up" delay={100}>
+      <Animated animation="fade-up" delay={500}>
         <section id="mission" className="content-section">
           <div className="section-container">
             <h2 className="section-title">Mission, Vision & Goals</h2>
@@ -194,7 +194,7 @@ const AboutUsSection = () => {
       </Animated>
 
       {/* Certifications Section */}
-      <Animated animation="fade-up" delay={100}>
+      <Animated animation="fade-up" delay={600}>
         <section id="certifications" className="content-section alt-bg">
           <div className="section-container">
             <h2 className="section-title">Our Certifications</h2>
@@ -256,7 +256,7 @@ const AboutUsSection = () => {
       </Animated>
 
       {/* Why Choose DTC Section */}
-      <Animated animation="fade-up" delay={100}>
+      <Animated animation="fade-up" delay={700}>
         <section id="why-dtc" className="content-section">
           <div className="section-container">
             <h2 className="section-title">Why Choose Dream Trading Club</h2>

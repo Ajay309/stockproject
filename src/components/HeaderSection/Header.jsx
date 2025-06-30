@@ -44,8 +44,8 @@ export default function HeaderSection() {
           </Animated>
           <Animated animation="fade-up" delay={300}>
             <p className="lead text-white mb-4 text-center">
-              Track your stocks, analyze trends, and make smart decisions with real-time insights.
-              Empower your trading with our easy-to-use platform.
+              Track Your Stocks, Analyze Trends, And Make Smart Decisions With Real-Time Inights.
+              Empower Your Trading With Our Easy-To-Use Platform.
             </p>
           </Animated>
           <Animated animation="fade-up" delay={500}>

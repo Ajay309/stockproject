@@ -73,8 +73,8 @@
   
   .slider-track {
     display: flex;
-    width: calc(250px * 10); /* Adjust according to logos count * 2 */
-    animation: scroll 20s linear infinite;
+    width: calc(250px * 20); /* Double the width to ensure seamless loop */
+    animation: scroll 30s linear infinite;
   }
   
   .slide {
@@ -101,7 +101,41 @@
       transform: translateX(0);
     }
     100% {
-      transform: translateX(-50%);
+      transform: translateX(calc(-250px * 10)); /* Move exactly half the track width */
+    }
+  }
+  
+  /* Mobile-specific scroll animations */
+  @media (max-width: 768px) {
+    @keyframes scroll {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(calc(-150px * 10)); /* Move exactly half the track width for mobile */
+      }
+    }
+  }
+  
+  @media (max-width: 600px) {
+    @keyframes scroll {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(calc(-120px * 10)); /* Move exactly half the track width for smaller mobile */
+      }
+    }
+  }
+  
+  @media (max-width: 400px) {
+    @keyframes scroll {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(calc(-100px * 10)); /* Move exactly half the track width for very small mobile */
+      }
     }
   }
   
@@ -115,8 +149,7 @@
     margin-bottom: 16px;
   }
   .logo-slider {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
     width: 100%;
     margin-bottom: 10px;
   }
@@ -124,17 +157,17 @@
     display: flex;
     flex-wrap: nowrap;
     gap: 20px;
-    width: auto;
-    animation: none;
+    width: calc(150px * 20); /* Ensure enough width for continuous movement */
+    animation: scroll 25s linear infinite; /* Enable animation on mobile */
   }
   .slide {
-    width: 120px;
-    min-width: 100px;
-    max-width: 140px;
+    width: 150px;
+    min-width: 120px;
+    max-width: 160px;
     padding: 0 8px;
   }
   .slide img {
-    max-width: 60px;
+    max-width: 80px; /* Increased from 60px */
     height: auto;
   }
 }
@@ -148,22 +181,23 @@
     margin-bottom: 10px;
   }
   .logo-slider {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
     width: 100%;
     margin-bottom: 8px;
   }
   .slider-track {
-    gap: 10px;
+    gap: 15px;
+    width: calc(120px * 20); /* Ensure enough width for continuous movement */
+    animation: scroll 20s linear infinite; /* Enable animation on mobile */
   }
   .slide {
-    width: 80px;
-    min-width: 70px;
-    max-width: 100px;
+    width: 120px;
+    min-width: 100px;
+    max-width: 140px;
     padding: 0 4px;
   }
   .slide img {
-    max-width: 40px;
+    max-width: 70px; /* Increased from 40px */
     height: auto;
   }
 }
@@ -183,13 +217,17 @@
     overflow-wrap: break-word !important;
     background: none !important;
   }
+  .slider-track {
+    width: calc(100px * 20); /* Ensure enough width for continuous movement */
+    animation: scroll 18s linear infinite; /* Enable animation on mobile */
+  }
   .slide {
-    width: 60px;
-    min-width: 50px;
-    max-width: 70px;
+    width: 100px;
+    min-width: 80px;
+    max-width: 120px;
   }
   .slide img {
-    max-width: 28px;
+    max-width: 60px; /* Increased from 28px */
   }
 }
   

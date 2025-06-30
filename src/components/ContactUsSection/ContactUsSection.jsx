@@ -174,11 +174,12 @@ const ContactUsSection = () => {
             </Animated>
           </div>
         </div>
-        <div className="row">
-          <div className="col-lg-6 mb-5">
+      <div className="row align-stretch-row">
+
+          <div className="col-lg-6 mb-5 h-100">
             <Animated animation="fade-up" delay={600}>
               <h2>Send Us A Message</h2>
-              <form onSubmit={handleSubmit} className="contact-form bg-white shadow rounded p-4">
+              <form onSubmit={handleSubmit} className="contact-form bg-white shadow rounded p-4 h-100">
                 {error && <div className="alert alert-danger">{error}</div>}
                 <div className="row">
                   <div className="col-md-6">
@@ -255,19 +256,20 @@ const ContactUsSection = () => {
               </form>
             </Animated>
           </div>
-          <div className="col-lg-6">
+          <div className="col-lg-6 mb-5 h-100">
             <h2>Our Location</h2>
-            <div className="map-container rounded overflow-hidden shadow">
+            <div className="map-container rounded overflow-hidden shadow h-100">
               {mapCoords.latitude && mapCoords.longitude ? (
                 <iframe
-                  src={`https://www.google.com/maps?q=${mapCoords.latitude},${mapCoords.longitude}&z=15&output=embed`}
-                  width="100%"
-                  height="300"
-                  style={{ border: 0 }}
-                  allowFullScreen=""
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                ></iframe>
+                src={`https://www.google.com/maps?q=${mapCoords.latitude},${mapCoords.longitude}&z=15&output=embed`}
+                width="100%"
+                height="100%"
+                style={{ border: 0, minHeight: '350px' }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+              
               ) : (
                 <p>Loading map...</p>
               )}

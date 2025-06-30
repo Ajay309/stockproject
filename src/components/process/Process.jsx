@@ -25,7 +25,7 @@ const cards = [
   },
   {
     title: 'Access DTC Indicator on TradingView',
-    desc: 'Within 2-3 minutes, your TradingView account will get access to the DTC Indicator. Go to the "Invite-only scripts" section under Indicators on TradingView - you will find DTC Indicator listed there.',
+    desc: 'Within 2-3 mins, your TradingView account will get access to the DTC Indicator. Check the "Invite-only scripts" section under Indicators — you will find it there.' ,
     link: 'See project launches'
   },
   {

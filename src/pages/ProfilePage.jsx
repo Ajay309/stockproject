@@ -37,13 +37,9 @@ const ProfilePage = () => {
 
       try {
         const response = await axios.get(`https://dtc.sinfode.com/api/v1/user-payments/${userProfile.id}`);
-<<<<<<< HEAD
         console.log('Payment API response:', response.data);
 
         // Handle different response shapes
-=======
-        // Try to handle both possible response shapes
->>>>>>> 4d5f9c7607d42ce92d0a911fb3dce34120663383
         const paymentArray = response.data?.data || response.data;
         if (Array.isArray(paymentArray) && paymentArray.length > 0) {
           setPaymentData(paymentArray[0]);
@@ -69,12 +65,8 @@ const ProfilePage = () => {
       alert('Admin WhatsApp number not available.');
       return;
     }
-<<<<<<< HEAD
 
     const  formattedNumber= phoneNumber.replace(/\D/g, '');
-=======
-    const formattedNumber = phoneNumber.replace(/\D/g, '');
->>>>>>> 4d5f9c7607d42ce92d0a911fb3dce34120663383
     const message = encodeURIComponent(
       `Hello ${userProfile?.name}, thank you for your payment for the plan: ${paymentData?.plan_name}.`
     );

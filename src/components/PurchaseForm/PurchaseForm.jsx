@@ -53,7 +53,7 @@ const PurchaseForm = ({ plan, onClose }) => {
   };
 
   const calculateDiscountedPrice = () => {
-    if (!couponData) return plan.price;
+    if (!couponData) return plan.discount_price;
 
     if (couponData.discount_type === 'fixed') {
       return Math.max(0, plan.price - parseFloat(couponData.fixed_amount || 0));

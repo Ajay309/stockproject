@@ -1,7 +1,7 @@
 // src/components/BlogDetails.js
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-// import './BlogDetails.css';
+import './BlogDetails.css';
 
 const BlogDetail = () => {
   const { id } = useParams(); // this is blog_key
@@ -54,7 +54,7 @@ const BlogDetail = () => {
 </div>
 
         <div className="">
-          <div dangerouslySetInnerHTML={{ __html: blog.description }} />
+<div className="blog-content" dangerouslySetInnerHTML={{ __html: blog.description }} />
         </div>
       </div>
     </div>

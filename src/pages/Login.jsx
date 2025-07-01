@@ -71,7 +71,7 @@ const Login = () => {
     setMessage('');
 
     try {
-      const res = await axios.post('https://dtc.sinfode.com/api/v1/login', {
+      const res = await axios.post('https://admin.dtctradingclub.com/api/v1/login', {
         email,
         password,
       });

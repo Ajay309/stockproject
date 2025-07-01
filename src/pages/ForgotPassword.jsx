@@ -14,7 +14,7 @@ const ForgotPassword = () => {
     setLoading(true);
     setMessage('');
     try {
-      const res = await axios.post('https://dtc.sinfode.com/api/v1/forgot-password', { email });
+      const res = await axios.post('https://admin.dtctradingclub.com/api/v1/forgot-password', { email });
       setMessage(res.data.message || 'Password reset link sent to your email.');
     } catch (err) {
       setMessage(err.response?.data?.message || 'Something went wrong.');

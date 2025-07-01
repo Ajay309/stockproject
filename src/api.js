@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://dtc.sinfode.com/api/v1',
+  baseURL: 'https://admin.dtctradingclub.com/api/v1',
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
@@ -209,7 +209,7 @@ export const verifyPayment = async (verificationData) => {
 // Mark Payment as Success
 export const markPaymentSuccess = async (paymentData) => {
   try {
-    const res = await fetch('https://dtc.sinfode.com/api/v1/verify-payment', {
+    const res = await fetch('https://admin.dtctradingclub.com/api/v1/verify-payment', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(paymentData),

@@ -30,7 +30,7 @@ export default function EnquiryForm() {
     setError(null);
 
     try {
-      const response = await fetch('https://dtc.sinfode.com/api/v1/contact-us', {
+      const response = await fetch('https://admin.dtctradingclub.com/api/v1/contact-us', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

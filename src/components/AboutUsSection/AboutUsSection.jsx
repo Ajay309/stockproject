@@ -18,7 +18,7 @@ const AboutUsSection = () => {
     const fetchSettingsAndCertification = async () => {
       try {
         // Fetch site settings
-        const settingsRes = await fetch('https://dtc.sinfode.com/api/v1/settings');
+        const settingsRes = await fetch('https://admin.dtctradingclub.com/api/v1/settings');
         const settingsData = await settingsRes.json();
 
         if (settingsData.status === 'success') {
@@ -28,7 +28,7 @@ const AboutUsSection = () => {
         }
 
         // Fetch certifications
-        const certRes = await fetch('https://dtc.sinfode.com/api/v1/certifiaction');
+        const certRes = await fetch('https://admin.dtctradingclub.com/api/v1/certifiaction');
         const certData = await certRes.json();
 
         if (certData.status === 'success') {

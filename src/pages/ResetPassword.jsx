@@ -28,7 +28,7 @@ const ResetPassword = () => {
 
     setLoading(true);
     try {
-      const res = await axios.post('https://dtc.sinfode.com/api/v1/reset-password', {
+      const res = await axios.post('https://admin.dtctradingclub.com/api/v1/reset-password', {
         token,
         email,
         password,

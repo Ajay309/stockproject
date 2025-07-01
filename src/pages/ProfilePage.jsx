@@ -13,7 +13,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const response = await fetch('https://dtc.sinfode.com/api/v1/settings');
+        const response = await fetch('https://admin.dtctradingclub.com/api/v1/settings');
         const result = await response.json();
         if (result.status === 'success' && result.data?.common_setting) {
           const settings = result.data.common_setting;
@@ -36,7 +36,7 @@ const ProfilePage = () => {
       }
 
       try {
-        const response = await axios.get(`https://dtc.sinfode.com/api/v1/user-payments/${userProfile.id}`);
+        const response = await axios.get(`https://admin.dtctradingclub.com/api/v1/user-payments/${userProfile.id}`);
         console.log('Payment API response:', response.data);
 
         // Handle different response shapes

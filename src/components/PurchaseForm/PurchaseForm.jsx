@@ -28,7 +28,7 @@ const PurchaseForm = ({ plan, onClose }) => {
 
     setLoadingCoupon(true);
     try {
-      const res = await fetch('https://dtc.sinfode.com/api/v1/coupon');
+      const res = await fetch('https://admin.dtctradingclub.com/api/v1/coupon');
       const result = await res.json();
 
       const found = result.data.find(
@@ -78,7 +78,7 @@ const PurchaseForm = ({ plan, onClose }) => {
     const discountedAmount = calculateDiscountedPrice();
 
     try {
-      const res = await fetch('https://dtc.sinfode.com/api/v1/create-order', {
+      const res = await fetch('https://admin.dtctradingclub.com/api/v1/create-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -103,7 +103,7 @@ const PurchaseForm = ({ plan, onClose }) => {
         order_id: data.order_id,
         handler: async function (response) {
           try {
-            const verifyRes = await fetch('https://dtc.sinfode.com/api/v1/verify-payment', {
+            const verifyRes = await fetch('https://admin.dtctradingclub.com/api/v1/verify-payment', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -116,7 +116,7 @@ const PurchaseForm = ({ plan, onClose }) => {
             const verifyData = await verifyRes.json();
 
             if (verifyData.success) {
-              await fetch('https://dtc.sinfode.com/api/v1/verify-payment', {
+              await fetch('https://admin.dtctradingclub.com/api/v1/verify-payment', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

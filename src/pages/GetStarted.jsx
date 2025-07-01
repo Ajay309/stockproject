@@ -48,7 +48,7 @@ const GetStarted = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post('https://dtc.sinfode.com/api/v1/send-otp', { email });
+      const res = await axios.post('https://admin.dtctradingclub.com/api/v1/send-otp', { email });
       if (res.data.already_registered) {
         setMessage('Email already registered. Redirecting to login...');
         setTimeout(() => navigate('/login'), 2000);
@@ -66,7 +66,7 @@ const GetStarted = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post('https://dtc.sinfode.com/api/v1/verify-otp', { email, otp });
+      await axios.post('https://admin.dtctradingclub.com/api/v1/verify-otp', { email, otp });
       setMessage('OTP verified successfully!');
       setStep(3);
     } catch (err) {
@@ -88,7 +88,7 @@ const GetStarted = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post('https://dtc.sinfode.com/api/v1/verify-otp', {
+      const res = await axios.post('https://admin.dtctradingclub.com/api/v1/verify-otp', {
         email,
         name,
         password,

@@ -12,7 +12,7 @@ const BlogDetail = () => {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const response = await fetch(`https://dtc.sinfode.com/api/v1/blog-detail/${id}`);
+        const response = await fetch(`https://admin.dtctradingclub.com/api/v1/blog-detail/${id}`);
         const result = await response.json();
         if (result.status === 'success') {
           setBlog(result.data);

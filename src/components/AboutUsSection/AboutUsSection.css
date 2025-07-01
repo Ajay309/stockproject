@@ -218,6 +218,7 @@
   padding: 2rem 1.5rem;
   box-sizing: border-box;
   width: 100%;
+  scroll-margin-top: 90px;
 }
 
 .alt-bg {
@@ -258,6 +259,7 @@
   margin-bottom: 2.5rem; /* More space below title */
   text-align: left;
   color: #000000;
+  scroll-margin-top: 90px;
 }
 
 .section-description {

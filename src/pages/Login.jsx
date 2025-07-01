@@ -133,7 +133,7 @@ const Login = () => {
         Please login to your account
       </div>
 
-      <div id="google-signin-button" style={{ marginBottom: '32px' }}></div>
+      <div id="google-signin-button" style={{ marginBottom: '12px' }}></div>
 
       <div
         style={{
@@ -141,7 +141,7 @@ const Login = () => {
           alignItems: 'center',
           width: '100%',
           maxWidth: '420px',
-          margin: '24px 0',
+          margin: '14px 0',
         }}
       >
         <div style={{ flex: 1, height: '1.5px', background: '#eee' }}></div>

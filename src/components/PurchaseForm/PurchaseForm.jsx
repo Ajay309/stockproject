@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import './PurchaseForm.css';
+import Animated from '../Animated.jsx';
 
 
 const PurchaseForm = ({ plan, onClose }) => {
@@ -171,90 +172,92 @@ const PurchaseForm = ({ plan, onClose }) => {
   };
 
   return (
-    <div className="purchase-form-modal mt-5 py-5 bg-white">
-      <div className="purchase-form">
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-6">
-              <h4>Purchase {plan.name}</h4>
+    <Animated animation="fade-up" delay={40}>
+      <div className="purchase-form-modal mt-5 py-5 bg-white">
+        <div className="purchase-form">
+          <div className="container">
+            <div className="row justify-content-center">
+              <div className="col-6">
+                <h4>Purchase {plan.name}</h4>
 
-              <div className="mb-3">
-                <label>Email:</label>
-                <input
-                  type="email"
-                  className="form-control"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
-                  required
-                />
-              </div>
+                <div className="mb-3">
+                  <label>Email:</label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    required
+                  />
+                </div>
 
-              <div className="mb-3">
-                <label>Phone:</label>
-                <input
-                  className="form-control"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="Enter your phone number"
-                  required
-                />
-              </div>
-
-              <div className="mb-3">
-                <label>Coupon Code (optional):</label>
-                <div className="d-flex">
+                <div className="mb-3">
+                  <label>Phone:</label>
                   <input
                     className="form-control"
-                    value={coupon}
-                    onChange={(e) => {
-                      setCoupon(e.target.value);
-                      setIsCouponValid(null);
-                    }}
-                    placeholder="Enter coupon code"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="Enter your phone number"
+                    required
                   />
-                  <button
-                    type="button"
-                    className="login bg-warning rounded border-0 ms-2"
-                    onClick={validateCoupon}
-                    disabled={loadingCoupon}
-                    style={{ height: 51 }}
-                  >
-                    {loadingCoupon ? 'Checking...' : 'Apply'}
+                </div>
+
+                <div className="mb-3">
+                  <label>Coupon Code (optional):</label>
+                  <div className="d-flex">
+                    <input
+                      className="form-control"
+                      value={coupon}
+                      onChange={(e) => {
+                        setCoupon(e.target.value);
+                        setIsCouponValid(null);
+                      }}
+                      placeholder="Enter coupon code"
+                    />
+                    <button
+                      type="button"
+                      className="login bg-warning rounded border-0 ms-2"
+                      onClick={validateCoupon}
+                      disabled={loadingCoupon}
+                      style={{ height: 51 }}
+                    >
+                      {loadingCoupon ? 'Checking...' : 'Apply'}
+                    </button>
+                  </div>
+                  {isCouponValid === true && (
+                    <small className="text-success">
+                      ✅ Coupon applied!{' '}
+                      {couponData?.discount_type === 'fixed'
+                        ? `₹${couponData.fixed_amount} off`
+                        : `${couponData.discount}% off`}
+                    </small>
+                  )}
+                  {isCouponValid === false && (
+                    <small className="text-danger">
+                      ❌ Invalid, expired, or not applicable for this plan
+                    </small>
+                  )}
+                </div>
+
+                <div className="mb-3">
+                  <strong>Total Payable: {currencySymbol}{calculateDiscountedPrice()}</strong>
+                </div>
+
+                <div className="d-flex gap-2">
+                  <button className="login bg-warning border-0" onClick={handlePayment}>
+                    Proceed to Pay {currencySymbol}{calculateDiscountedPrice()}
+                  </button>
+                  <button className="login bg-warning border-0" onClick={onClose}>
+                    Cancel
                   </button>
                 </div>
-                {isCouponValid === true && (
-                  <small className="text-success">
-                    ✅ Coupon applied!{' '}
-                    {couponData?.discount_type === 'fixed'
-                      ? `₹${couponData.fixed_amount} off`
-                      : `${couponData.discount}% off`}
-                  </small>
-                )}
-                {isCouponValid === false && (
-                  <small className="text-danger">
-                    ❌ Invalid, expired, or not applicable for this plan
-                  </small>
-                )}
-              </div>
-
-              <div className="mb-3">
-                <strong>Total Payable: {currencySymbol}{calculateDiscountedPrice()}</strong>
-              </div>
-
-              <div className="d-flex gap-2">
-                <button className="login bg-warning border-0" onClick={handlePayment}>
-                  Proceed to Pay {currencySymbol}{calculateDiscountedPrice()}
-                </button>
-                <button className="login bg-warning border-0" onClick={onClose}>
-                  Cancel
-                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Animated>
   );
 };
 

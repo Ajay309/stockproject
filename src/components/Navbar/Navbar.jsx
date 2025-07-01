@@ -68,7 +68,10 @@ export default function Navbar() {
   const handleMobileMenuToggle = () => setMobileMenuOpen((prev) => !prev);
 
   // Close mobile menu on nav item click
-  const handleNavItemClick = () => setMobileMenuOpen(false);
+  const handleNavItemClick = () => {
+    setMobileMenuOpen(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <>
@@ -102,7 +105,11 @@ export default function Navbar() {
           aria-label="Toggle navigation"
           onClick={handleMobileMenuToggle}
         >
-          <span className="navbar-toggler-icon"></span>
+          {mobileMenuOpen ? (
+            <span style={{ fontSize: '2rem', lineHeight: 1, color: '#000', fontWeight: 700 }}>&times;</span>
+          ) : (
+            <span className="navbar-toggler-icon"></span>
+          )}
         </button>
 
         <div className={`collapse navbar-collapse${mobileMenuOpen ? ' show' : ''}`} id="navbarNav">

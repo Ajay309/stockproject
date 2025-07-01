@@ -132,7 +132,7 @@ const GetStarted = () => {
   return (
     <div className="get-started-container">
       <div className="get-started-heading">Welcome to DTC Club</div>
-      <div className="get-started-subheading">To get started, please sign up</div>
+      <div className="get-started-subheading">To get started, Please sign up</div>
 
       <div id="google-signin-button" style={{ marginBottom: '1rem' }}></div>
 

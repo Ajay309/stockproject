@@ -4,19 +4,19 @@ import Footer from '../components/Footer/Footer';
 const partnersData = [
   {
     name: 'AlphaInvest',
-    logo: 'https://via.placeholder.com/100x50?text=AlphaInvest',
+    // logo: 'https://via.placeholder.com/100x50?text=AlphaInvest',
     description: 'Leading brokerage firm providing real-time stock analysis and research tools.',
     color: '#3498db'
   },
   {
     name: 'TradeGuru',
-    logo: 'https://via.placeholder.com/100x50?text=TradeGuru',
+    // logo: 'https://via.placeholder.com/100x50?text=TradeGuru',
     description: 'Trusted financial advisor offering expert insights for smart investing.',
     color: '#2ecc71'
   },
   {
     name: 'FinTechX',
-    logo: 'https://via.placeholder.com/100x50?text=FinTechX',
+    // logo: 'https://via.placeholder.com/100x50?text=FinTechX',
     description: 'Innovative fintech partner delivering seamless trading technology.',
     color: '#e74c3c'
   },
@@ -83,7 +83,7 @@ const Partners = () => {
                 e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
               }}
             >
-              <div style={{
+              {/* <div style={{
                 width: '100%',
                 height: '80px',
                 display: 'flex',
@@ -103,7 +103,7 @@ const Partners = () => {
                     objectFit: 'contain'
                   }}
                 />
-              </div>
+              </div> */}
               
               <h3 style={{
                 color: partner.color,

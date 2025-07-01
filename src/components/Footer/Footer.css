@@ -188,6 +188,19 @@
     align-items: center;
     gap: 8px;
   }
+  .footer-column .d-flex {
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100%;
+    gap: 0.5rem !important;
+  }
+  .footer-column .d-flex > * {
+    text-align: center !important;
+    width: 100%;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 0 auto !important;
+  }
 }
 
 @media (max-width: 480px) {

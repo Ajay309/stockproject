@@ -11,7 +11,7 @@ const cards = [
   {
     title: 'Choose Your Subscription Plan',
     desc: 'Visit our website and select the best-suited DTC Indicator subscription plan based on your trading needs. Complete the secure payment process.',
-    link: 'See creative production'
+    link: 'See Creative Production'
   },
 //   {
 //     title: 'Project intake',
@@ -21,17 +21,17 @@ const cards = [
   {
     title: 'Share Your TradingView Username',
     desc: 'After payment, you will be automatically redirected to our DTC Support Team. Simply share your TradingView username with our team to activate access.',
-    link: 'See project launches'
+    link: 'See Project Launches'
   },
   {
-    title: 'Access DTC Indicator on TradingView',
+    title: 'Access DTC Indicator On TradingView',
     desc: 'Within 2-3 mins, your TradingView account will get access to the DTC Indicator. Check the "Invite-only scripts" section under Indicators — you will find it there.' ,
-    link: 'See project launches'
+    link: 'See Project Launches'
   },
   {
     title: 'Get Educational Course & Support',
     desc: 'Our team will send you the complete educational video course, PDF guides, and lifetime WhatsApp support on your registered email and WhatsApp number.',
-    link: 'See project launches'
+    link: 'See Project Launches'
   },
   
 ];
@@ -93,7 +93,7 @@ export default function Process() {
         <div className="row">
         <div className="col-lg-12">
         <Animated animation="fade-up" delay={100}>
-        <h2 className="heading-3 process-heading">How to Use DTC Indicator Setup</h2>
+        <h2 className="heading-3 process-heading">How To Use DTC Indicator Setup</h2>
         </Animated>
         </div>
       </div>

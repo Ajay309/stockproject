@@ -19,33 +19,36 @@ const Login = () => {
     script.onload = () => {
       window.google.accounts.id.initialize({
         client_id: '49001026194-7fj7o57v1ag5i6i24ncmpma8semjiikk.apps.googleusercontent.com',
-        callback: (response) => {
+        callback: async (response) => {
           if (response.credential) {
-            const base64Url = response.credential.split('.')[1];
-            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            const jsonPayload = decodeURIComponent(
-              atob(base64)
-                .split('')
-                .map(function (c) {
-                  return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-                })
-                .join('')
-            );
-            const profile = JSON.parse(jsonPayload);
-            const userProfile = {
-              email: profile.email,
-              name: profile.name || profile.email.split('@')[0],
-              isLoggedIn: true,
-              profileImage:
-                profile.picture ||
-                `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                  profile.name || profile.email.split('@')[0]
-                )}&background=f6b40e&color=fff&bold=true`,
-            };
-            login(userProfile);
-            localStorage.setItem('userProfile', JSON.stringify(userProfile));
-            localStorage.setItem('auth_token', response.credential);
-            navigate('/');
+            try {
+              // 🔥 Send Google JWT to Laravel API
+              const apiResponse = await axios.post('https://admin.dtctradingclub.com/api/v1/auth/google', {
+                access_token: response.credential,
+              });
+
+              const user = apiResponse.data.user;
+              const token = apiResponse.data.token;
+
+              const userProfile = {
+                email: user.email,
+                name: user.name || user.email.split('@')[0],
+                isLoggedIn: true,
+                profileImage:
+                  user.profile_image ||
+                  `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                    user.name || user.email.split('@')[0]
+                  )}&background=f6b40e&color=fff&bold=true`,
+              };
+
+              login(userProfile);
+              localStorage.setItem('userProfile', JSON.stringify(userProfile));
+              localStorage.setItem('auth_token', token);
+              navigate('/');
+            } catch (err) {
+              console.error('Google login failed:', err);
+              alert('Google login failed. Please try again.');
+            }
           }
         },
       });
@@ -68,7 +71,7 @@ const Login = () => {
     setMessage('');
 
     try {
-      const res = await axios.post('https://admin.dtctradingclub.com/api/v1/login', {
+      const res = await axios.post('https://dtc.sinfode.com/api/v1/login', {
         email,
         password,
       });
@@ -95,7 +98,7 @@ const Login = () => {
   };
 
   return (
-    <div 
+    <div
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -108,7 +111,6 @@ const Login = () => {
         boxSizing: 'border-box',
         paddingTop: '110px',
       }}
-      
     >
       <div
         style={{
@@ -133,7 +135,7 @@ const Login = () => {
         Please login to your account
       </div>
 
-      <div id="google-signin-button" style={{ marginBottom: '12px' }}></div>
+      <div id="google-signin-button" style={{ marginBottom: '32px' }}></div>
 
       <div
         style={{
@@ -141,7 +143,7 @@ const Login = () => {
           alignItems: 'center',
           width: '100%',
           maxWidth: '420px',
-          margin: '14px 0',
+          margin: '24px 0',
         }}
       >
         <div style={{ flex: 1, height: '1.5px', background: '#eee' }}></div>

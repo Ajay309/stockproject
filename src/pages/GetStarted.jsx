@@ -24,9 +24,41 @@ const GetStarted = () => {
     script.onload = () => {
       window.google.accounts.id.initialize({
         client_id: '49001026194-7fj7o57v1ag5i6i24ncmpma8semjiikk.apps.googleusercontent.com',
-        callback: (response) => {
+        callback: async (response) => {
           if (response.credential) {
-            console.log('Google sign-in successful, token:', response.credential);
+            try {
+              const res = await axios.post('https://admin.dtctradingclub.com/api/v1/auth/google', {
+                access_token: response.credential
+              });
+
+              const token = res.data.token;
+              const user = res.data.user;
+
+              localStorage.setItem('auth_token', token);
+              localStorage.setItem('user_id', user.id);
+
+              const nameParts = user.name.trim().split(/\s+/);
+              let initials;
+              if (nameParts.length > 1) {
+                initials = `${nameParts[0][0].toUpperCase()}${nameParts[nameParts.length - 1][0].toUpperCase()}`;
+              } else {
+                initials = nameParts[0].slice(0, 2).toUpperCase();
+              }
+
+              const userProfile = {
+                id: user.id,
+                email: user.email,
+                name: user.name || user.email.split('@')[0],
+                isLoggedIn: true,
+                profileImage: user.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=f6b40e&color=fff&bold=true`
+              };
+
+              login(userProfile);
+              navigate('/');
+            } catch (error) {
+              console.error('Google login failed:', error);
+              setMessage('Google login failed. Please try again.');
+            }
           }
         }
       });
@@ -95,13 +127,11 @@ const GetStarted = () => {
         otp
       });
 
-      console.log('Signup response:', res.data);
-
       const token = res.data.token;
-      const user = res.data.user || {}; // fallback to empty object
+      const user = res.data.user || {};
 
       localStorage.setItem('auth_token', token);
-      localStorage.setItem('user_id', user.id); // ✅ store user_id
+      localStorage.setItem('user_id', user.id);
 
       const nameParts = name.trim().split(/\s+/);
       let initials;
@@ -142,12 +172,15 @@ const GetStarted = () => {
         <div className="line"></div>
       </div>
 
-      <form onSubmit={
-        step === 1 ? handleSendOtp :
-        step === 2 ? handleVerifyOtp :
-        step === 3 ? handleNameSubmit :
-        handlePasswordSubmit
-      } className="get-started-form">
+      <form
+        onSubmit={
+          step === 1 ? handleSendOtp :
+          step === 2 ? handleVerifyOtp :
+          step === 3 ? handleNameSubmit :
+          handlePasswordSubmit
+        }
+        className="get-started-form"
+      >
         <label className="form-label">
           {step === 1 ? 'Email address' :
            step === 2 ? 'Enter OTP sent to your email' :

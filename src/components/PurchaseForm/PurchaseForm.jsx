@@ -13,6 +13,8 @@ const PurchaseForm = ({ plan, onClose }) => {
   const [isCouponValid, setIsCouponValid] = useState(null);
   const [loadingCoupon, setLoadingCoupon] = useState(false);
 
+  const currencySymbol = plan.currency === 'USD' ? '$' : '₹';
+
   const navigate = useNavigate();
   const userId = localStorage.getItem('id');
 
@@ -174,7 +176,7 @@ const PurchaseForm = ({ plan, onClose }) => {
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-6">
-              <h4>Purchase {plan.name} Plan</h4>
+              <h4>Purchase {plan.name}</h4>
 
               <div className="mb-3">
                 <label>Email:</label>
@@ -237,12 +239,12 @@ const PurchaseForm = ({ plan, onClose }) => {
               </div>
 
               <div className="mb-3">
-                <strong>Total Payable: ₹{calculateDiscountedPrice()}</strong>
+                <strong>Total Payable: {currencySymbol}{calculateDiscountedPrice()}</strong>
               </div>
 
               <div className="d-flex gap-2">
                 <button className="login bg-warning border-0" onClick={handlePayment}>
-                  Proceed to Pay ₹{calculateDiscountedPrice()}
+                  Proceed to Pay {currencySymbol}{calculateDiscountedPrice()}
                 </button>
                 <button className="login bg-warning border-0" onClick={onClose}>
                   Cancel

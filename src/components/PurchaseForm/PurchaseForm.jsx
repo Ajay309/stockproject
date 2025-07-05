@@ -1,23 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import './PurchaseForm.css';
 import Animated from '../Animated.jsx';
 
-
 const PurchaseForm = ({ plan, onClose }) => {
   const { user } = useAuth();
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [countryCode, setCountryCode] = useState('+91');
+  const [countryCodes, setCountryCodes] = useState([]);
   const [coupon, setCoupon] = useState('');
   const [couponData, setCouponData] = useState(null);
   const [isCouponValid, setIsCouponValid] = useState(null);
   const [loadingCoupon, setLoadingCoupon] = useState(false);
 
   const currencySymbol = plan.currency === 'USD' ? '$' : '₹';
-
   const navigate = useNavigate();
   const userId = localStorage.getItem('id');
+
+  // Fetch country codes on component mount
+  useEffect(() => {
+    const fetchCountryCodes = async () => {
+      try {
+        const res = await fetch('https://restcountries.com/v3.1/all?fields=name,idd');
+        const data = await res.json();
+        const codes = data
+          .map((country) => {
+            const root = country.idd?.root;
+            const suffix = country.idd?.suffixes?.[0];
+            if (root && suffix) {
+              return {
+                name: country.name.common,
+                code: root + suffix,
+              };
+            }
+            return null;
+          })
+          .filter((item) => item !== null)
+          .sort((a, b) => a.name.localeCompare(b.name));
+        setCountryCodes(codes);
+      } catch (err) {
+        console.error('Error fetching country codes:', err);
+      }
+    };
+    fetchCountryCodes();
+  }, []);
 
   const validateCoupon = async () => {
     if (!coupon.trim()) {
@@ -57,15 +85,12 @@ const PurchaseForm = ({ plan, onClose }) => {
 
   const calculateDiscountedPrice = () => {
     if (!couponData) return plan.discount_price;
-
     if (couponData.discount_type === 'fixed') {
       return Math.max(0, plan.price - parseFloat(couponData.fixed_amount || 0));
     }
-
     if (couponData.discount_type === 'percentage') {
       return Math.max(0, plan.price - (plan.price * parseFloat(couponData.discount || 0)) / 100);
     }
-
     return plan.price;
   };
 
@@ -86,7 +111,7 @@ const PurchaseForm = ({ plan, onClose }) => {
           plan: plan.name,
           amount: discountedAmount,
           email,
-          phone,
+          phone: `${countryCode}${phone}`,
           coupon: couponData?.code || 'NO_COUPON',
         }),
       });
@@ -124,7 +149,7 @@ const PurchaseForm = ({ plan, onClose }) => {
                   payment_id: response.razorpay_payment_id,
                   user_id: userId,
                   email,
-                  phone,
+                  phone: `${countryCode}${phone}`,
                   plan: plan.name,
                   amount: discountedAmount,
                   coupon: couponData?.code || '',
@@ -139,7 +164,7 @@ const PurchaseForm = ({ plan, onClose }) => {
                     plan: plan.name,
                     amount: discountedAmount,
                     email,
-                    phone,
+                    phone: `${countryCode}${phone}`,
                     coupon: couponData?.code || '',
                   },
                 },
@@ -156,7 +181,7 @@ const PurchaseForm = ({ plan, onClose }) => {
         prefill: {
           name: user?.name || '',
           email,
-          contact: phone,
+          contact: `${countryCode}${phone}`,
         },
         theme: {
           color: '#3399cc',
@@ -194,13 +219,27 @@ const PurchaseForm = ({ plan, onClose }) => {
 
                 <div className="mb-3">
                   <label>Phone:</label>
-                  <input
-                    className="form-control"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="Enter your phone number"
-                    required
-                  />
+                  <div className="d-flex gap-2">
+                    <select
+                      className="form-control"
+                      value={countryCode}
+                      onChange={(e) => setCountryCode(e.target.value)}
+                      style={{ width: '120px' }}
+                    >
+                      {countryCodes.map((country, index) => (
+                        <option key={index} value={country.code}>
+                          {country.name} ({country.code})
+                        </option>
+                      ))}
+                    </select>
+                    <input
+                      className="form-control"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      placeholder="Enter your phone number"
+                      required
+                    />
+                  </div>
                 </div>
 
                 <div className="mb-3">
@@ -241,12 +280,16 @@ const PurchaseForm = ({ plan, onClose }) => {
                 </div>
 
                 <div className="mb-3">
-                  <strong>Total Payable: {currencySymbol}{calculateDiscountedPrice()}</strong>
+                  <strong>
+                    Total Payable: {currencySymbol}
+                    {calculateDiscountedPrice()}
+                  </strong>
                 </div>
 
                 <div className="d-flex gap-2">
                   <button className="login bg-warning border-0" onClick={handlePayment}>
-                    Proceed to Pay {currencySymbol}{calculateDiscountedPrice()}
+                    Proceed to Pay {currencySymbol}
+                    {calculateDiscountedPrice()}
                   </button>
                   <button className="login bg-warning border-0" onClick={onClose}>
                     Cancel

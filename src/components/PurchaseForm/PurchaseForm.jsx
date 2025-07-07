@@ -5,7 +5,7 @@ import './PurchaseForm.css';
 import Animated from '../Animated.jsx';
 
 const PurchaseForm = ({ plan, onClose }) => {
-  const { user } = useAuth();
+  const { userProfile } = useAuth();
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [countryCode, setCountryCode] = useState('+91');
@@ -19,7 +19,6 @@ const PurchaseForm = ({ plan, onClose }) => {
   const navigate = useNavigate();
   const userId = localStorage.getItem('id');
 
-  // Fetch country codes on component mount
   useEffect(() => {
     const fetchCountryCodes = async () => {
       try {
@@ -95,6 +94,12 @@ const PurchaseForm = ({ plan, onClose }) => {
   };
 
   const handlePayment = async () => {
+    if (!userProfile) {
+      alert('❗ Please login to purchase a plan.');
+      navigate('/login', { state: { from: '/plans' } }); // pass route
+      return;
+    }
+
     if (!email || !phone) {
       alert('❗ Email and phone are required.');
       return;
@@ -123,7 +128,7 @@ const PurchaseForm = ({ plan, onClose }) => {
         key: data.key,
         amount: data.amount,
         currency: data.currency,
-        name: 'Your Company Name',
+        name: 'DTC TRADING CLUB',
         description: plan.name,
         order_id: data.order_id,
         handler: async function (response) {
@@ -179,7 +184,7 @@ const PurchaseForm = ({ plan, onClose }) => {
           }
         },
         prefill: {
-          name: user?.name || '',
+          name: userProfile?.name || '',
           email,
           contact: `${countryCode}${phone}`,
         },

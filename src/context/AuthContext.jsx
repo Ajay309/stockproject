@@ -1,10 +1,8 @@
-// src/AuthContext.js
+// src/context/AuthContext.js
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Create context
 const AuthContext = createContext(null);
 
-// Custom hook with safety check
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
@@ -18,7 +16,6 @@ export const AuthProvider = ({ children }) => {
   const [userProfile, setUserProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Load user profile on initial mount
   useEffect(() => {
     const loadProfile = () => {
       const savedProfile = localStorage.getItem('userProfile');
@@ -36,16 +33,15 @@ export const AuthProvider = ({ children }) => {
     loadProfile();
   }, []);
 
-  // ✅ Modified login function to accept full response from backend
   const login = (profile) => {
-  if (!profile || !profile.email) {
-    console.error('Invalid profile passed to login:', profile);
-    return;
-  }
-  setUserProfile(profile);
-  setUserEmail(profile.email);
-  localStorage.setItem('userProfile', JSON.stringify(profile));
-};
+    if (!profile || !profile.email) {
+      console.error('Invalid profile passed to login:', profile);
+      return;
+    }
+    setUserProfile(profile);
+    setUserEmail(profile.email);
+    localStorage.setItem('userProfile', JSON.stringify(profile));
+  };
 
   const logout = () => {
     localStorage.removeItem('auth_email');
@@ -55,9 +51,7 @@ export const AuthProvider = ({ children }) => {
     setUserProfile(null);
   };
 
-  if (isLoading) {
-    return null; // You can return a loader here
-  }
+  if (isLoading) return null;
 
   return (
     <AuthContext.Provider value={{ userProfile, userEmail, login, logout }}>

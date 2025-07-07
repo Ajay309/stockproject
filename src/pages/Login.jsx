@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+
+import { useNavigate , useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 
@@ -9,6 +10,9 @@ const Login = () => {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+const redirectTo = location.state?.from || '/';
+
   const { login } = useAuth();
 
   useEffect(() => {
@@ -31,6 +35,7 @@ const Login = () => {
               const token = apiResponse.data.token;
 
               const userProfile = {
+                id: user.id,
                 email: user.email,
                 name: user.name || user.email.split('@')[0],
                 isLoggedIn: true,
@@ -44,7 +49,7 @@ const Login = () => {
               login(userProfile);
               localStorage.setItem('userProfile', JSON.stringify(userProfile));
               localStorage.setItem('auth_token', token);
-              navigate('/');
+navigate(redirectTo);
             } catch (err) {
               console.error('Google login failed:', err);
               alert('Google login failed. Please try again.');
@@ -77,6 +82,7 @@ const Login = () => {
       });
 
       const userProfile = {
+        id: user.id,
         email: res.data.user.email,
         name: res.data.user.name || res.data.user.email.split('@')[0],
         isLoggedIn: true,
@@ -90,7 +96,7 @@ const Login = () => {
       login(userProfile);
       localStorage.setItem('userProfile', JSON.stringify(userProfile));
       localStorage.setItem('auth_token', res.data.token);
-      navigate('/');
+navigate(redirectTo);
     } catch (err) {
       setMessage(err.response?.data?.message || 'Login failed. Please check your credentials.');
     }

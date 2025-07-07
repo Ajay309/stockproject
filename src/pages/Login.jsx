@@ -82,7 +82,7 @@ navigate(redirectTo);
       });
 
       const userProfile = {
-        id: user.id,
+        id : res.data.user.id,
         email: res.data.user.email,
         name: res.data.user.name || res.data.user.email.split('@')[0],
         isLoggedIn: true,

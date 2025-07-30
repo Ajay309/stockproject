@@ -1,133 +1,149 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from '../components/Footer/Footer';
 
 const PrivacyPolicy = () => {
-  const sections = [
-    {
-      title: '1. About Dream Trading Club',
-      content: 'Dream Trading Club is an educational platform offering tools, resources, and structured content to help learners understand technical analysis, chart reading, and market behavior. We do not provide any investment or trading advice. We are not registered with SEBI or any financial regulatory authority. All our offerings are meant solely for educational purposes.'
-    },
-    {
-      title: '2. Products & Services Offered',
-      content: (
-        <ul>
-          <li>DTC Indicator Tool – Custom tool on TradingView (lifetime access post-purchase)</li>
-          <li>Recorded Video Course – Guide to using the DTC Indicator</li>
-          <li>Educational PDFs – Technical content and usage instructions</li>
-          <li>WhatsApp Support – Tool setup, general guidance, content clarification</li>
-        </ul>
-      )
-    },
-    {
-      title: '3. Payment & Delivery',
-      content: 'All purchases must be made through our official website (www.dtcclub.in) or authorized team members. Upon confirmation of payment, access to the DTC Indicator, course content, and WhatsApp support is granted typically within 1–12 hours.'
-    },
-    {
-      title: '4. Legal Nature of Services',
-      content: 'Dream Trading Club operates strictly for educational purposes. We are not financial advisors, portfolio managers, or SEBI-registered entities. We provide no buy/sell recommendations or guaranteed returns.'
-    },
-    {
-      title: '5. Refund Policy',
-      content: (
-        <div>
-          <p><strong>No Refunds Will Be Issued If:</strong></p>
-          <ul>
-            <li>Access to any tool or course content has been delivered</li>
-            <li>Tool is not liked or didn’t work as expected</li>
-            <li>Purchase made by mistake or regret after buying</li>
-          </ul>
-          <p><strong>Refunds May Be Issued ONLY If:</strong></p>
-          <ul>
-            <li>No access/content was delivered within 72 hours</li>
-            <li>No access was granted and support was absent</li>
-          </ul>
-          <p>Refunds must be requested within 24 hours of purchase with receipt, transaction ID, and issue explanation.</p>
-        </div>
-      )
-    },
-    {
-      title: '6. Client Responsibility',
-      content: (
-        <ul>
-          <li>Read full product descriptions before buying</li>
-          <li>Do not share tool/PDFs/videos with others</li>
-          <li>Use products for personal educational use only</li>
-          <li>Do not demand refunds based on opinion or market results</li>
-        </ul>
-      )
-    },
-    {
-      title: '7. Violation of Terms',
-      content: (
-        <ul>
-          <li>Sharing or reselling our content/tools</li>
-          <li>Making false refund claims</li>
-          <li>Abusive behavior with our team</li>
-          <li>Copyright infringement will result in legal action</li>
-        </ul>
-      )
-    },
-    {
-      title: '8. Policy Acceptance',
-      content: 'By purchasing from Dream Trading Club, you agree to our Terms & Conditions, Refund Policy, and Educational Disclaimer. Use of our tools is entirely at your own risk.'
-    },
-    {
-      title: '9. Contact & Support',
-      content: (
-        <div style={{ backgroundColor: '#e8f4f8', padding: '20px', borderRadius: '8px' }}>
-          <p><strong>WhatsApp:</strong> +91 78599 91926</p>
-          <p><strong>Website:</strong> www.dtcclub.in</p>
-          <p><strong>Email:</strong> dtcclub1@gmail.com</p>
-        </div>
-      )
-    }
-  ];
-
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      minHeight: '100vh',
-      backgroundColor: '#ffffff' // full white background
-    }}>
-      {/* Space for fixed navbar */}
-      <div style={{ height: '100px' }} />
+    <div>
+    <div className="container my-5 pt-5 pb-5">
+      <div className="card shadow-lg p-4">
+        <h2 className="text-center mb-4 pt-5">🔒 Privacy Policy</h2>
 
-      <main style={{
-        flex: 1,
-        padding: '40px 60px',
-        width: '100%',
-        boxSizing: 'border-box',
-      }}>
-        <h1 style={{
-          color: '#2c3e50',
-          fontSize: '2.5rem',
-          marginBottom: '10px',
-          borderBottom: '2px solid #3498db',
-          paddingBottom: '10px'
-        }}>
-          Terms & Conditions & Refund Policy
-        </h1>
-        <p style={{ color: '#7f8c8d', marginBottom: '30px' }}>Issued by: Dream Trading Club</p>
+        <Section title="1. Introduction">
+          <p>Dream Trading Club (“we,” “our,” or “us”) respects your privacy and is committed to protecting your personal information. This Privacy Policy outlines how we collect, use, disclose, and safeguard your data when you use our services or access our website <a href="https://www.dtctradingclub.com" target="_blank" rel="noopener noreferrer">www.dtctradingclub.com</a></p>
+          <p>By using our platform, purchasing our products, or engaging with our services, you agree to the terms of this Privacy Policy.</p>
+        </Section>
 
-        {sections.map((section, index) => (
-          <section key={index} style={{ marginBottom: '30px' }}>
-            <h2 style={{
-              color: '#2c3e50',
-              fontSize: '1.5rem',
-              marginBottom: '15px'
-            }}>{section.title}</h2>
-            <div style={{
-              color: '#34495e',
-              lineHeight: '1.6'
-            }}>{section.content}</div>
-          </section>
-        ))}
-      </main>
+        <Section title="2. Who We Are">
+          <p>Dream Trading Club is an educational platform offering digital tools and resources to help individuals learn about technical analysis, trading psychology, and market behavior.</p>
+          <p><strong>Note:</strong> We are not SEBI-registered and do not offer investment advice. Our offerings are for educational purposes only.</p>
+        </Section>
 
-      <Footer />
+        <Section title="3. Information We Collect">
+          <h6>a. Personal Identification Information</h6>
+          <ul>
+            <li>Full name</li>
+            <li>Email address</li>
+            <li>Phone number</li>
+            <li>Country or region</li>
+            <li>Payment details (processed via third-party gateway)</li>
+          </ul>
+          <h6>b. Transactional & Access Data</h6>
+          <ul>
+            <li>Product purchase history</li>
+            <li>Access logs for tools, videos, and PDFs</li>
+            <li>Communication via WhatsApp or email</li>
+          </ul>
+          <h6>c. Technical Data</h6>
+          <ul>
+            <li>IP address</li>
+            <li>Browser type and version</li>
+            <li>Device information</li>
+            <li>Cookies and usage tracking data</li>
+          </ul>
+        </Section>
+
+        <Section title="4. How We Use Your Information">
+          <ul>
+            <li>To deliver purchased products and services</li>
+            <li>To provide customer and WhatsApp support</li>
+            <li>To send transactional emails</li>
+            <li>To enhance platform security and user experience</li>
+            <li>To comply with legal obligations</li>
+          </ul>
+          <p><strong>We do not sell or rent your data to any third party.</strong></p>
+        </Section>
+
+        <Section title="5. Payment Processing">
+          <p>All transactions are securely processed through our payment partners. We do not store any credit/debit card details or sensitive payment info.</p>
+          <p>Payments are accepted only via:</p>
+          <ul>
+            <li>Our official website: <a href="https://www.dtctradingclub.com" target="_blank" rel="noopener noreferrer">www.dtctradingclub.com</a></li>
+            <li>Authorized Dream Trading Club representatives</li>
+          </ul>
+        </Section>
+
+        <Section title="6. Data Sharing & Disclosure">
+          <ul>
+            <li>With trusted third-party service providers for operational needs</li>
+            <li>To comply with legal obligations or court orders</li>
+            <li>To enforce our Terms & Conditions or protect our rights</li>
+          </ul>
+          <p><strong>We do not share your personal data with any marketing or advertising agencies.</strong></p>
+        </Section>
+
+        <Section title="7. User Rights & Responsibilities">
+          <h6>Rights:</h6>
+          <ul>
+            <li>Request access to your data</li>
+            <li>Request correction or deletion</li>
+            <li>Withdraw consent (where applicable)</li>
+          </ul>
+          <h6>Responsibilities:</h6>
+          <ul>
+            <li>Provide accurate and up-to-date information</li>
+            <li>Use our content for educational purposes only</li>
+            <li>Do not share, resell, or misuse our tools/materials</li>
+          </ul>
+        </Section>
+
+        <Section title="8. Data Storage & Retention">
+          <p>We retain user data as long as needed to:</p>
+          <ul>
+            <li>Fulfill policy purposes</li>
+            <li>Provide support/services</li>
+            <li>Comply with legal/tax obligations</li>
+          </ul>
+          <p>Data is securely deleted when no longer needed.</p>
+        </Section>
+
+        <Section title="9. Cookies & Tracking">
+          <p>We may use cookies to improve functionality and experience:</p>
+          <ul>
+            <li>Understand user interaction with the site</li>
+            <li>Store login/session preferences</li>
+          </ul>
+          <p>Users can manage cookies via browser settings.</p>
+        </Section>
+
+        <Section title="10. Children’s Privacy">
+          <p>Services are not intended for individuals under 18. No data is knowingly collected from minors. If discovered, such data is deleted immediately.</p>
+        </Section>
+
+        <Section title="11. Security Measures">
+          <ul>
+            <li>SSL encryption for transactions</li>
+            <li>Secure access controls</li>
+            <li>Internal compliance and confidentiality policies</li>
+          </ul>
+          <p><strong>Note:</strong> No online system is 100% secure. Users must also secure their own devices/accounts.</p>
+        </Section>
+
+        <Section title="12. Policy Changes & Updates">
+          <p>This policy may be updated. Users should check this page regularly for changes.</p>
+        </Section>
+
+        <Section title="13. Third-Party Links">
+          <p>We are not responsible for the privacy practices of external sites linked from our website. Please review their policies separately.</p>
+        </Section>
+
+        <Section title="14. Grievances & Contact Information">
+          <p>📧 Email: <a href="mailto:support@dtcclub.in">support@dtcclub.in</a><br />
+            📞 WhatsApp: <a href="https://wa.me/917859991926" target="_blank" rel="noopener noreferrer">+91 78599 91926</a><br />
+            🌐 Website: <a href="https://www.dtctradingclub.com" target="_blank" rel="noopener noreferrer">www.dtctradingclub.com</a></p>
+        </Section>
+      </div>
     </div>
+      <Footer />
+      </div> 
   );
 };
+
+const Section = ({ title, children }) => (
+  <div className="mb-4">
+    <h5 className="fw-bold border-bottom pb-2">{title}</h5>
+    {children}
+  </div>
+);
 
 export default PrivacyPolicy;

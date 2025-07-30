@@ -226,6 +226,7 @@ const Footer = () => {
         <hr className="container" />
 
         <div className="d-flex justify-content-left gap-4 mb-4">
+          <Link to="/terms-and-condition" onClick={() => handleNavigation('/terms-and-condition')} className="text-white text-decoration-none">Terms and Condition</Link>
           <Link to="/privacy-policy" onClick={() => handleNavigation('/privacy-policy')} className="text-white text-decoration-none">Privacy Policy</Link>
           <Link to="/contact-us" onClick={() => handleNavigation('/contact-us')} className="text-white text-decoration-none">Contact Us</Link>
         </div>

@@ -101,7 +101,7 @@ const AboutUsSection = () => {
       {/* Navigation Bar */}
       <nav className="about-nav">
         <div className="nav-container">
-          <a href="#company" className="nav-link">Company Intro</a>
+          <a href="#company" className="nav-link">Company Introduction</a>
           <a href="#offers" className="nav-link">What We Offer</a>
           <a href="#community" className="nav-link">Our Community</a>
           <a href="#mission" className="nav-link">Mission & Vision</a>
@@ -114,7 +114,7 @@ const AboutUsSection = () => {
       <Animated animation="fade-up" delay={40}>
         <section id="company" className="content-section alt-bg">
           <div className="section-container">
-            <h2 className="section-title">Company Intro</h2>
+            <h2 className="section-title">Company Introduction</h2>
             <div className="section-layout">
               <div className="section-text-content">
                 <p>{about_setting.description}</p>

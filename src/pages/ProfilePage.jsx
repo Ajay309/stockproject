@@ -68,7 +68,7 @@ const ProfilePage = () => {
 
     const  formattedNumber= phoneNumber.replace(/\D/g, '');
     const message = encodeURIComponent(
-      `Hello ${userProfile?.name}, thank you for your payment for the plan: ${paymentData?.plan_name}.`
+      `Hello ! I am ${userProfile?.name}, i have purchased your: ${paymentData?.plan_name}.`
     );
     window.open(`https://wa.me/${formattedNumber}?text=${message}`, '_blank');
   };

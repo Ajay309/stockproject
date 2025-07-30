@@ -9,7 +9,7 @@ import Animated from '../Animated.jsx';
 const BlogsSection = () => {
   const [blogs, setBlogs] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const blogsPerPage = 3;
+  const blogsPerPage = 6;
   const pageCount = Math.ceil(blogs.length / blogsPerPage);
 
   const navigate = useNavigate();
@@ -46,12 +46,12 @@ const BlogsSection = () => {
         {currentBlogs.map((blog, index) => (
           <div key={index} className="col-md-4 mb-4 d-flex">
             <Animated animation="fade-up" delay={200 + index * 100}>
-              <div className="card blog-card">
+               <div className="card blog-card">
                 <img src={blog.image} className="card-img-top" alt={blog.image} />
                 <div className="card-body">
                   <h5 className="card-title">{blog.name}</h5>
                   <p className="card-text text-muted small">{blog.created_at}</p>
-                  <p className="card-text">{blog.blog_key}</p>
+                  {/* <p className="card-text">{blog.blog_key}</p> */}
                   <button
                     className="btn btn-primary rounded-pill"
                     onClick={() => handleReadMore(blog)}

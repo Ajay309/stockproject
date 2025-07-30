@@ -45,32 +45,38 @@ const Timer = () => {
   }, [targetDate]);
 
   return (
-    <>
-  <style>{`
-    @media (max-width: 600px) {
-      .timer-section .d-flex {
-        flex-wrap: nowrap !important;
-        gap: 4px !important;
+  <>
+    <style>{`
+      @media (max-width: 600px) {
+        .timer-section .d-flex {
+          flex-wrap: nowrap !important;
+          gap: 4px !important;
+        }
+        .timer-box {
+          min-width: 20vw;
+          max-width: 24vw;
+          flex: 1 1 20vw;
+          margin-bottom: 0;
+          padding: 6px 0;
+          text-align: center;
+        }
+        .timer-value {
+          font-size: 1.1rem;
+        }
+        .timer-label {
+          font-size: 0.8rem;
+        }
       }
-      .timer-box {
-        min-width: 20vw;
-        max-width: 24vw;
-        flex: 1 1 20vw;
-        margin-bottom: 0;
-        padding: 6px 0;
-        text-align: center;
-      }
-      .timer-value {
-        font-size: 1.1rem;
-      }
-      .timer-label {
-        font-size: 0.8rem;
-      }
-    }
-      `}</style>
-      <div className="timer-section text-center py-4">
-        <h3 className="timer-heading">Limited Time Offer</h3>
-        <NotificationOnlyBar message="Hurry up! Offer ends soon!" className="text-warning" />
+    `}</style>
+
+    <div className="timer-section text-center py-4">
+      <h3 className="timer-heading">Limited Time Offer</h3>
+
+      {/* Notification bar should always be shown */}
+      <NotificationOnlyBar message="Hurry up! Offer ends soon!" className="text-warning" />
+
+      {/* Only show timer when time is active */}
+      {(targetDate && (timeLeft.days > 0 || timeLeft.hours > 0 || timeLeft.minutes > 0 || timeLeft.seconds > 0)) && (
         <div className="d-flex justify-content-center gap-4">
           {['days', 'hours', 'minutes', 'seconds'].map((label) => (
             <div className="timer-box" key={label}>
@@ -81,9 +87,11 @@ const Timer = () => {
             </div>
           ))}
         </div>
-      </div>
-    </>
-  );
-};
+      )}
+    </div>
+  </>
+);
+
+}
 
 export default Timer;

@@ -9,7 +9,6 @@ import AboutUS from '../pages/AboutUs';
 import Blogs from '../pages/Blogs';
 import GetStarted from '../pages/GetStarted';
 import BlogDetail from '../pages/BlogDetail';
-import PurchaseForm from '../pages/Purchase';
 import FeaturesSection from '../components/FeatureSection/FeatureSection';
 import ProfilePage from '../pages/ProfilePage';
 import Partners from '../pages/Partners';
@@ -17,6 +16,7 @@ import TermsCondition from '../pages/TermsCondition';
 import ForgotPassword from '../pages/ForgotPassword';
 import ResetPassword from '../pages/ResetPassword';
 import PrivacyPolicy from '../pages/PrivacyPolicy';
+import PurchasePage from '../components/PurchaseForm/PurchagePage';
 
 
 export default function AppRoutes() {
@@ -28,10 +28,10 @@ export default function AppRoutes() {
       <Route path="/contact-us" element={<ContactUs />} />
       <Route path="/about-us" element={<AboutUS />} />
       <Route path="/blogs" element={<Blogs />} />
-       <Route path="/blogs/:id" element={<BlogDetail />} />
+      <Route path="/blogs/:id" element={<BlogDetail />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/purchase" element={<PurchaseForm />} />
+<Route path="/purchase/:packageId/:planId" element={<PurchasePage />} />
       <Route path="/get-started" element={<GetStarted/>} />
       <Route path="/profile" element={<ProfilePage/>} />
       <Route path="/partners" element={<Partners />} />
@@ -41,7 +41,6 @@ export default function AppRoutes() {
       <Route path="/feedback" element={<Navigate to="/#review" replace />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password/:token" element={<ResetPassword />} />
-
     </Routes>
   );
 }

@@ -180,7 +180,7 @@ const Footer = () => {
               <h5 className="mb-3">Company</h5>
               <div className="d-flex flex-column gap-2">
                 <Link to="/about-us" onClick={() => handleNavigation('/about-us')} className="text-white text-decoration-none">About Us</Link>
-                <Link to="/partners" onClick={() => handleNavigation('/partners')} className="text-white text-decoration-none">Partners</Link>
+                {/* <Link to="/partners" onClick={() => handleNavigation('/partners')} className="text-white text-decoration-none">Partners</Link> */}
                 <Link to="/about-us" onClick={handleCommunityNavigation} className="text-white text-decoration-none">Community</Link>
                 <Link to="/about-us" onClick={handleWhyChooseUsNavigation} className="text-white text-decoration-none">Why Choose Us</Link>
               </div>

@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
-
-import { useNavigate , useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-const redirectTo = location.state?.from || '/';
+  const redirectTo = location.state?.from || '/';
 
   const { login } = useAuth();
 
@@ -26,7 +28,6 @@ const redirectTo = location.state?.from || '/';
         callback: async (response) => {
           if (response.credential) {
             try {
-              // 🔥 Send Google JWT to Laravel API
               const apiResponse = await axios.post('https://admin.dtctradingclub.com/api/v1/auth/google', {
                 access_token: response.credential,
               });
@@ -49,7 +50,7 @@ const redirectTo = location.state?.from || '/';
               login(userProfile);
               localStorage.setItem('userProfile', JSON.stringify(userProfile));
               localStorage.setItem('auth_token', token);
-navigate(redirectTo);
+              navigate(redirectTo);
             } catch (err) {
               console.error('Google login failed:', err);
               alert('Google login failed. Please try again.');
@@ -74,6 +75,7 @@ navigate(redirectTo);
     e.preventDefault();
     setLoading(true);
     setMessage('');
+    setEmailError('');
 
     try {
       const res = await axios.post('https://admin.dtctradingclub.com/api/v1/login', {
@@ -82,7 +84,7 @@ navigate(redirectTo);
       });
 
       const userProfile = {
-        id : res.data.user.id,
+        id: res.data.user.id,
         email: res.data.user.email,
         name: res.data.user.name || res.data.user.email.split('@')[0],
         isLoggedIn: true,
@@ -96,10 +98,16 @@ navigate(redirectTo);
       login(userProfile);
       localStorage.setItem('userProfile', JSON.stringify(userProfile));
       localStorage.setItem('auth_token', res.data.token);
-navigate(redirectTo);
+      navigate(redirectTo);
     } catch (err) {
-      setMessage(err.response?.data?.message || 'Login failed. Please check your credentials.');
+      const errorMsg = err.response?.data?.message || 'Login failed. Please check your credentials.';
+      if (errorMsg.toLowerCase().includes('email')) {
+        setEmailError(errorMsg);
+      } else {
+        setMessage(errorMsg);
+      }
     }
+
     setLoading(false);
   };
 
@@ -114,68 +122,30 @@ navigate(redirectTo);
         backgroundColor: '#fff',
         width: '100%',
         padding: '20px',
-        boxSizing: 'border-box',
         paddingTop: '110px',
+        boxSizing: 'border-box',
       }}
     >
-      <div
-        style={{
-          fontSize: '2rem',
-          fontWeight: 700,
-          marginBottom: '8px',
-          color: '#222',
-          textAlign: 'center',
-          letterSpacing: '-1px',
-        }}
-      >
+      <div style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '8px', color: '#222', textAlign: 'center' }}>
         Welcome Back
       </div>
-      <div
-        style={{
-          color: '#666',
-          fontSize: '1.1rem',
-          marginBottom: '24px',
-          textAlign: 'center',
-        }}
-      >
+      <div style={{ color: '#666', fontSize: '1.1rem', marginBottom: '24px', textAlign: 'center' }}>
         Please login to your account
       </div>
 
       <div id="google-signin-button" style={{ marginBottom: '32px' }}></div>
 
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          width: '100%',
-          maxWidth: '420px',
-          margin: '24px 0',
-        }}
-      >
+      <div style={{ display: 'flex', alignItems: 'center', width: '100%', maxWidth: '420px', margin: '24px 0' }}>
         <div style={{ flex: 1, height: '1.5px', background: '#eee' }}></div>
-        <span
-          style={{
-            margin: '0 18px',
-            color: '#888',
-            fontWeight: '600',
-            fontSize: '1.1rem',
-          }}
-        >
-          or
-        </span>
+        <span style={{ margin: '0 18px', color: '#888', fontWeight: '600', fontSize: '1.1rem' }}>or</span>
         <div style={{ flex: 1, height: '1.5px', background: '#eee' }}></div>
       </div>
 
       <form
         onSubmit={handleLogin}
-        style={{
-          width: '100%',
-          maxWidth: '420px',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'stretch',
-        }}
+        style={{ width: '100%', maxWidth: '420px', display: 'flex', flexDirection: 'column' }}
       >
+        {/* Email Field */}
         <div style={{ marginBottom: '20px' }}>
           <label
             style={{
@@ -191,12 +161,15 @@ navigate(redirectTo);
           <input
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setEmailError('');
+            }}
             placeholder="Enter your email"
             style={{
               width: '100%',
               padding: '12px 14px',
-              border: '1.5px solid #ddd',
+              border: `1.5px solid ${emailError ? '#dc2626' : '#ddd'}`,
               borderRadius: '7px',
               fontSize: '1rem',
               outline: 'none',
@@ -204,12 +177,18 @@ navigate(redirectTo);
               boxSizing: 'border-box',
             }}
             onFocus={(e) => (e.target.style.border = '1.5px solid #f6b40e')}
-            onBlur={(e) => (e.target.style.border = '1.5px solid #ddd')}
+            onBlur={(e) => (e.target.style.border = emailError ? '1.5px solid #dc2626' : '1.5px solid #ddd')}
             required
           />
+          {emailError && (
+            <div style={{ marginTop: '6px', color: '#dc2626', fontSize: '0.85rem' }}>
+              {emailError}
+            </div>
+          )}
         </div>
 
-        <div style={{ marginBottom: '20px' }}>
+        {/* Password Field */}
+        <div style={{ marginBottom: '20px', position: 'relative' }}>
           <label
             style={{
               display: 'block',
@@ -222,13 +201,13 @@ navigate(redirectTo);
             Password
           </label>
           <input
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter your password"
             style={{
               width: '100%',
-              padding: '12px 14px',
+              padding: '12px 40px 12px 14px',
               border: '1.5px solid #ddd',
               borderRadius: '7px',
               fontSize: '1rem',
@@ -240,6 +219,20 @@ navigate(redirectTo);
             onBlur={(e) => (e.target.style.border = '1.5px solid #ddd')}
             required
           />
+          <span
+            onClick={() => setShowPassword(!showPassword)}
+            style={{
+              position: 'absolute',
+              right: '14px',
+              top: '38px',
+              cursor: 'pointer',
+              color: '#888',
+              fontSize: '1.2rem',
+            }}
+            title={showPassword ? 'Hide password' : 'Show password'}
+          >
+            {showPassword ? <FaEye /> : <FaEyeSlash />}
+          </span>
         </div>
 
         <button
@@ -292,16 +285,7 @@ navigate(redirectTo);
         </p>
       )}
 
-      <div
-        style={{
-          marginTop: '24px',
-          textAlign: 'center',
-          color: '#666',
-          fontSize: '0.9rem',
-          maxWidth: '420px',
-          width: '100%',
-        }}
-      >
+      <div style={{ marginTop: '24px', textAlign: 'center', color: '#666', fontSize: '0.9rem', maxWidth: '420px' }}>
         Don't have an account?{' '}
         <span
           style={{
@@ -319,14 +303,7 @@ navigate(redirectTo);
         </span>
       </div>
 
-      <div
-        style={{
-          marginTop: '16px',
-          textAlign: 'center',
-          maxWidth: '420px',
-          width: '100%',
-        }}
-      >
+      <div style={{ marginTop: '16px', textAlign: 'center', maxWidth: '420px' }}>
         <span
           style={{
             fontSize: '0.9rem',

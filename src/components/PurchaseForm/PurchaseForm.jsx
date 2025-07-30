@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
 import './PurchaseForm.css';
 import Animated from '../Animated.jsx';
 
-const PurchaseForm = ({ plan, onClose }) => {
+const PurchaseForm = () => {
+  const { packageId, planId } = useParams();
   const { userProfile } = useAuth();
+  const [plan, setPlan] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [phone, setPhone] = useState('');
   const [countryCode, setCountryCode] = useState('+91');
   const [countryCodes, setCountryCodes] = useState([]);
@@ -14,11 +18,35 @@ const PurchaseForm = ({ plan, onClose }) => {
   const [couponData, setCouponData] = useState(null);
   const [isCouponValid, setIsCouponValid] = useState(null);
   const [loadingCoupon, setLoadingCoupon] = useState(false);
-
-  const currencySymbol = plan.currency === 'USD' ? '$' : '₹';
   const navigate = useNavigate();
   const userId = localStorage.getItem('id');
 
+  // Fetch plan data
+  useEffect(() => {
+    const fetchPlan = async () => {
+      try {
+        const res = await fetch(`https://admin.dtctradingclub.com/api/v1/packages/${packageId}/plans`);
+        const result = await res.json();
+        const found = result.data.find((p) => String(p.id) === String(planId));
+        if (found) {
+          setPlan(found);
+        } else {
+          alert('❌ Plan not found');
+          navigate('/');
+        }
+      } catch (error) {
+        console.error('Error loading plan:', error);
+        alert('❌ Failed to fetch plan.');
+        navigate('/');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPlan();
+  }, [packageId, planId, navigate]);
+
+  // Fetch country codes
   useEffect(() => {
     const fetchCountryCodes = async () => {
       try {
@@ -85,24 +113,32 @@ const PurchaseForm = ({ plan, onClose }) => {
   const calculateDiscountedPrice = () => {
     if (!couponData) return plan.discount_price;
     if (couponData.discount_type === 'fixed') {
-      return Math.max(0, plan.price - parseFloat(couponData.fixed_amount || 0));
+      return Math.max(0, plan.discount_price - parseFloat(couponData.fixed_amount || 0));
     }
     if (couponData.discount_type === 'percentage') {
-      return Math.max(0, plan.price - (plan.price * parseFloat(couponData.discount || 0)) / 100);
+      return Math.max(0, plan.discount_price - (plan.discount_price * parseFloat(couponData.discount || 0)) / 100);
     }
-    return plan.price;
+    return plan.discount_price;
   };
 
-  const handlePayment = async () => {
+  const handleRazorpayPayment = async () => {
     if (!userProfile) {
-      alert('❗ Please login to purchase a plan.');
-      navigate('/login', { state: { from: '/plans' } }); // pass route
+  alert('❗ Please login to purchase a plan.');
+  navigate('/login', {
+    state: { from: `/purchase/${packageId}/${planId}` },
+  });
+  return;
+}
+    if (!email || !phone) {
+      setEmailError(!email ? '❗ Email is required.' : '');
       return;
     }
 
-    if (!email || !phone) {
-      alert('❗ Email and phone are required.');
+    if (email.trim().toLowerCase() !== userProfile.email.toLowerCase()) {
+      setEmailError('❗ Please use the email you signed up with.');
       return;
+    } else {
+      setEmailError('');
     }
 
     const discountedAmount = calculateDiscountedPrice();
@@ -161,7 +197,6 @@ const PurchaseForm = ({ plan, onClose }) => {
                 }),
               });
 
-              alert('✅ Payment Verified and Successful!');
               navigate('/profile', {
                 state: {
                   userId: userId,
@@ -176,10 +211,8 @@ const PurchaseForm = ({ plan, onClose }) => {
               });
             } else {
               alert('❌ Invalid payment signature.');
-              console.error('❌ Verification failed:', verifyData.message);
             }
           } catch (err) {
-            console.error('❌ Payment verification failed:', err);
             alert('❌ Payment verification failed.');
           }
         },
@@ -196,10 +229,22 @@ const PurchaseForm = ({ plan, onClose }) => {
       const rzp = new window.Razorpay(options);
       rzp.open();
     } catch (error) {
-      console.error('Payment error:', error);
       alert('❌ Payment failed. Please try again.');
     }
   };
+
+  const handleCosmofeedPayment = () => {
+    if (plan.cosmofeed_link) {
+      window.open(plan.cosmofeed_link, '_blank');
+    } else {
+      alert('❗ Cosmofeed link not available.');
+    }
+  };
+
+  if (loading) return <div className="text-center mt-5">Loading...</div>;
+  if (!plan) return null;
+
+  const currencySymbol = plan.currency === 'USD' ? '$' : '₹';
 
   return (
     <Animated animation="fade-up" delay={40}>
@@ -214,12 +259,16 @@ const PurchaseForm = ({ plan, onClose }) => {
                   <label>Email:</label>
                   <input
                     type="email"
-                    className="form-control"
+                    className={`form-control ${emailError ? 'is-invalid' : ''}`}
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setEmailError('');
+                    }}
                     placeholder="Enter your email"
                     required
                   />
+                  {emailError && <div className="invalid-feedback">{emailError}</div>}
                 </div>
 
                 <div className="mb-3">
@@ -273,7 +322,7 @@ const PurchaseForm = ({ plan, onClose }) => {
                     <small className="text-success">
                       ✅ Coupon applied!{' '}
                       {couponData?.discount_type === 'fixed'
-                        ? `₹${couponData.fixed_amount} off`
+                        ? `${currencySymbol}${couponData.fixed_amount} off`
                         : `${couponData.discount}% off`}
                     </small>
                   )}
@@ -292,11 +341,20 @@ const PurchaseForm = ({ plan, onClose }) => {
                 </div>
 
                 <div className="d-flex gap-2">
-                  <button className="login bg-warning border-0" onClick={handlePayment}>
-                    Proceed to Pay {currencySymbol}
+                  <button
+                    className="login bg-warning border-0"
+                    onClick={() => {
+                      if (plan.cosmofeed_link) {
+                        handleCosmofeedPayment();
+                      } else {
+                        handleRazorpayPayment();
+                      }
+                    }}
+                  >
+                    Pay {currencySymbol}
                     {calculateDiscountedPrice()}
                   </button>
-                  <button className="login bg-warning border-0" onClick={onClose}>
+                  <button className="login bg-warning border-0" onClick={() => navigate(-1)}>
                     Cancel
                   </button>
                 </div>

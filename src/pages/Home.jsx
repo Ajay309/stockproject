@@ -18,12 +18,11 @@ export default function Home() {
       </div>
       <div className="with-navbar-padding">
         <FeaturesSection />
-      </div>
+      </div> 
       <div className="">
         <VideoSection/>
       </div>
-      
-
+  
       <div>
         <Process />
       </div>

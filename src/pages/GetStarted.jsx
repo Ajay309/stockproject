@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import { FaEye , FaEyeSlash  } from "react-icons/fa";
+
 import './GetStarted.css';
 
 const GetStarted = () => {
@@ -15,6 +17,7 @@ const GetStarted = () => {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [googleReady, setGoogleReady] = useState(false);
+const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -216,15 +219,33 @@ const GetStarted = () => {
             required
           />
         ) : (
-          <input
-            type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            placeholder="Create a strong password"
-            className="form-input"
-            required
-            minLength="6"
-          />
+          <div style={{ position: 'relative' }}>
+  <input
+    type={showPassword ? 'text' : 'password'}
+    value={password}
+    onChange={e => setPassword(e.target.value)}
+    placeholder="Create a strong password"
+    className="form-input"
+    required
+    minLength="6"
+  />
+  <span
+    onClick={() => setShowPassword(!showPassword)}
+    style={{
+      position: 'absolute',
+      right: '14px',
+      top: '37%',
+      transform: 'translateY(-50%)',
+      cursor: 'pointer',
+      color: '#777',
+      fontSize: '1.2rem'
+    }}
+    title={showPassword ? 'Hide password' : 'Show password'}
+  >
+           {showPassword ? <FaEye /> : <FaEyeSlash />}
+  </span>
+</div>
+
         )}
 
         <button

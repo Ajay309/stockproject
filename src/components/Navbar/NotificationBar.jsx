@@ -42,7 +42,7 @@ export default function NotificationBar() {
     } else {
       document.body.classList.remove('has-notification-bar');
     }
-  }, [notification, timerLoading, timerError]);
+  }, [notification, timerLoading, timerError]); 
 
   useEffect(() => {
     let timerId;

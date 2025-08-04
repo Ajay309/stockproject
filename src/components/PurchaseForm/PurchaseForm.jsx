@@ -180,7 +180,11 @@ const PurchaseForm = () => {
               razorpay_signature: response.razorpay_signature,
             }),
           });
-
+if (!res.ok) {
+  const errorText = await res.text();
+  console.error('Server error:', errorText); // 👈 log full server error
+  throw new Error('Failed to create order');
+}
           const verifyData = await verifyRes.json();
 
           if (verifyData.success) {

@@ -47,7 +47,7 @@ const PlansCard = ({ plan, isHomePage = false }) => {
                     </div>
                     <div className="button d-flex justify-content-center mt-3">
                         <button className='btn btn-primary w-100 mx-3' onClick={handleGetStarted}>
-                            Get Started
+                            Buy Now
                         </button>
                     </div>
                 </div>

@@ -154,6 +154,8 @@ const PurchaseForm = () => {
           email,
           phone: `${countryCode}${phone}`,
           coupon: couponData?.code || 'NO_COUPON',
+            currency: plan.currency || 'INR', // Add currency here
+
         }),
       });
 

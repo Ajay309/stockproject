@@ -121,119 +121,119 @@ const PurchaseForm = () => {
     return plan.discount_price;
   };
 
-  const handleRazorpayPayment = async () => {
-    if (!userProfile) {
-  alert('❗ Please login to purchase a plan.');
-  navigate('/login', {
-    state: { from: `/purchase/${packageId}/${planId}` },
-  });
-  return;
-}
-    if (!email || !phone) {
-      setEmailError(!email ? '❗ Email is required.' : '');
-      return;
-    }
+ const handleRazorpayPayment = async () => {
+  if (!userProfile) {
+    alert('❗ Please login to purchase a plan.');
+    navigate('/login', {
+      state: { from: `/purchase/${packageId}/${planId}` },
+    });
+    return;
+  }
 
-    if (email.trim().toLowerCase() !== userProfile.email.toLowerCase()) {
-      setEmailError('❗ Please use the email you signed up with.');
-      return;
-    } else {
-      setEmailError('');
-    }
+  if (!email || !phone) {
+    setEmailError(!email ? '❗ Email is required.' : '');
+    return;
+  }
 
-    const discountedAmount = calculateDiscountedPrice();
+  if (email.trim().toLowerCase() !== userProfile.email.toLowerCase()) {
+    setEmailError('❗ Please use the email you signed up with.');
+    return;
+  } else {
+    setEmailError('');
+  }
 
-    try {
-      const res = await fetch('https://admin.dtctradingclub.com/api/v1/create-order', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          user: userId,
-          plan: plan.name,
-          amount: discountedAmount,
-          email,
-          phone: `${countryCode}${phone}`,
-          coupon: couponData?.code || 'NO_COUPON',
-            currency: plan.currency || 'INR', // Add currency here
+  const discountedAmount = calculateDiscountedPrice();
 
-        }),
-      });
+  try {
+    const res = await fetch('https://admin.dtctradingclub.com/api/v1/create-order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        user: userId,
+        plan: plan.name,
+        amount: discountedAmount,
+        email,
+        phone: `${countryCode}${phone}`,
+        coupon: couponData?.code || 'NO_COUPON',
+        currency: plan.currency || 'INR', // ✅ Send currency to backend
+      }),
+    });
 
-      const responseText = await res.text();
-      const data = JSON.parse(responseText);
+    const responseText = await res.text();
+    const data = JSON.parse(responseText);
 
-      const options = {
-        key: data.key,
-        amount: data.amount,
-        currency: data.currency,
-        name: 'DTC TRADING CLUB',
-        description: plan.name,
-        order_id: data.order_id,
-        handler: async function (response) {
-          try {
-            const verifyRes = await fetch('https://admin.dtctradingclub.com/api/v1/verify-payment', {
+    const options = {
+      key: data.key,
+      amount: data.amount,
+      currency: data.currency,
+      name: 'DTC TRADING CLUB',
+      description: plan.name,
+      order_id: data.order_id,
+      handler: async function (response) {
+        try {
+          const verifyRes = await fetch('https://admin.dtctradingclub.com/api/v1/verify-payment', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            }),
+          });
+
+          const verifyData = await verifyRes.json();
+
+          if (verifyData.success) {
+            await fetch('https://admin.dtctradingclub.com/api/v1/verify-payment', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
-                razorpay_order_id: response.razorpay_order_id,
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature,
+                order_id: response.razorpay_order_id,
+                payment_id: response.razorpay_payment_id,
+                user_id: userId,
+                email,
+                phone: `${countryCode}${phone}`,
+                plan: plan.name,
+                amount: discountedAmount,
+                coupon: couponData?.code || '',
               }),
             });
 
-            const verifyData = await verifyRes.json();
-
-            if (verifyData.success) {
-              await fetch('https://admin.dtctradingclub.com/api/v1/verify-payment', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  order_id: response.razorpay_order_id,
-                  payment_id: response.razorpay_payment_id,
-                  user_id: userId,
-                  email,
-                  phone: `${countryCode}${phone}`,
+            navigate('/profile', {
+              state: {
+                userId: userId,
+                payment: {
                   plan: plan.name,
                   amount: discountedAmount,
+                  email,
+                  phone: `${countryCode}${phone}`,
                   coupon: couponData?.code || '',
-                }),
-              });
-
-              navigate('/profile', {
-                state: {
-                  userId: userId,
-                  payment: {
-                    plan: plan.name,
-                    amount: discountedAmount,
-                    email,
-                    phone: `${countryCode}${phone}`,
-                    coupon: couponData?.code || '',
-                  },
                 },
-              });
-            } else {
-              alert('❌ Invalid payment signature.');
-            }
-          } catch (err) {
-            alert('❌ Payment verification failed.');
+              },
+            });
+          } else {
+            alert('❌ Invalid payment signature.');
           }
-        },
-        prefill: {
-          name: userProfile?.name || '',
-          email,
-          contact: `${countryCode}${phone}`,
-        },
-        theme: {
-          color: '#3399cc',
-        },
-      };
+        } catch (err) {
+          alert('❌ Payment verification failed.');
+        }
+      },
+      prefill: {
+        name: userProfile?.name || '',
+        email,
+        contact: `${countryCode}${phone}`,
+      },
+      theme: {
+        color: '#3399cc',
+      },
+    };
 
-      const rzp = new window.Razorpay(options);
-      rzp.open();
-    } catch (error) {
-      alert('❌ Payment failed. Please try again.');
-    }
-  };
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  } catch (error) {
+    alert('❌ Payment failed. Please try again.');
+  }
+};
 
   const handleCosmofeedPayment = () => {
     if (plan.cosmofeed_link) {

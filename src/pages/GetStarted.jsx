@@ -17,7 +17,7 @@ const GetStarted = () => {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [googleReady, setGoogleReady] = useState(false);
-const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     const script = document.createElement('script');

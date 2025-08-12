@@ -17,6 +17,7 @@ import ForgotPassword from '../pages/ForgotPassword';
 import ResetPassword from '../pages/ResetPassword';
 import PrivacyPolicy from '../pages/PrivacyPolicy';
 import PurchasePage from '../components/PurchaseForm/PurchagePage';
+import PlansSection from '../components/Plans/PlansSection';
 
 
 export default function AppRoutes() {
@@ -31,7 +32,7 @@ export default function AppRoutes() {
       <Route path="/blogs/:id" element={<BlogDetail />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/login" element={<Login />} />
-<Route path="/purchase/:packageId/:planId" element={<PurchasePage />} />
+      <Route path="/purchase/:packageId/:planId" element={<PurchasePage />} />
       <Route path="/get-started" element={<GetStarted/>} />
       <Route path="/profile" element={<ProfilePage/>} />
       <Route path="/partners" element={<Partners />} />
@@ -41,6 +42,8 @@ export default function AppRoutes() {
       <Route path="/feedback" element={<Navigate to="/#review" replace />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password/:token" element={<ResetPassword />} />
+      <Route path="/plans/:packageId" element={<PlansSection/>} />
+
     </Routes>
   );
 }

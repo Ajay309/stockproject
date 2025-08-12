@@ -39,7 +39,7 @@ const ProfilePage = () => {
         const response = await axios.get(`https://admin.dtctradingclub.com/api/v1/user-payments/${userProfile.id}`);
         console.log('Payment API response:', response.data);
 
-        // Handle different response shapes
+        // Handle different response shapesv
         const paymentArray = response.data?.data || response.data;
         if (Array.isArray(paymentArray) && paymentArray.length > 0) {
           setPaymentData(paymentArray[0]);
@@ -64,7 +64,7 @@ const ProfilePage = () => {
     if (!phoneNumber) {
       alert('Admin WhatsApp number not available.');
       return;
-    }
+    } 
 
     const  formattedNumber= phoneNumber.replace(/\D/g, '');
     const message = encodeURIComponent(

@@ -6,8 +6,13 @@ import './PlansSection.css'; // Import your CSS file
 import { useLocation } from 'react-router-dom';
 import Timer from './Timer';
 import Animated from '../Animated';
+  import { useParams , useNavigate } from 'react-router-dom';
+
+
+
 
 const PlansSection = () => {
+  const { packageId } = useParams(); // get from URL
   const [packages, setPackages] = useState([]);
   const [selectedPackage, setSelectedPackage] = useState(null);
   const [plans, setPlans] = useState([]);
@@ -15,16 +20,24 @@ const PlansSection = () => {
   const [error, setError] = useState(null);
   const location = useLocation();
   const isHomePage = location.pathname === '/';
+  const navigate = useNavigate();
 
-  // Fetch packages on mount
   useEffect(() => {
     const fetchPackages = async () => {
       setLoading(true);
       try {
         const data = await getPackages();
         setPackages(data);
-        if (data.length > 0) {
-          setSelectedPackage(data[0]); // Select first package by default
+
+        if (packageId) {
+          const found = data.find(pkg => pkg.id.toString() === packageId);
+          if (found) {
+            setSelectedPackage(found);
+          } else {
+            setSelectedPackage(data[0]); // fallback
+          }
+        } else {
+          setSelectedPackage(data[0]); // default
         }
       } catch (err) {
         setError('Failed to load packages');
@@ -33,7 +46,7 @@ const PlansSection = () => {
       }
     };
     fetchPackages();
-  }, []);
+  }, [packageId]);
 
   // Fetch plans when selectedPackage changes
   useEffect(() => {
@@ -73,13 +86,16 @@ const PlansSection = () => {
       {/* Package Tabs */}
       <div className="d-flex justify-content-center flex-wrap mb-4">
         {packages.map((pkg) => (
-          <button
-            key={pkg.id}
-            className={`plan-tabs-btn${selectedPackage?.id === pkg.id ? ' selected' : ''}`}
-            onClick={() => setSelectedPackage(pkg)}
-          >
-            {pkg.name}
-          </button>
+         <button
+  key={pkg.id}
+  className={`plan-tabs-btn${selectedPackage?.id === pkg.id ? ' selected' : ''}`}
+  onClick={() => {
+    setSelectedPackage(pkg);
+    navigate(`/plans/${pkg.id}`);
+  }}
+>
+  {pkg.name}
+</button>
         ))}
       </div>
 
@@ -102,5 +118,6 @@ const PlansSection = () => {
     </div>
   );
 };
+
 
 export default PlansSection;

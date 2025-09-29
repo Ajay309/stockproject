@@ -18,6 +18,9 @@ import ResetPassword from '../pages/ResetPassword';
 import PrivacyPolicy from '../pages/PrivacyPolicy';
 import PurchasePage from '../components/PurchaseForm/PurchagePage';
 import PlansSection from '../components/Plans/PlansSection';
+import NotFound from '../components/NotFound/NotFound';
+
+
 
 
 export default function AppRoutes() {
@@ -43,6 +46,8 @@ export default function AppRoutes() {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password/:token" element={<ResetPassword />} />
       <Route path="/plans/:packageId" element={<PlansSection/>} />
+      <Route path="*" element={<NotFound/>} />
+
 
     </Routes>
   );

@@ -1,375 +1,307 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
-import './PurchaseForm.css';
-import Animated from '../Animated.jsx';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import "./PurchaseForm.css";
+import Animated from "../Animated.jsx";
+import { Modal, Button } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const PurchaseForm = () => {
   const { packageId, planId } = useParams();
   const { userProfile } = useAuth();
   const [plan, setPlan] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [phone, setPhone] = useState('');
-  const [countryCode, setCountryCode] = useState('+91');
-  const [countryCodes, setCountryCodes] = useState([]);
-  const [coupon, setCoupon] = useState('');
-  const [couponData, setCouponData] = useState(null);
-  const [isCouponValid, setIsCouponValid] = useState(null);
-  const [loadingCoupon, setLoadingCoupon] = useState(false);
+  const [wallets, setWallets] = useState([]);
+  const [showCryptoModal, setShowCryptoModal] = useState(false);
+  const [selectedWallet, setSelectedWallet] = useState(null);
+  const [copied, setCopied] = useState(false);
   const navigate = useNavigate();
-  const userId = localStorage.getItem('id');
 
-  // Fetch plan data
+  // ✅ Fetch Plan
   useEffect(() => {
     const fetchPlan = async () => {
       try {
-        const res = await fetch(`https://admin.dtctradingclub.com/api/v1/packages/${packageId}/plans`);
+        const res = await fetch(
+          `https://admin.dtctradingclub.com/api/v1/packages/${packageId}/plans`
+        );
         const result = await res.json();
-        const found = result.data.find((p) => String(p.id) === String(planId));
-        if (found) {
-          setPlan(found);
-        } else {
-          alert('❌ Plan not found');
-          navigate('/');
+        const found = result.data.find(
+          (p) => String(p.id) === String(planId)
+        );
+        if (found) setPlan(found);
+        else {
+          alert("❌ Plan not found");
+          navigate("/");
         }
-      } catch (error) {
-        console.error('Error loading plan:', error);
-        alert('❌ Failed to fetch plan.');
-        navigate('/');
+      } catch (err) {
+        console.error("Error fetching plan:", err);
+        alert("Failed to load plan.");
+        navigate("/");
       } finally {
         setLoading(false);
       }
     };
-
     fetchPlan();
   }, [packageId, planId, navigate]);
 
-  // Fetch country codes
+  // ✅ Fetch Crypto Wallets
   useEffect(() => {
-    const fetchCountryCodes = async () => {
+    const fetchWallets = async () => {
       try {
-        const res = await fetch('https://restcountries.com/v3.1/all?fields=name,idd');
-        const data = await res.json();
-        const codes = data
-          .map((country) => {
-            const root = country.idd?.root;
-            const suffix = country.idd?.suffixes?.[0];
-            if (root && suffix) {
-              return {
-                name: country.name.common,
-                code: root + suffix,
-              };
-            }
-            return null;
-          })
-          .filter((item) => item !== null)
-          .sort((a, b) => a.name.localeCompare(b.name));
-        setCountryCodes(codes);
-      } catch (err) {
-        console.error('Error fetching country codes:', err);
+        const res = await fetch("https://admin.dtctradingclub.com/api/v1/qr-code");
+        const result = await res.json();
+        if (result.status === "success") {
+          setWallets(result.data);
+        }
+      } catch (error) {
+        console.error("Error loading wallets:", error);
       }
     };
-    fetchCountryCodes();
+    fetchWallets();
   }, []);
 
-  const validateCoupon = async () => {
-    if (!coupon.trim()) {
-      setCouponData(null);
-      setIsCouponValid(null);
-      return;
-    }
-
-    setLoadingCoupon(true);
-    try {
-      const res = await fetch('https://admin.dtctradingclub.com/api/v1/coupon');
-      const result = await res.json();
-
-      const found = result.data.find(
-        (c) =>
-          c.code.toLowerCase() === coupon.trim().toLowerCase() &&
-          c.is_active === 1 &&
-          new Date(c.expire_at) > new Date() &&
-          (c.plan_id === plan.id || c.package_id === plan.package_id)
-      );
-
-      if (found) {
-        setCouponData(found);
-        setIsCouponValid(true);
-      } else {
-        setCouponData(null);
-        setIsCouponValid(false);
-      }
-    } catch (err) {
-      console.error('Coupon validation error:', err);
-      setIsCouponValid(false);
-      setCouponData(null);
-    } finally {
-      setLoadingCoupon(false);
-    }
-  };
-
-  const calculateDiscountedPrice = () => {
-    if (!couponData) return plan.discount_price;
-    if (couponData.discount_type === 'fixed') {
-      return Math.max(0, plan.discount_price - parseFloat(couponData.fixed_amount || 0));
-    }
-    if (couponData.discount_type === 'percentage') {
-      return Math.max(0, plan.discount_price - (plan.discount_price * parseFloat(couponData.discount || 0)) / 100);
-    }
-    return plan.discount_price;
-  };
-
- const handleRazorpayPayment = async () => {
-  if (!userProfile) {
-    alert('❗ Please login to purchase a plan.');
-    navigate('/login', {
-      state: { from: `/purchase/${packageId}/${planId}` },
-    });
-    return;
-  }
-
-  if (!email || !phone) {
-    setEmailError(!email ? '❗ Email is required.' : '');
-    return;
-  }
-
-  if (email.trim().toLowerCase() !== userProfile.email.toLowerCase()) {
-    setEmailError('❗ Please use the email you signed up with.');
-    return;
-  } else {
-    setEmailError('');
-  }
-
-  const discountedAmount = calculateDiscountedPrice();
-
-  try {
-    const res = await fetch('https://admin.dtctradingclub.com/api/v1/create-order', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        user: userId,
-        plan: plan.name,
-        amount: discountedAmount,
-        email,
-        phone: `${countryCode}${phone}`,
-        coupon: couponData?.code || 'NO_COUPON',
-        currency: plan.currency || 'INR', // 🔁 send currency (INR or USD)
-
-      }),
-    });
-
-    const responseText = await res.text();
-    const data = JSON.parse(responseText);
-
-    const options = {
-      key: data.key,
-      amount: data.amount,
-      currency: data.currency,
-      name: 'DTC TRADING CLUB',
-      description: plan.name,
-      order_id: data.order_id,
-      handler: async function (response) {
-        try {
-          const verifyRes = await fetch('https://admin.dtctradingclub.com/api/v1/verify-payment', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature,
-            }),
-          });
-if (!res.ok) {
-  const errorText = await res.text();
-  console.error('Server error:', errorText); // 👈 log full server error
-  throw new Error('Failed to create order');
-}
-          const verifyData = await verifyRes.json();
-
-          if (verifyData.success) {
-            await fetch('https://admin.dtctradingclub.com/api/v1/verify-payment', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                order_id: response.razorpay_order_id,
-                payment_id: response.razorpay_payment_id,
-                user_id: userId,
-                email,
-                phone: `${countryCode}${phone}`,
-                plan: plan.name,
-                amount: discountedAmount,
-                coupon: couponData?.code || '',
-              }),
-            });
-
-            navigate('/profile', {
-              state: {
-                userId: userId,
-                payment: {
-                  plan: plan.name,
-                  amount: discountedAmount,
-                  email,
-                  phone: `${countryCode}${phone}`,
-                  coupon: couponData?.code || '',
-                },
-              },
-            });
-          } else {
-            alert('❌ Invalid payment signature.');
-          }
-        } catch (err) {
-          alert('❌ Payment verification failed.');
-        }
-      },
-      prefill: {
-        name: userProfile?.name || '',
-        email,
-        contact: `${countryCode}${phone}`,
-      },
-      theme: {
-        color: '#3399cc',
-      },
-    };
-
-    const rzp = new window.Razorpay(options);
-    rzp.open();
-  } catch (error) {
-    alert('❌ Payment failed. Please try again.');
-  }
-};
-
+  // ✅ Handle Card Payment (Cosmofeed)
   const handleCosmofeedPayment = () => {
-    if (plan.cosmofeed_link) {
-      window.open(plan.cosmofeed_link, '_blank');
+    if (plan?.cosmofeed_link) {
+      window.open(plan.cosmofeed_link, "_blank");
     } else {
-      alert('❗ Cosmofeed link not available.');
+      alert("❗ Cosmofeed link not available.");
     }
   };
 
-  if (loading) return <div className="text-center mt-5">Loading...</div>;
+  // ✅ Handle Crypto Payment Modal
+  const openCryptoModal = (type) => {
+    const wallet = wallets.find(
+      (w) => w.addresh_type.toLowerCase() === type.toLowerCase()
+    );
+    if (wallet) {
+      setSelectedWallet(wallet);
+      setShowCryptoModal(true);
+    } else {
+      alert(`${type} wallet not found`);
+    }
+  };
+
+  const handleCopy = () => {
+    if (selectedWallet?.addresh) {
+      navigator.clipboard.writeText(selectedWallet.addresh);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  if (loading) return (
+    <div className="loading-container">
+      <div className="spinner-border text-primary" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>
+      <p className="mt-3 text-muted">Loading your plan...</p>
+    </div>
+  );
+  
   if (!plan) return null;
 
-  const currencySymbol = plan.currency === 'USD' ? '$' : '₹';
+  const currencySymbol = plan.currency === "USD" ? "$" : "₹";
 
   return (
     <Animated animation="fade-up" delay={40}>
-      <div className="purchase-form-modal mt-5 py-5 bg-white">
-        <div className="purchase-form">
-          <div className="container">
-            <div className="row justify-content-center">
-              <div className="col-6">
-                <h4>Purchase {plan.name}</h4>
+      <div className="purchase-container">
+        <div className="purchase-card">
+          {/* Header Section */}
+          <div className="purchase-header">
+            <div className="plan-badge">{plan.name}</div>
+            <h2 className="plan-title">Get Started with {plan.name}</h2>
+            <p className="plan-description">
+              {plan.description || "Premium trading package designed for success"}
+            </p>
+          </div>
 
-                <div className="mb-3">
-                  <label>Email:</label>
-                  <input
-                    type="email"
-                    className={`form-control ${emailError ? 'is-invalid' : ''}`}
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                      setEmailError('');
-                    }}
-                    placeholder="Enter your email"
-                    required
-                  />
-                  {emailError && <div className="invalid-feedback">{emailError}</div>}
-                </div>
+          {/* Pricing Section */}
+          <div className="pricing-section">
+            <div className="price-display">
+              <span className="currency">{currencySymbol}</span>
+              <span className="amount">{plan.discount_price}</span>
+            </div>
+            <div className="price-label">Total Payable</div>
+          </div>
 
-                <div className="mb-3">
-                  <label>Phone:</label>
-                  <div className="d-flex gap-2">
-                    <select
-                      className="form-control"
-                      value={countryCode}
-                      onChange={(e) => setCountryCode(e.target.value)}
-                      style={{ width: '120px' }}
-                    >
-                      {countryCodes.map((country, index) => (
-                        <option key={index} value={country.code}>
-                          {country.name} ({country.code})
-                        </option>
-                      ))}
-                    </select>
-                    <input
-                      className="form-control"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      placeholder="Enter your phone number"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="mb-3">
-                  <label>Coupon Code (optional):</label>
-                  <div className="d-flex">
-                    <input
-                      className="form-control"
-                      value={coupon}
-                      onChange={(e) => {
-                        setCoupon(e.target.value);
-                        setIsCouponValid(null);
-                      }}
-                      placeholder="Enter coupon code"
-                    />
-                    <button
-                      type="button"
-                      className="login bg-warning rounded border-0 ms-2"
-                      onClick={validateCoupon}
-                      disabled={loadingCoupon}
-                      style={{ height: 51 }}
-                    >
-                      {loadingCoupon ? 'Checking...' : 'Apply'}
-                    </button>
-                  </div>
-                  {isCouponValid === true && (
-                    <small className="text-success">
-                      ✅ Coupon applied!{' '}
-                      {couponData?.discount_type === 'fixed'
-                        ? `${currencySymbol}${couponData.fixed_amount} off`
-                        : `${couponData.discount}% off`}
-                    </small>
-                  )}
-                  {isCouponValid === false && (
-                    <small className="text-danger">
-                      ❌ Invalid, expired, or not applicable for this plan
-                    </small>
-                  )}
-                </div>
-
-                <div className="mb-3">
-                  <strong>
-                    Total Payable: {currencySymbol}
-                    {calculateDiscountedPrice()}
-                  </strong>
-                </div>
-
-                <div className="d-flex gap-2">
-                  <button
-                    className="login bg-warning border-0"
-                    onClick={() => {
-                      if (plan.cosmofeed_link) {
-                        handleCosmofeedPayment();
-                      } else {
-                        handleRazorpayPayment();
-                      }
-                    }}
-                  >
-                    Pay {currencySymbol}
-                    {calculateDiscountedPrice()}
-                  </button>
-                  <button className="login bg-warning border-0" onClick={() => navigate(-1)}>
-                    Cancel
-                  </button>
+          {/* Payment Methods */}
+          <div className="payment-methods">
+            <h4 className="methods-title">Choose Payment Method</h4>
+            
+            {/* Card Payment */}
+            <div className="payment-option primary-option">
+              <div className="option-content">
+                <div className="option-icon">💳</div>
+                <div className="option-info">
+                  <h5>Credit/Debit Card</h5>
+                  <p>Secure payment via Cosmofeed</p>
                 </div>
               </div>
+              <Button 
+                variant="primary" 
+                className="pay-btn"
+                onClick={handleCosmofeedPayment}
+              >
+                Pay Now
+              </Button>
             </div>
+
+            {/* Crypto Payments */}
+            <div className="crypto-options">
+              {wallets.some((w) => w.addresh_type === "TRC20") && (
+                <div className="payment-option crypto-option">
+                  <div className="option-content">
+                    <div className="option-icon">₿</div>
+                    <div className="option-info">
+                      <h5>Crypto (TRC20)</h5>
+                      <p>USDT, USDC, TRX</p>
+                    </div>
+                  </div>
+                  <Button 
+                    variant="outline-dark" 
+                    className="pay-btn"
+                    onClick={() => openCryptoModal("TRC20")}
+                  >
+                    Select
+                  </Button>
+                </div>
+              )}
+
+              {wallets.some((w) => w.addresh_type === "BTC") && (
+                <div className="payment-option crypto-option">
+                  <div className="option-content">
+                    <div className="option-icon">₿</div>
+                    <div className="option-info">
+                      <h5>Bitcoin (BTC)</h5>
+                      <p>Bitcoin Network</p>
+                    </div>
+                  </div>
+                  <Button 
+                    variant="outline-dark" 
+                    className="pay-btn"
+                    onClick={() => openCryptoModal("BTC")}
+                  >
+                    Select
+                  </Button>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Footer Actions */}
+          <div className="purchase-footer">
+            <Button 
+              variant="outline-secondary" 
+              className="back-btn"
+              onClick={() => navigate(-1)}
+            >
+              ← Back to Plans
+            </Button>
           </div>
         </div>
       </div>
+
+      {/* ✅ Enhanced Crypto Modal */}
+      <Modal
+        show={showCryptoModal}
+        onHide={() => {
+          setShowCryptoModal(false);
+          setCopied(false);
+        }}
+        centered
+        className="crypto-modal"
+      >
+        <Modal.Header className="modal-header-custom">
+          <Modal.Title>
+            <div className="modal-title-content">
+              <span className="crypto-icon">₿</span>
+              <div>
+                <h4>Pay with {selectedWallet?.addresh_type || "Crypto"}</h4>
+                <p className="modal-subtitle">Send exact amount to continue</p>
+              </div>
+            </div>
+          </Modal.Title>
+        </Modal.Header>
+        
+        <Modal.Body className="modal-body-custom text-center">
+          {selectedWallet ? (
+            <>
+              {/* QR Code */}
+              <div className="qr-container">
+                <img
+                  src={selectedWallet.image}
+                  alt={selectedWallet.addresh_type}
+                  className="qr-code"
+                />
+              </div>
+
+              {/* Payment Info */}
+              <div className="payment-info">
+                <div className="amount-display">
+                  <span className="amount-label">Send Exactly:</span>
+                  <span className="amount-value">
+                    {currencySymbol}{plan.discount_price} worth of {selectedWallet.addresh_type}
+                  </span>
+                </div>
+                
+                {/* Address with Copy Functionality */}
+                <div className="address-section">
+                  <label className="address-label">Wallet Address:</label>
+                  <div className="address-input-group">
+                    <div className="address-display">
+                      {selectedWallet.addresh}
+                    </div>
+                    <button 
+                      className={`copy-btn ${copied ? 'copied' : ''}`}
+                      onClick={handleCopy}
+                    >
+                      {copied ? '✓ Copied' : 'Copy'}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Important Notes */}
+                <div className="important-notes">
+                  <div className="note-item">
+                    <span className="note-icon">⚠️</span>
+                    <span>Send only {selectedWallet.addresh_type} on correct network</span>
+                  </div>
+                  <div className="note-item">
+                    <span className="note-icon">⏱️</span>
+                    <span>Payment will be confirmed within 15-30 minutes</span>
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="loading-wallet">
+              <div className="spinner-border text-primary" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+              <p>Loading wallet information...</p>
+            </div>
+          )}
+        </Modal.Body>
+        
+        <Modal.Footer className="modal-footer-custom">
+          <Button 
+            variant="outline-secondary" 
+            onClick={() => setShowCryptoModal(false)}
+          >
+            Cancel
+          </Button>
+          <Button 
+            variant="primary"
+            onClick={() => {
+              setShowCryptoModal(false);
+              // Add confirmation logic here if needed
+            }}
+          >
+            I've Sent Payment
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Animated>
   );
 };

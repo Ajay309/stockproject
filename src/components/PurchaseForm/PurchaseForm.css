@@ -1,69 +1,365 @@
-/* PurchaseForm.css */
-
-/* Ensure container padding is adjusted on mobile */
-@media (max-width: 768px) {
-  .purchase-form-modal .container {
-    padding: 0 15px !important; /* Reduce horizontal padding */
-  }
-
-  .purchase-form h4 {
-    font-size: 1.5rem !important; /* Adjust heading size */
-    text-align: center;
-    margin-bottom: 1.5rem !important;
-  }
-
-  .purchase-form .col-6 {
-    width: 100% !important; /* Make column take full width */
-    padding: 0 !important; /* Remove padding from column */
-  }
-
-  .purchase-form .mb-3 {
-    margin-bottom: 1rem !important; /* Reduce margin between form groups */
-  }
-
-  .purchase-form label {
-    font-size: 0.9rem !important; /* Adjust label font size */
-    margin-bottom: 0.3rem !important;
-  }
-
-  .purchase-form .form-control {
-    font-size: 1rem !important; /* Adjust input font size */
-    padding: 0.6rem 0.75rem !important; /* Adjust input padding */
-  }
-
-  .purchase-form .d-flex.gap-2 {
-    flex-direction: column !important; /* Stack buttons vertically */
-    gap: 0.8rem !important; /* Adjust gap for stacked buttons */
-  }
-
-  .purchase-form button {
-    width: 100% !important; /* Make buttons take full width */
-    padding: 0.7rem 1rem !important; /* Adjust button padding */
-    font-size: 1rem !important; /* Adjust button font size */
-  }
+.purchase-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-@media (max-width: 480px) {
-  .purchase-form h4 {
-    font-size: 1.3rem !important;
-    margin-bottom: 1rem !important;
-  }
+.purchase-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  padding: 2.5rem;
+  max-width: 500px;
+  width: 100%;
+  margin: 2rem auto;
+}
 
-  .purchase-form label {
-    font-size: 0.85rem !important;
-  }
+.purchase-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
 
-  .purchase-form .form-control {
-    font-size: 0.9rem !important;
-    padding: 0.5rem 0.6rem !important;
-  }
+.plan-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
 
-  .purchase-form .d-flex.gap-2 {
-    gap: 0.6rem !important;
-  }
+.plan-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+}
 
-  .purchase-form button {
-    padding: 0.6rem 0.8rem !important;
-    font-size: 0.9rem !important;
+.plan-description {
+  color: #718096;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.pricing-section {
+  text-align: center;
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: #f7fafc;
+  border-radius: 15px;
+  border: 2px solid #e2e8f0;
+}
+
+.price-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.currency {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.amount {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #2d3748;
+  line-height: 1;
+}
+
+.price-label {
+  color: #718096;
+  font-weight: 500;
+  margin-top: 0.5rem;
+}
+
+.payment-methods {
+  margin: 2rem 0;
+}
+
+.methods-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.payment-option:hover {
+  border-color: #667eea;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.primary-option {
+  border-color: #667eea;
+  background: linear-gradient(135deg, #f7faff, #ffffff);
+}
+
+.option-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.option-icon {
+  font-size: 1.5rem;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f7fafc;
+  border-radius: 12px;
+}
+
+.option-info h5 {
+  margin: 0;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.option-info p {
+  margin: 0;
+  color: #718096;
+  font-size: 0.9rem;
+}
+
+.pay-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+  min-width: 100px;
+}
+
+.crypto-options {
+  margin-top: 1.5rem;
+}
+
+.purchase-footer {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.back-btn {
+  padding: 0.75rem 2rem;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+/* Crypto Modal Styles */
+.crypto-modal .modal-content {
+  border-radius: 20px;
+  border: none;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header-custom {
+  border-bottom: 1px solid #e2e8f0;
+  padding: 1.5rem 2rem;
+}
+
+.modal-title-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.crypto-icon {
+  font-size: 2rem;
+}
+
+.modal-subtitle {
+  color: #718096;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.modal-body-custom {
+  padding: 2rem;
+}
+
+.qr-container {
+  background: #f7fafc;
+  padding: 1.5rem;
+  border-radius: 15px;
+  margin-bottom: 2rem;
+}
+
+.qr-code {
+  max-width: 250px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.payment-info {
+  text-align: left;
+}
+
+.amount-display {
+  background: #f0fff4;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #48bb78;
+}
+
+.amount-label {
+  display: block;
+  color: #718096;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.amount-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+.address-section {
+  margin-bottom: 1.5rem;
+}
+
+.address-label {
+  display: block;
+  color: #718096;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.address-input-group {
+  display: flex;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+
+.address-display {
+  flex: 1;
+  background: #f7fafc;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  font-family: monospace;
+  font-size: 0.9rem;
+  word-break: break-all;
+}
+
+.copy-btn {
+  padding: 0.75rem 1.5rem;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  min-width: 80px;
+}
+
+.copy-btn:hover {
+  background: #5a6fd8;
+  transform: translateY(-1px);
+}
+
+.copy-btn.copied {
+  background: #48bb78;
+}
+
+.important-notes {
+  background: #fffaf0;
+  padding: 1rem;
+  border-radius: 10px;
+  border-left: 4px solid #ed8936;
+}
+
+.note-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #744210;
+}
+
+.note-item:last-child {
+  margin-bottom: 0;
+}
+
+.note-icon {
+  font-size: 1rem;
+}
+
+.modal-footer-custom {
+  border-top: 1px solid #e2e8f0;
+  padding: 1.5rem 2rem;
+  gap: 1rem;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  color: #718096;
+}
+
+.loading-wallet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .purchase-card {
+    margin: 1rem;
+    padding: 1.5rem;
   }
-} 
+  
+  .plan-title {
+    font-size: 1.5rem;
+  }
+  
+  .amount {
+    font-size: 2.5rem;
+  }
+  
+  .payment-option {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .address-input-group {
+    flex-direction: column;
+  }
+  
+  .modal-body-custom {
+    padding: 1.5rem;
+  }
+}

@@ -47,8 +47,6 @@ export default function AppRoutes() {
       <Route path="/reset-password/:token" element={<ResetPassword />} />
       <Route path="/plans/:packageId" element={<PlansSection/>} />
       <Route path="*" element={<NotFound/>} />
-
-
     </Routes>
   );
 }

@@ -151,6 +151,21 @@
   font-size: 0.9rem;
 }
 
+.confirm{
+  background-color: #edb636;
+   padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+  min-width: 100px;
+  transition: all 0.3s ease;
+}
+
+:hover .confirm{
+  background-color: #ffa80b;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
 .pay-btn {
   padding: 0.75rem 1.5rem;
   border-radius: 10px;

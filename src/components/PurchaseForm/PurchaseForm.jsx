@@ -342,7 +342,8 @@ const PurchaseForm = () => {
             Cancel
           </Button>
           <Button 
-            variant="primary"
+            variant=""
+            className="confirm"
             onClick={() => {
               setShowCryptoModal(false);
               // Add confirmation logic here if needed

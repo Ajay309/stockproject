@@ -15,6 +15,7 @@ const PurchaseForm = () => {
   const [showCryptoModal, setShowCryptoModal] = useState(false);
   const [selectedWallet, setSelectedWallet] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [showCryptoOptions, setShowCryptoOptions] = useState(false);
   const navigate = useNavigate();
 
   // ✅ Fetch Plan
@@ -77,6 +78,7 @@ const PurchaseForm = () => {
     if (wallet) {
       setSelectedWallet(wallet);
       setShowCryptoModal(true);
+      setShowCryptoOptions(false);
     } else {
       alert(`${type} wallet not found`);
     }
@@ -88,6 +90,11 @@ const PurchaseForm = () => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
+  };
+
+  // Toggle crypto options visibility
+  const toggleCryptoOptions = () => {
+    setShowCryptoOptions(!showCryptoOptions);
   };
 
   if (loading) return (
@@ -102,6 +109,7 @@ const PurchaseForm = () => {
   if (!plan) return null;
 
   const currencySymbol = plan.currency === "USD" ? "$" : "₹";
+  const hasCryptoWallets = wallets.length > 0;
 
   return (
     <Animated animation="fade-up" delay={40}>
@@ -134,12 +142,12 @@ const PurchaseForm = () => {
               <div className="option-content">
                 <div className="option-icon">💳</div>
                 <div className="option-info">
-                  <h5>Credit/Debit Card</h5>
-                  <p>Secure payment via Cosmofeed</p>
+                  <h5>Pay With Card</h5>
+                  {/* <p>Secure payment via Cosmofeed</p> */}
                 </div>
               </div>
               <Button 
-                variant="primary" 
+                variant=""
                 className="pay-btn"
                 onClick={handleCosmofeedPayment}
               >
@@ -147,46 +155,84 @@ const PurchaseForm = () => {
               </Button>
             </div>
 
-            {/* Crypto Payments */}
-            <div className="crypto-options">
-              {wallets.some((w) => w.addresh_type === "TRC20") && (
-                <div className="payment-option crypto-option">
+            {/* Main Crypto Option */}
+            {hasCryptoWallets && (
+              <div className="crypto-main-option">
+                <div 
+                  className={`payment-option crypto-main ${showCryptoOptions ? 'expanded' : ''}`}
+                  onClick={toggleCryptoOptions}
+                >
                   <div className="option-content">
                     <div className="option-icon">₿</div>
                     <div className="option-info">
-                      <h5>Crypto (TRC20)</h5>
-                      <p>USDT, USDC, TRX</p>
+                      <h5>Pay with Crypto</h5>
+                      <p>Multiple cryptocurrencies supported</p>
                     </div>
                   </div>
-                  <Button 
-                    variant="outline-dark" 
-                    className="pay-btn"
-                    onClick={() => openCryptoModal("TRC20")}
-                  >
-                    Select
-                  </Button>
+                  <div className="crypto-arrow">
+                    {showCryptoOptions ? '▼' : '▶'}
+                  </div>
                 </div>
-              )}
 
-              {wallets.some((w) => w.addresh_type === "BTC") && (
-                <div className="payment-option crypto-option">
-                  <div className="option-content">
-                    <div className="option-icon">₿</div>
-                    <div className="option-info">
-                      <h5>Bitcoin (BTC)</h5>
-                      <p>Bitcoin Network</p>
+                {/* Crypto Sub-options */}
+                {showCryptoOptions && (
+                  <div className="crypto-sub-options">
+                    <div className="crypto-options-header">
+                      <span>Select Crypto Network</span>
                     </div>
+                    
+                    {wallets.some((w) => w.addresh_type === "TRC20") && (
+                      <div 
+                        className="crypto-sub-option"
+                        onClick={() => openCryptoModal("TRC20")}
+                      >
+                        <div className="crypto-option-content">
+                          <div className="crypto-network-icon">🌐</div>
+                          <div className="crypto-option-info">
+                            <h6>TRC20 Network</h6>
+                            <p>USDT, USDC, TRX</p>
+                          </div>
+                        </div>
+                        <div className="crypto-select-arrow">→</div>
+                      </div>
+                    )}
+
+                    {wallets.some((w) => w.addresh_type === "BTC") && (
+                      <div 
+                        className="crypto-sub-option"
+                        onClick={() => openCryptoModal("BTC")}
+                      >
+                        <div className="crypto-option-content">
+                          <div className="crypto-network-icon">₿</div>
+                          <div className="crypto-option-info">
+                            <h6>Bitcoin Network</h6>
+                            <p>BTC</p>
+                          </div>
+                        </div>
+                        <div className="crypto-select-arrow">→</div>
+                      </div>
+                    )}
+
+                    {/* Add more crypto options as needed */}
+                    {wallets.some((w) => w.addresh_type === "ERC20") && (
+                      <div 
+                        className="crypto-sub-option"
+                        onClick={() => openCryptoModal("ERC20")}
+                      >
+                        <div className="crypto-option-content">
+                          <div className="crypto-network-icon">⚡</div>
+                          <div className="crypto-option-info">
+                            <h6>ERC20 Network</h6>
+                            <p>USDT, USDC, ETH</p>
+                          </div>
+                        </div>
+                        <div className="crypto-select-arrow">→</div>
+                      </div>
+                    )}
                   </div>
-                  <Button 
-                    variant="outline-dark" 
-                    className="pay-btn"
-                    onClick={() => openCryptoModal("BTC")}
-                  >
-                    Select
-                  </Button>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Footer Actions */}
@@ -270,6 +316,10 @@ const PurchaseForm = () => {
                   <div className="note-item">
                     <span className="note-icon">⏱️</span>
                     <span>Payment will be confirmed within 15-30 minutes</span>
+                  </div>
+                  <div className="note-item">
+                    <span className="note-icon">💡</span>
+                    <span>Double-check the network before sending</span>
                   </div>
                 </div>
               </div>

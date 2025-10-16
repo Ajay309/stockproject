@@ -1,3 +1,4 @@
+/* PurchaseForm.css */
 .purchase-container {
   min-height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -102,6 +103,7 @@
   border-radius: 12px;
   margin-bottom: 1rem;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .payment-option:hover {
@@ -113,6 +115,11 @@
 .primary-option {
   border-color: #667eea;
   background: linear-gradient(135deg, #f7faff, #ffffff);
+}
+
+.primary-option .pay-btn {
+ background: linear-gradient(135deg, #ffa80b, #ffa80b);
+  border: none;
 }
 
 .option-content {
@@ -149,10 +156,127 @@
   border-radius: 10px;
   font-weight: 600;
   min-width: 100px;
+  transition: all 0.3s ease;
 }
 
-.crypto-options {
-  margin-top: 1.5rem;
+/* Crypto Main Option Styles */
+.crypto-main-option {
+  margin-bottom: 1rem;
+}
+
+.crypto-main {
+  background: linear-gradient(135deg, #f0fff4, #ffffff);
+  border-color: #48bb78;
+  cursor: pointer;
+}
+
+.crypto-main:hover {
+  border-color: #38a169;
+  background: linear-gradient(135deg, #e6fffa, #ffffff);
+}
+
+.crypto-main.expanded {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-bottom: 0;
+}
+
+.crypto-arrow {
+  font-size: 1.2rem;
+  color: #718096;
+  transition: transform 0.3s ease;
+}
+
+.crypto-main.expanded .crypto-arrow {
+  transform: rotate(0deg);
+  color: #667eea;
+}
+
+/* Crypto Sub-options */
+.crypto-sub-options {
+  background: #f7fafc;
+  border: 2px solid #e2e8f0;
+  border-top: none;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  padding: 0;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.crypto-options-header {
+  padding: 1rem 1.25rem;
+  background: #edf2f7;
+  border-bottom: 1px solid #e2e8f0;
+  font-weight: 600;
+  color: #4a5568;
+  font-size: 0.9rem;
+}
+
+.crypto-sub-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.crypto-sub-option:last-child {
+  border-bottom: none;
+}
+
+.crypto-sub-option:hover {
+  background: white;
+  transform: translateX(5px);
+}
+
+.crypto-option-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.crypto-network-icon {
+  font-size: 1.25rem;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.crypto-option-info h6 {
+  margin: 0;
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 0.95rem;
+}
+
+.crypto-option-info p {
+  margin: 0;
+  color: #718096;
+  font-size: 0.85rem;
+}
+
+.crypto-select-arrow {
+  color: #667eea;
+  font-weight: bold;
+  font-size: 1.1rem;
 }
 
 .purchase-footer {
@@ -361,5 +485,15 @@
   
   .modal-body-custom {
     padding: 1.5rem;
+  }
+  
+  .crypto-option-content {
+    gap: 0.5rem;
+  }
+  
+  .crypto-network-icon {
+    width: 35px;
+    height: 35px;
+    font-size: 1.1rem;
   }
 }
